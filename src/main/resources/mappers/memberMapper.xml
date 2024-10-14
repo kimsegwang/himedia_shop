@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.SpringBootBasicBoard.mapper.UserMapper">
+    <resultMap id="memberResultMap" type="com.example.SpringBootBasicBoard.model.Member">
+        <result property="userId" column="user_id" />
+        <result property="password" column="password" />
+        <result property="myLocation" column="my_location" />
+    </resultMap>
+    <insert id="memberInsert" parameterType="com.example.tobi.himedia_shop.model.Member">
+        insert into member (user_id,password,my_loction,phone,)
+        values(#{userId},#{password},#{my_loction})
+    </insert>
+    <select id="signIn"
+            parameterType="String"
+            resultMap="memberResultMap" >
+        SELECT * FROM member WHERE user_id = #{userId};
+    </select>
+</mapper>
