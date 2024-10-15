@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private  final MemberMapper memberMapper;
-
+     private  final MemberMapper memberMapper;
 
     public void signUp(Member member) {
         memberMapper.memberInsert(member);

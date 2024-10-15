@@ -28,7 +28,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         HttpSession session = request.getSession();
         session.setAttribute("userId", member.getUserId());
-        session.setAttribute("location", member.getMy_location());
+        session.setAttribute("location", member.getMyLocation());
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json; charset=utf-8" );

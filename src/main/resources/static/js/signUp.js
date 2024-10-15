@@ -5,7 +5,7 @@ $(document).ready(() => {
         let userId = $('#user_id').val().trim();
         let password = $('#password').val().trim();
         let location = $('#location').val().trim();
-        let phone = $('#phone').val().trim();
+        let phone = $('#phoneNumber').val().trim();
 
         let formData ={
             userId : userId,
@@ -17,7 +17,7 @@ $(document).ready(() => {
         $.ajax(
             {
                 type: 'POST',
-                url: '/join',
+                url: '/member/join',
                 data: JSON.stringify(formData),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
