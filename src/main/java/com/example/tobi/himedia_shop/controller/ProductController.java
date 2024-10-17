@@ -2,6 +2,7 @@ package com.example.tobi.himedia_shop.controller;
 
 import com.example.tobi.himedia_shop.dto.ProductDetailResponseDTO;
 import com.example.tobi.himedia_shop.service.ProductService;
+import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,10 @@ public class ProductController {
 
     private final ProductService productService;
     @GetMapping("/detail/{productId}")
-    public String productDetail(Model model, @PathVariable("productId") Integer productId) {
+    public String productDetail(Model model, @PathVariable("productId") Integer productId, HttpSession session) {
         ProductDetailResponseDTO productById = productService.getProductById(productId);
         model.addAttribute("productById", productById);
+
         return "product-detail";
     }
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tobi.himedia_shop.mapper.MemberMapper">
+    <resultMap id="reviewResultMap" type="com.example.tobi.himedia_shop.model.Review">
+        <result property="id" column="id" />
+        <result property="productId" column="product_id" />
+        <result property="review" column="review" />
+        <result property="reviewDate" column="review_date" />
+        <result property="score" column="score" />
+    </resultMap>
+
+    <insert id="reviewInsert" parameterType="com.example.tobi.himedia_shop.model.Review">
+        INSERT INTO review (product_id, review, score)
+        VALUES (#{productId}, #{review}, #{score})
+    </insert>
+    <delete id="reviewDelete" parameterType="com.example.tobi.himedia_shop.model.Review">
+        DELETE FROM review
+        WHERE product_id = ${productId};
+    </delete>
+
+    <select id="findReview" parameterType="String" resultMap="reviewResultMap">
+        SELECT
+            id,product_id,review,review_date,score
+        FROM review
+        WHERE product_id = #{productId}
+    </select>
+
+</mapper>
+

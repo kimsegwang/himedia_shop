@@ -44,6 +44,27 @@
     <h2 th:text="${productById.price}"> </h2>
 
     <div class="reviews">
+        <div th:if="${session.userId != null}">
+            <button onclick="openModal()">리뷰 작성</button>
+        </div>
+
+        <div id="reviewModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>리뷰 작성</h2>
+                <input type="hidden" id="productId" th:value="${productById.id}"> <!-- 제품 ID -->
+                <input type="text" id="review" placeholder="리뷰를 입력하세요">
+                <input type="number" id="rating" step="0.5"  min="1" max="5" placeholder="별점 (1-5)"> <!-- 별점 입력란 -->
+                <button onclick="submitReview()">제출</button>
+                <button onclick="closeModal()">취소</button>
+            </div>
+        </div>
+
+        <div id="responseMessage"></div>
+
+        <div th:if="${session.userId == null}">
+            <p>로그인 후 리뷰를 작성할 수 있습니다. <a href="/member/login">로그인하기</a></p>
+        </div>
         <h3>리뷰</h3>
         <p>★★★★★ - 정말 좋습니다!</p>
         <p>★★★★☆ - 괜찮은 제품이에요.</p>

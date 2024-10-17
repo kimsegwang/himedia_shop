@@ -17,6 +17,7 @@ public class ProductService {
     public ProductDetailResponseDTO getProductById(Integer productId) {
         Products productById = productMapper.getProductById(productId);
         return  ProductDetailResponseDTO.builder()
+                .id(productById.getId())
                 .category(productById.getCategory())
                 .title(productById.getTitle())
                 .content(productById.getContent())
