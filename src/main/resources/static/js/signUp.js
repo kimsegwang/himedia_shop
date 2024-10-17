@@ -2,16 +2,19 @@
 $(document).ready(() => {
 
     $('#signup').click(() => {
+        event.preventDefault();
         let userId = $('#user_id').val().trim();
         let password = $('#password').val().trim();
         let location = $('#location').val().trim();
         let phone = $('#phoneNumber').val().trim();
+        let name = $('#user-name').val().trim();
 
         let formData ={
             userId : userId,
             password : password,
             location : location,
-            phone:phone
+            phone:phone,
+            name:name
         }
 
         $.ajax(
@@ -27,7 +30,8 @@ $(document).ready(() => {
                 },
                 error: function(error) {
                     // 실패 시 실행될 콜백 함수
-                    console.error('오류 발생:', error);
+                    console.error('오류 발생:', error.responseJSON.message);
+                    window.location.href =  error.responseJSON.url;
                     alert('회원가입 중 오류가 발생했습니다.');
                 }
             }

@@ -11,6 +11,7 @@ public class MemberRequestDTO {
     private String location;
 
     private String phone;
+    private String name;
 
     public Member toMember(BCryptPasswordEncoder bCryptPasswordEncoder) {
         return Member.builder()
@@ -18,6 +19,7 @@ public class MemberRequestDTO {
                 .password(bCryptPasswordEncoder.encode(password))
                 .myLocation(location)
                 .phone(phone)
+                .name(getName())
                 .build();
     }
 }

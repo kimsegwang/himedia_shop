@@ -14,9 +14,18 @@ import java.util.List;
 public class CustomUserDetails implements UserDetails {
     private Member member;
 
+    private List<GrantedAuthority> authorities;
+
+    // Builder 패턴을 사용하는 경우
+    @Builder
+    public CustomUserDetails(Member member, List<GrantedAuthority> authorities) {
+        this.member = member;
+        this.authorities = authorities;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return authorities;
     }
 
     @Override

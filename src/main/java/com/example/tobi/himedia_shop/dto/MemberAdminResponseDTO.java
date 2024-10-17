@@ -1,19 +1,16 @@
-package com.example.tobi.himedia_shop.model;
-
+package com.example.tobi.himedia_shop.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Builder
 @Setter
-public class Member {
+@Builder
+public class MemberAdminResponseDTO {
     private int id;
-    private String userId;
+    private String username;
     private String password;
-    private String myLocation;
     private String phone;
-    private String name;
-
+    private String myLocation;
 }

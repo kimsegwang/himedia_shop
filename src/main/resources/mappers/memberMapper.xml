@@ -4,20 +4,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.tobi.himedia_shop.mapper.MemberMapper">
     <resultMap id="memberResultMap" type="com.example.tobi.himedia_shop.model.Member">
+        <result property="id" column="id"/>
         <result property="userId" column="user_id" />
-        <result property="password" column="password" />
-        <result property="phone" column="phone" />
         <result property="myLocation" column="my_location" />
+        <result property="password" column="password" />
     </resultMap>
 
     <insert id="memberInsert" parameterType="com.example.tobi.himedia_shop.model.Member">
-        INSERT INTO member (user_id, password, my_location, phone)
-        VALUES (#{userId}, #{password}, #{myLocation}, #{phone})
+        INSERT INTO member (user_id, password, my_location, phone,name)
+        VALUES (#{userId}, #{password}, #{myLocation}, #{phone},#{name})
+    </insert>
+    <insert id="memberRoleInsert" parameterType="int">
+        INSERT INTO user_roles (user_id,role_id)
+        VALUES (#{userId},2)
     </insert>
 
-    <select id="signIn" parameterType="String" resultMap="memberResultMap">
-        SELECT user_id, password, phone, my_location
+    <select id="findByUserId" parameterType="String" resultMap="memberResultMap">
+        SELECT
+            *
         FROM member
-        WHERE user_id = #{userId}
+        WHERE user_id = #{username}
+    </select>
+
+    <select id="findRolesByUserId" resultType="com.example.tobi.himedia_shop.dto.permission.Role">
+        SELECT r.* FROM roles r
+                            JOIN user_roles ur ON r.id = ur.role_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <select id="memberCheckId" parameterType="String" resultType="int">
+        select count(user_id) from member where user_id = #{userId}
     </select>
 </mapper>
+
