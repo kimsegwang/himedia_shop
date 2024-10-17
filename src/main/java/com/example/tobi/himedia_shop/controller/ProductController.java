@@ -1,9 +1,13 @@
 package com.example.tobi.himedia_shop.controller;
 
+import com.example.tobi.himedia_shop.dto.ProductDetailResponseDTO;
+import com.example.tobi.himedia_shop.service.ProductService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -11,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/product")
 public class ProductController {
 
-    @GetMapping("/detail")
-    public String productDetail() {
+    private final ProductService productService;
+    @GetMapping("/detail/{productId}")
+    public String productDetail(Model model, @PathVariable("productId") Integer productId) {
+        ProductDetailResponseDTO productById = productService.getProductById(productId);
+        model.addAttribute("productById", productById);
         return "product-detail";
     }
+
 }

@@ -5,6 +5,7 @@ import com.example.tobi.himedia_shop.client.WeatherClient;
 import com.example.tobi.himedia_shop.dto.weather.Item;
 import com.example.tobi.himedia_shop.dto.weather.WeatherResponse;
 import com.example.tobi.himedia_shop.dto.weather.WeatherResponseDTO;
+import com.example.tobi.himedia_shop.mapper.ProductMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +23,7 @@ import java.util.List;
 public class WeatherService {
     private final WeatherClient weatherClient;
     private final ObjectMapper objectMapper;
+    private final ProductMapper productMapper;
     @Value("${weather.api.key}")
     private String serviceKey;
 
@@ -40,7 +42,7 @@ public class WeatherService {
         String baseDate = getCurrentDateAsString();
         String baseTime  = getCurrentTimeAsString();
         int nx = Usernx;
-        int ny = Userny;;
+        int ny = Userny;
         try {
             String weatherData = weatherClient.getWeatherData(
                     serviceKey,

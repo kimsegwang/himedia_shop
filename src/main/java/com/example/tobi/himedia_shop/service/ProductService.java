@@ -14,7 +14,7 @@ import java.util.List;
 public class ProductService {
 
     private final ProductMapper productMapper;
-    public ProductDetailResponseDTO getProductById(String productId) {
+    public ProductDetailResponseDTO getProductById(Integer productId) {
         Products productById = productMapper.getProductById(productId);
         return  ProductDetailResponseDTO.builder()
                 .category(productById.getCategory())

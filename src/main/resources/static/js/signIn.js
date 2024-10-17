@@ -1,5 +1,5 @@
 $(document).ready(() => {
-    $('#signIn').click(function(event) {
+    $('#signIn').click((event)=> {
         event.preventDefault(); // 기본 폼 제출 방지
 
         let userId = $('#user_id').val();
