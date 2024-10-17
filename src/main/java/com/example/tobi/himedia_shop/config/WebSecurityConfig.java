@@ -34,12 +34,10 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
-                                        new AntPathRequestMatcher("/member/login"),
-                                        new AntPathRequestMatcher("/member/join"),
-                                        new AntPathRequestMatcher("/join")
-                                ).permitAll()
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .anyRequest().authenticated()
+                                    "/member/my-page"
+                                ).authenticated()  // 이 페이지들은 로그인이 필요
+                                .requestMatchers("/admin/**").hasRole("ADMIN")  // ADMIN 페이지는 ADMIN 역할이 필요
+                                .anyRequest().permitAll()  // 나머지 요청은 로그인 없이 접근 가능
                 )
                 .formLogin(
                         form -> form
