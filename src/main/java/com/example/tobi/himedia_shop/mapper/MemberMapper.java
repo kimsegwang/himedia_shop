@@ -10,7 +10,7 @@ import java.util.List;
 public interface MemberMapper {
     void memberInsert(Member user);
     void memberRoleInsert(int userId);
-    Member findByUserId(String username);
+    Member findByUserId(String userId);
     List<Role> findRolesByUserId(int userId);
     int memberCheckId(String userId);
 

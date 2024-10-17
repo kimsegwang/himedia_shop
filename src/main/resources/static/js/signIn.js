@@ -1,6 +1,6 @@
 $(document).ready(() => {
-    $('#loginForm').submit((event) => {
-        event.preventDefault(); // 기본 폼 제출 동작 방지
+    $('#signIn').click(function(event) {
+        event.preventDefault(); // 기본 폼 제출 방지
 
         let userId = $('#user_id').val();
         let password = $('#password').val();

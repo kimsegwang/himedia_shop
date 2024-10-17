@@ -11,7 +11,7 @@ CREATE TABLE member (
 CREATE TABLE products (
                           id INT AUTO_INCREMENT PRIMARY KEY,
                           category varchar(30) not null ,
-                          seller_id INT NOT NULL,
+                          seller_id VARCHAR(50) NOT NULL,
                           content VARCHAR(50),
                           title VARCHAR(30),
                           content_img VARCHAR(255) NOT NULL,
