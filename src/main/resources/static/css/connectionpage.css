@@ -1,0 +1,173 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden; /* 사이드바 열릴 때 수평 스크롤 막기 */
+}
+
+header {
+    background-size: 100% 100%;
+    color: black;
+    padding: 80px 0;
+    text-align: center;
+    font-size: 35px;
+    position: relative;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #444;
+    position: fixed;
+    top: 0;
+    width: 80%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+nav a {
+    color: #fff;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+}
+
+nav a:hover {
+    background-color: #555;
+}
+
+header {
+    padding-top: 80px;
+}
+
+section {
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+.image-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.image-section img {
+    max-width: 300px;
+    height: 400px;
+}
+
+.image-insta img {
+    max-width: 30px;
+    height: 30px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    bottom: 0;
+}
+
+/* 사이드바 스타일 */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1001;
+    top: 0;
+    left: 0; /* 왼쪽에 위치 */
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.sidenav .search-container {
+    padding: 10px 32px;
+}
+
+.sidenav input[type="text"] {
+    width: 80%;
+    padding: 5px;
+    margin: 5px 0;
+    border: none;
+    background: #f1f1f1;
+    color: black;
+}
+
+.sidenav button {
+    width: 80%;
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.sidenav button:hover {
+    background-color: #555;
+}
+
+#main {
+    transition: margin-left 0.5s;
+    padding: 16px;
+}
+
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    position: fixed;
+    top: 20px;
+    left: 20px; /* 왼쪽에 위치 */
+    z-index: 1002;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+/* connectionpage.css */
+#provinceSelect, .weather-details {
+    float: right;
+    text-align: right;
+    margin-right: 20px;
+}
+
+
+
