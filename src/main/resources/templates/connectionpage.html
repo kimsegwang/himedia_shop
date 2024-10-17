@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/index.js}"></script>
+    <title>Trend & Weather</title>
+    <link rel="stylesheet" href="css/connectionpage.css"><!-- CSS 파일 연결 -->
+</head>
+<body>
+<header>
+    <h1><i>Trend & Weather</i></h1>
+</header>
+
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="검색...">
+        <button onclick="searchFunction()">검색</button>
+    </div>
+    <a href="#recommended">BEST</a>
+    <a href="#home">NEW</a>
+    <a href="#about">OUTER</a>
+    <a href="#contact">TOP</a>
+    <a href="#new">BOTTOM</a>
+    <a href="#ACC">ACC</a>
+</div>
+
+<select id="provinceSelect">
+    <option value="">지역을 선택하세요</option>
+</select>
+<div class="weather-details">
+    <!-- 날씨 정보가 여기에 동적으로 추가됩니다. -->
+</div>
+
+
+<div id="main">
+    <button id="menuBtn" class="openbtn" onclick="toggleNav()">&#9776;</button>
+
+    <div class="container">
+
+        <section id="recommended">
+            <h2>BEST</h2>
+            <div class="image-section">
+                <a href="추천템.html">
+                    <img src="이미지/감성바다.jfif" alt="추천 이미지1">
+                </a>
+                <a href="추천템.html">
+                    <img src="이미지/감성바다.jfif" alt="추천 이미지2">
+                </a>
+                <a href="추천템.html">
+                    <img src="이미지/감성바다.jfif" alt="추천 이미지3">
+                </a>
+            </div>
+        </section>
+
+        <section id="home">
+            <h2>NEW</h2>
+            <div class="image-section">
+                <img src="이미지/감성바다.jfif" alt="신상품 이미지">
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>OUTER</h2>
+        </section>
+
+        <section id="contact">
+            <h2>TOP</h2>
+        </section>
+
+        <section id="new">
+            <h2>BOTTOM</h2>
+        </section>
+
+        <section id="ACC">
+            <h2>ACC</h2>
+        </section>
+
+        <section id="link">
+            <div class="image-insta">
+                <a href="https://www.instagram.com/" target="_blank">
+                    <img src="이미지/인스타.jfif" alt="인스타 로고">
+                </a>
+            </div>
+        </section>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 SEG. All rights reserved.</p>
+</footer>
+
+<script th:src="@{/js/connectionpage.js}"></script> <!-- JS 파일 연결 -->
+</body>
+</html>
