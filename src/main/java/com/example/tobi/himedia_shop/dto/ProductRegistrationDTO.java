@@ -3,9 +3,8 @@ package com.example.tobi.himedia_shop.dto;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
 @Getter
-public class SignUpResponseDTO {
+@Builder
+public class ProductRegistrationDTO {
     private String url;
-    private String message;
 }

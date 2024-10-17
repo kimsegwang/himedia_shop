@@ -9,10 +9,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService {
 
-     private  final MemberMapper memberMapper;
+    private  final MemberMapper memberMapper;
 
-    public void signUp(Member member) {
+    public boolean signUp(Member member) {
+        if(memberMapper.memberCheckId(member.getUserId())>0){
+            return false;
+        }
         memberMapper.memberInsert(member);
+        Member byUserId = memberMapper.findByUserId(member.getUserId());
+        memberMapper.memberRoleInsert(byUserId.getId());
+        return true;
     }
 
 }

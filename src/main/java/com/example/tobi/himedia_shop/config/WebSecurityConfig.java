@@ -30,6 +30,7 @@ public class WebSecurityConfig {
 
     )throws Exception {
         http
+
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
@@ -37,6 +38,7 @@ public class WebSecurityConfig {
                                         new AntPathRequestMatcher("/member/join"),
                                         new AntPathRequestMatcher("/join")
                                 ).permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(
