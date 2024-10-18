@@ -1,25 +1,22 @@
-package com.example.tobi.himedia_shop.model;
-
+package com.example.tobi.himedia_shop.dto.product.product;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Builder
 @Setter
-public class Products {
+@Builder
+public class ProductListResponseDTO {
     private int id;
     private String category;
     private String sellerId;
     private String title;
     private String content;
-    private String contentImg;
     private String created;
-    private String updated;
     private int stock;
     private int price;
+    private String contentImg;
     private int temperature;
     private int precipitation;
-
 }

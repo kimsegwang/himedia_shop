@@ -1,7 +1,7 @@
 package com.example.tobi.himedia_shop.service;
 
-import com.example.tobi.himedia_shop.dto.ProductListResponseDTO;
-import com.example.tobi.himedia_shop.dto.ProductRequestDTO;
+import com.example.tobi.himedia_shop.dto.product.product.ProductListResponseDTO;
+
 import com.example.tobi.himedia_shop.dto.RainAndTemResponseDTO;
 import com.example.tobi.himedia_shop.mapper.ProductMapper;
 import com.example.tobi.himedia_shop.model.Products;

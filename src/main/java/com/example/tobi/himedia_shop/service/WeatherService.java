@@ -43,7 +43,7 @@ public class WeatherService {
         String baseDate = getCurrentDateAsString();
         String baseTime  = getCurrentTimeAsString();
         int nx = Usernx;
-        int ny = Userny;;
+        int ny = Userny;
         try {
             String weatherData = weatherClient.getWeatherData(
                     serviceKey,

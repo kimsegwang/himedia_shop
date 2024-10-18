@@ -6,10 +6,10 @@ spring:
     password: 1234
 
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath:mappers/*.xml
 
 server:
-  port: 8081
+  port: 8080
 
 weather:
   api:
