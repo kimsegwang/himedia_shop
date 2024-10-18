@@ -15,7 +15,7 @@ public class ProductListResponseDTO {
     private String content;
     private String created;
     private int stock;
-    private String price;
+    private int price;
     private String contentImg;
     private int temperature;
     private int precipitation;

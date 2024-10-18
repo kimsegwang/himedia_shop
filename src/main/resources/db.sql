@@ -1,3 +1,4 @@
+
 create database shoppingMall;
 use shoppingMall;
 CREATE TABLE member (

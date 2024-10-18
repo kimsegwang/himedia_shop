@@ -14,13 +14,14 @@
         <result property="updated"  column="updated" />
         <result property="stock"  column="stock" />
         <result property="price"   column="price" />
-        <result property="temperature;"  column="temperature" />
+        <result property="temperature"  column="temperature" />
         <result property="precipitation;"  column="precipitation" />
     </resultMap>
     <select id="getProductALL" parameterType="String" resultMap="productResultMap">
         SELECT
             id, category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation
         FROM products
+
     </select>
     <select id="getProductById" parameterType="int" resultMap="productResultMap">
         SELECT
@@ -28,6 +29,11 @@
         FROM products
         where
             id = #{id}
+    </select>
+    <select id="getProductWeather" parameterType="com.example.tobi.himedia_shop.dto.RainAndTemResponseDTO" resultMap="productResultMap">
+        SELECT * FROM products
+        where
+            temperature = #{temperature} and precipitation=#{precipitation}
     </select>
 
 </mapper>
