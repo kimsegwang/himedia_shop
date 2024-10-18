@@ -20,7 +20,7 @@ public class Products {
     private int stock;
     private int price;
     private int temperature;
-    private String precipitation;
+    private int precipitation;
 
 
 }

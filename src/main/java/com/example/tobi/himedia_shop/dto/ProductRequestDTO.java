@@ -18,7 +18,7 @@ public class ProductRequestDTO {
     private String productContent;
     private MultipartFile productImage;
     private int productTemperature;
-    private String productPrecipitation;
+    private int productPrecipitation;
     private int productStock;
     private int productPrice;
 

@@ -8,6 +8,8 @@
         <result property="userId" column="user_id" />
         <result property="myLocation" column="my_location" />
         <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="name" column="name" />
     </resultMap>
 
     <insert id="memberInsert" parameterType="com.example.tobi.himedia_shop.model.Member">
@@ -21,9 +23,9 @@
 
     <select id="findByUserId" parameterType="String" resultMap="memberResultMap">
         SELECT
-            *
+            id, user_id, password, my_location, phone, name
         FROM member
-        WHERE user_id = #{username}
+        WHERE user_id = #{userId}
     </select>
 
     <select id="findRolesByUserId" resultType="com.example.tobi.himedia_shop.dto.permission.Role">
