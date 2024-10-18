@@ -11,6 +11,6 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
     Products getProductById(String id);
-    List<Products> getProductALL();
+    //List<Products> getProductALL();
     List<Products> getProductWeather(RainAndTemResponseDTO dto);
 }
