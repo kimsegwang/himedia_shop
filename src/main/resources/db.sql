@@ -28,9 +28,12 @@ CREATE TABLE products (
 CREATE TABLE review (
                         id INT AUTO_INCREMENT PRIMARY KEY,
                         product_id INT NOT NULL,
+                        userId VARCHAR(30) not null ,
+                        title varchar(30) not null ,
                         review VARCHAR(50) NULL,
                         review_date DATETIME DEFAULT CURRENT_TIMESTAMP,
                         score INT NULL
+
 );
 
 CREATE TABLE wishlist (
@@ -64,3 +67,6 @@ CREATE TABLE user_roles (
 INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 INSERT INTO roles (name) VALUES ('ROLE_USER');
 
+INSERT INTO user_roles (user_id, role_id) VALUES (5,1);
+
+select * from member;

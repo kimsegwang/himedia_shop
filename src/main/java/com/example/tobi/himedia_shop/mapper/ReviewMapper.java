@@ -7,8 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface ReviewMapper {
-    void reviewInsert(Review review);
+    int reviewInsert(Review review);
+    int reviewDelete(int reviewId);
     List<Review> reviewSelect(int productId);
-
-    void reviewDelete(int reviewId);
 }

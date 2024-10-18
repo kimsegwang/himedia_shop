@@ -1,16 +1,15 @@
-package com.example.tobi.himedia_shop.model;
+package com.example.tobi.himedia_shop.dto.product.review;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @Builder
-public class Review {
+@Getter
+public class ReviewResponseDTO {
+
     private int id;
+    private int productId;
     private String userId;
-    private String productId;
     private String title;
     private String review;
     private String reviewDate;
