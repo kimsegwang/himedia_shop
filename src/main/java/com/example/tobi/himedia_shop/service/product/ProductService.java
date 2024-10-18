@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class ProductService {
 
     private final ProductMapper productMapper;
-    public ProductDetailResponseDTO getProductById(Integer productId) {
+    public ProductDetailResponseDTO getProductById(int productId) {
         Products productById = productMapper.getProductById(productId);
         return  ProductDetailResponseDTO.builder()
                 .id(productById.getId())

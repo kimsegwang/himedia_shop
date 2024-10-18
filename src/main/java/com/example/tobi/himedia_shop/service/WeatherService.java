@@ -26,6 +26,7 @@ public class WeatherService {
     private final ProductMapper productMapper;
     @Value("${weather.api.key}")
     private String serviceKey;
+    private final RainAndTemService rainAndTemService;
 
     public static String getCurrentDateAsString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -64,9 +65,14 @@ public class WeatherService {
             Item ptyItem = items.get(0);
             Item t1hItem = items.get(3);
             var ptyValue = ptyItem.getObsrValue();
+            int tem = TemperatureDivide(Float.valueOf(t1hItem.getObsrValue()));
+            int rain = Integer.parseInt(ptyValue)==0?0:1;
+
+
             return WeatherResponseDTO.builder()
                     .temperature(t1hItem.getObsrValue() + "℃")
                     .PrecipitationType(getPrecipitationDescription(ptyValue))
+                    .products(rainAndTemService.Divide(tem,rain))
                     .build();
 
         } catch (JsonProcessingException e) {
@@ -93,6 +99,20 @@ public class WeatherService {
                 return "눈날림";
             default:
                 return "알 수 없는 상태";
+        }
+    }
+
+    private int TemperatureDivide(Float t1hValue) {
+        if (t1hValue > 23) {
+            return 1;
+        } else if (t1hValue > 15) {
+            return 2;
+        } else if (t1hValue > 10) {
+            return 3;
+        } else if (t1hValue > 5) {
+            return 4;
+        } else{
+            return 5;
         }
     }
 }

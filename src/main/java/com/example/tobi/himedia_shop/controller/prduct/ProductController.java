@@ -17,7 +17,7 @@ public class ProductController {
 
     private final ProductService productService;
     @GetMapping("/detail/{productId}")
-    public String productDetail(Model model, @PathVariable("productId") Integer productId, HttpSession session) {
+    public String productDetail(Model model, @PathVariable("productId") int productId, HttpSession session) {
         ProductDetailResponseDTO productById = productService.getProductById(productId);
         model.addAttribute("productById", productById);
 
