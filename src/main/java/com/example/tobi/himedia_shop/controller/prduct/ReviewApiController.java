@@ -19,7 +19,7 @@ public class ReviewApiController {
     private final ReviewService reviewService;
 
     @PostMapping("/review")
-    public ResponseEntity<ReviewMessageResponseDTO> reviewInsert(@RequestBody RequestReviewDTO requestReviewDTO) {
+    public ResponseEntity<ReviewMessageResponseDTO> reviewInsert(@ModelAttribute  RequestReviewDTO requestReviewDTO) {
         boolean success = reviewService.InsertReview(requestReviewDTO);
         return ResponseEntity.ok(new ReviewMessageResponseDTO(success ? "리뷰 작성 완료" : "리뷰 작성 실패"));
     }

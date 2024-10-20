@@ -26,7 +26,6 @@ public class MemberApiController {
                             .message("회원가입 성공")
                             .build()
             );
-
         }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     SignUpResponseDTO.builder()

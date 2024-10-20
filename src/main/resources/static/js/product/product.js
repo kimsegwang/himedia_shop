@@ -1,5 +1,6 @@
 $(document).ready(() => {
     getReviews(); // 페이지 로드 시 리뷰 가져오기
+    document.getElementById("review-image").addEventListener("change", previewImage);
 });
 
 // 리뷰 가져오기 함수
@@ -16,12 +17,18 @@ function getReviews() {
                 const deleteButton = (review.userId === userId)
                     ? `<button class="delete-button" data-review-id="${review.id}">삭제</button>`
                     : '';
+                const reviewImg = review.reviewImage
+                    ? `img/${review.reviewImage}`
+                    : '';
                 $('#reviews').append(
                     `<li id="review-${review.id}">
+                        <img src="${reviewImg}" alt="Review Image" />
+                        ${deleteButton}
                         <strong>제목:</strong> ${review.title} <br>
                         <strong>내용:</strong> ${review.review} <br>
                         <input type="number" class="rating" step="0.5" min="1" max="5" value="${review.score}" readonly />
                         ${deleteButton}
+                        
                     </li>`
                 );
             });
@@ -51,37 +58,41 @@ window.onclick = function(event) {
 
 // 리뷰 제출 함수
 window.submitReview = function() {
-    const reviewText = document.getElementById("review").value.trim();
-    const rating = parseFloat(document.getElementById("rating").value.trim());
-    const productId = document.getElementById("productId").value.trim();
-    const userId = document.getElementById("userId").value.trim();
-    const title = document.getElementById("title").value.trim();
+        const reviewText = document.getElementById("review").value.trim();
+        const rating = parseFloat(document.getElementById("rating").value.trim());
+        const productId = document.getElementById("productId").value.trim();
+        const userId = document.getElementById("userId").value.trim();
+        const title = document.getElementById("title").value.trim();
+        const reviewImage = document.getElementById("review-image").files[0];
+        // 리뷰 입력 확인
+        if (!reviewText) {
+            alert("리뷰를 입력해주세요.");
+            return;
+        }
 
-    // 리뷰 입력 확인
-    if (!reviewText) {
-        alert("리뷰를 입력해주세요.");
-        return;
-    }
+        // 별점 입력 확인
+        if (isNaN(rating) || rating < 1 || rating > 5 || (rating % 0.5 !== 0)) {
+            alert("별점을 1에서 5 사이의 0.5 단위로 입력해주세요.");
+            return;
+        }
+        if (!reviewText) {
+            alert("리뷰를 입력해주세요.");
+            return;
+        }
+        const formData = new FormData();
 
-    // 별점 입력 확인
-    if (isNaN(rating) || rating < 1 || rating > 5 || (rating % 0.5 !== 0)) {
-        alert("별점을 1에서 5 사이의 0.5 단위로 입력해주세요.");
-        return;
-    }
+    // 입력값을 FormData에 추가
+        for (const [key, value] of Object.entries(reviewData)) {
+            if (value) { // 값이 존재할 때만 추가
+                formData.append(key, value);
+            }
+        }
 
-    // 리뷰 제출 AJAX 요청
-    fetch('/api/review', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            review: reviewText,
-            productId: productId,
-            title: title,
-            userId: userId,
-            rating: rating
-        }),
+
+        // 리뷰 제출 AJAX 요청
+        fetch('/api/review', {
+            method: 'POST',
+            body: formData,
     })
         .then(response => response.json())
         .then(data => {
@@ -118,3 +129,32 @@ $(document).on('click', '.delete-button', function() {
         });
     }
 });
+// 이미지 미리보기 함수
+    function previewImage(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById("preview");
+        const imagePreviewContainer = document.getElementById("image-preview");
+        const removeButton = document.getElementById("remove-image-button");
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                imagePreviewContainer.style.display = "block";
+                removeButton.style.display = "block"; // 삭제 버튼 표시
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // 이미지 삭제 함수
+    function removeImage() {
+        const preview = document.getElementById("preview");
+        const imagePreviewContainer = document.getElementById("image-preview");
+        const removeButton = document.getElementById("remove-image-button");
+
+        document.getElementById("review-image").value = ''; // 파일 입력 초기화
+        preview.src = ''; // 미리보기 이미지 초기화
+        imagePreviewContainer.style.display = "none"; // 이미지 미리보기 숨기기
+        removeButton.style.display = "none"; // 삭제 버튼 숨기기
+    }

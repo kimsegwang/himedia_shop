@@ -11,11 +11,12 @@
         <result property="review" column="review" />
         <result property="reviewDate" column="review_date" />
         <result property="score" column="score" />
+        <result property="reviewImg" column="review_img" />
     </resultMap>
 
     <insert id="reviewInsert" parameterType="com.example.tobi.himedia_shop.model.Review">
-        INSERT INTO review (product_id,user_id,title, review, score)
-        VALUES (#{productId},#{userId},#{title}, #{review}, #{score})
+        INSERT INTO review (product_id,user_id,title, review, score,review_img)
+        VALUES (#{productId},#{userId},#{title}, #{review}, #{score},#{reviewImg})
     </insert>
     <delete id="reviewDelete" parameterType="Integer">
         DELETE FROM review
@@ -24,7 +25,7 @@
 
     <select id="reviewSelect" parameterType="Integer" resultMap="reviewResultMap">
         SELECT
-            id,product_id,user_id,title,review,review_date,score
+            id,product_id,user_id,title,review,review_date,score,review_img
         FROM review
         WHERE product_id = #{productId}
     </select>

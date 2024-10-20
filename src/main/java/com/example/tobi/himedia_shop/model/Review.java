@@ -15,4 +15,5 @@ public class Review {
     private String review;
     private String reviewDate;
     private float score;
+    private String reviewImg;
 }

@@ -18,7 +18,7 @@ public class AdminService {
     public void productRegistration(ProductRequestDTO prDTO) {
         String path = null;
         if(!prDTO.getProductImage().isEmpty()){
-            path=fileService.fileUpload(prDTO.getProductImage());
+            path=fileService.fileUpload(prDTO.getProductImage(),"product/");
         }
 
         adminMapper.saveProduct(Products.builder()

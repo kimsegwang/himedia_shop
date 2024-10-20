@@ -4,6 +4,7 @@ import com.example.tobi.himedia_shop.dto.product.review.RequestReviewDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewResponseDTO;
 import com.example.tobi.himedia_shop.mapper.ReviewMapper;
 import com.example.tobi.himedia_shop.model.Review;
+import com.example.tobi.himedia_shop.service.admin.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,19 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewMapper reviewMapper;
-
+    private final FileService fileService;
     public boolean InsertReview(RequestReviewDTO requestDTO) {
+        String path = null;
+        if(!requestDTO.getReviewImage().isEmpty()){
+            path=fileService.fileUpload(requestDTO.getReviewImage(),"reviews/");
+        }
         Review review = Review.builder()
                 .userId(requestDTO.getUserId())
                 .title(requestDTO.getTitle())
                 .review(requestDTO.getReview())
                 .productId(requestDTO.getProductId())
                 .score(requestDTO.getRating())
+                .reviewImg(path)
                 .build();
         return reviewMapper.reviewInsert(review) > 0;
     }
@@ -37,6 +43,7 @@ public class ReviewService {
                         .score(review.getScore())
                         .title(review.getTitle())
                         .review(review.getReview())
+                        .reviewImg(review.getReviewImg())
                         .build())
                 .collect(Collectors.toList());
 

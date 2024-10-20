@@ -39,6 +39,14 @@
                 <input type="text" id="title" placeholder="제목을 입력하세요">
                 <input type="text" id="review" placeholder="리뷰를 입력하세요">
                 <input type="number" id="rating" step="0.5"  min="1" max="5" placeholder="별점 (1-5)"> <!-- 별점 입력란 -->
+
+                <label for="review-image">리뷰이미지:</label>
+                <input type="file" id="review-image" name="reviewImage" accept="image/*" required onchange="previewImage(event)">
+                <button type="button" id="remove-image-button" style="display:none;" onclick="removeImage()">이미지 삭제</button>
+
+                <div id="image-preview" style="display:none;">
+                    <img id="preview" src="" alt="Image Preview" style="max-width: 200px; max-height: 200px;">
+                </div>
                 <button onclick="submitReview()">제출</button>
                 <button onclick="closeModal()">취소</button>
             </div>
