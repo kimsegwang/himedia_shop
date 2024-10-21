@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
-    <script th:src="@{/js/signUp.js}"></script>
-    <link th:href="@{/css/sign.css}" rel="stylesheet">
+    <script th:src="@{/js/member/signUp.js}"></script>
+    <link th:href="@{/css/member/sign.css}" rel="stylesheet">
     <title>회원가입</title>
 </head>
 <body>
@@ -24,6 +24,9 @@
 
         <label for="location">주소:</label>
         <input type="text" id="location" name="location" required>
+
+        <label for="user-name">이름 :</label>
+        <input type="text" id="user-name" name="user-name" required>
 
         <input id="signup" type="button" value="회원가입">
     </form>

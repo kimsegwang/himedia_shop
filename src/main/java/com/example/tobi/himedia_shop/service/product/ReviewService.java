@@ -1,6 +1,6 @@
 package com.example.tobi.himedia_shop.service.product;
 
-import com.example.tobi.himedia_shop.dto.product.review.RequestReviewDTO;
+import com.example.tobi.himedia_shop.dto.product.review.ReviewRequestDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewResponseDTO;
 import com.example.tobi.himedia_shop.mapper.ReviewMapper;
 import com.example.tobi.himedia_shop.model.Review;
@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 public class ReviewService {
     private final ReviewMapper reviewMapper;
     private final FileService fileService;
-    public boolean InsertReview(RequestReviewDTO requestDTO) {
+    public boolean InsertReview(ReviewRequestDTO requestDTO) {
         String path = null;
-        if(!requestDTO.getReviewImage().isEmpty()){
+        if (requestDTO.getReviewImage() != null && !requestDTO.getReviewImage().isEmpty()) {
             path=fileService.fileUpload(requestDTO.getReviewImage(),"reviews/");
         }
         Review review = Review.builder()
@@ -52,4 +52,6 @@ public class ReviewService {
     public boolean deleteReview(int reviewId) {
         return reviewMapper.reviewDelete(reviewId)>0;
     }
+
+
 }

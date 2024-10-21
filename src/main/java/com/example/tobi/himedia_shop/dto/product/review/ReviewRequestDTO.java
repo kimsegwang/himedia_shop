@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
-public class RequestReviewDTO {
+public class ReviewRequestDTO {
     private String review;
     private String productId;
     private String userId;

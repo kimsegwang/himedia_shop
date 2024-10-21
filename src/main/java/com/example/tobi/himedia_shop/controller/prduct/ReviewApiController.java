@@ -2,7 +2,7 @@ package com.example.tobi.himedia_shop.controller.prduct;
 
  
 import com.example.tobi.himedia_shop.dto.ReviewMessageResponseDTO;
-import com.example.tobi.himedia_shop.dto.product.review.RequestReviewDTO;
+import com.example.tobi.himedia_shop.dto.product.review.ReviewRequestDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewResponseDTO;
 import com.example.tobi.himedia_shop.service.product.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class ReviewApiController {
     private final ReviewService reviewService;
 
     @PostMapping("/review")
-    public ResponseEntity<ReviewMessageResponseDTO> reviewInsert(@ModelAttribute  RequestReviewDTO requestReviewDTO) {
+    public ResponseEntity<ReviewMessageResponseDTO> reviewInsert(@ModelAttribute ReviewRequestDTO requestReviewDTO) {
         boolean success = reviewService.InsertReview(requestReviewDTO);
         return ResponseEntity.ok(new ReviewMessageResponseDTO(success ? "리뷰 작성 완료" : "리뷰 작성 실패"));
     }
@@ -41,5 +41,7 @@ public class ReviewApiController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("리뷰 삭제에 실패했습니다.");
         }
     }
+
+
 
 }

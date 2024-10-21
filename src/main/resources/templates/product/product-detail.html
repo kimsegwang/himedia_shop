@@ -1,72 +1,85 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
-    <script th:src="@{/js/product/product.js}"></script>
+    <script th:src="@{/js/product/productReview.js}"></script>
+    <script th:src="@{/js/product/productBuy.js}"></script>
+    <script th:src="@{/js/product/recommendProduct.js}"></script>
     <link th:href="@{/css/product/product.css}" rel="stylesheet">
+    <link th:href="@{/css/product/review.css}" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>물건 상세 페이지</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
-
-<div class="left">
-    <img th:src="@{'/'+${productById.img}}" alt="물건 이미지" style="width: 100%;">
-
-</div>
-
-<div class="right">
-    <h1  th:text="${productById.title}"></h1>
-    <p  th:text="${productById.content}"> </p>
-    <p  th:text="${productById.created}"> </p>
-    <h2 th:text="${productById.price}"> </h2>
-
-    <div class="reviews">
-        <div id="reviewList">
-            <ul id="reviews"></ul>
-        </div>
-        <div th:if="${session.userId != null}">
-            <button onclick="openModal()">리뷰 작성</button>
-        </div>
-
-        <div id="reviewModal" class="modal" style="display:none;">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h2>리뷰 작성</h2>
-                <input type="hidden" id="productId" th:value="${productById.id}"> <!-- 제품 ID -->
-                <input type="hidden" id="userId" th:value="${session.userId}"> <!-- 제품 ID -->
-                <input type="text" id="title" placeholder="제목을 입력하세요">
-                <input type="text" id="review" placeholder="리뷰를 입력하세요">
-                <input type="number" id="rating" step="0.5"  min="1" max="5" placeholder="별점 (1-5)"> <!-- 별점 입력란 -->
-
-                <label for="review-image">리뷰이미지:</label>
-                <input type="file" id="review-image" name="reviewImage" accept="image/*" required onchange="previewImage(event)">
-                <button type="button" id="remove-image-button" style="display:none;" onclick="removeImage()">이미지 삭제</button>
-
-                <div id="image-preview" style="display:none;">
-                    <img id="preview" src="" alt="Image Preview" style="max-width: 200px; max-height: 200px;">
-                </div>
-                <button onclick="submitReview()">제출</button>
-                <button onclick="closeModal()">취소</button>
-            </div>
-        </div>
-
-
-
-        <div th:if="${session.userId == null}">
-            <p>로그인 후 리뷰를 작성할 수 있습니다. <a href="/member/login">로그인하기</a></p>
-        </div>
-
-    </div>
-
-    <div class="recommendations">
+<div class="container">
+    <div class="left">
+        <img th:src="@{'/'+${productById.img}}" alt="물건 이미지" style="width: 100%;">
         <h3>추천 상품</h3>
-        <img src="recommend1.jpg" alt="추천 이미지 1">
-        <img src="recommend2.jpg" alt="추천 이미지 2">
-        <img src="recommend3.jpg" alt="추천 이미지 3">
+        <ul style="display: flex" id="recommendations"></ul>
+    </div>
+
+    <div class="right">
+        <div class="product-card">
+            <h1>제목: <span th:text="${productById.title}"></span></h1>
+            <p>내용: <span th:text="${productById.content}"></span></p>
+            <p id="date">작성일: <span th:text="${productById.created}"></span></p>
+            <h2>가격: <span id="price" th:text="${productById.price}"></span> 원</h2>
+            <h2>재고: <span id="stock" th:text="${productById.stock}"></span> 원</h2>
+        </div>
+
+        <label for="userBuy">개수:</label>
+        <input  id ="userBuy" type="number" value=1>
+        <button  onclick="buy()">구매</button>
+
+        <div class="reviews">
+            <div id="reviewList">
+                <ul id="reviews"></ul>
+            </div>
+            <div th:if="${session.userId != null}">
+                <button onclick="openModal()">리뷰 작성</button>
+            </div>
+
+            <div id="reviewModal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <h2>리뷰 작성</h2>
+                    <input type="hidden" id="productId" th:value="${productById.id}"> <!-- 제품 ID -->
+                    <input type="hidden" id="userId" th:value="${session.userId}"> <!-- 제품 ID -->
+                    <input type="text" id="title" placeholder="제목을 입력하세요">
+                    <input type="text" id="review" placeholder="리뷰를 입력하세요">
+                    <span class="star">
+        ★★★★★
+        <span>★★★★★</span>
+        <input type="range" value="1" step="1" min="0" max="10">
+    </span>
+
+                    <label for="review-image">리뷰이미지:</label>
+                    <input type="file" id="review-image" name="reviewImage" accept="image/*" required onchange="previewImage(event)">
+                    <button type="button" id="remove-image-button" style="display:none;" onclick="removeImage()">이미지 삭제</button>
+
+                    <div id="image-preview" style="display:none;">
+                        <img id="preview" src="" alt="Image Preview" style="max-width: 200px; max-height: 200px;">
+                    </div>
+                    <button onclick="submitReview()">제출</button>
+                    <button onclick="closeModal()">취소</button>
+                </div>
+            </div>
+
+
+
+            <div th:if="${session.userId == null}">
+                <p>로그인 후 리뷰를 작성할 수 있습니다.</p>
+                <p><a href="/member/login">로그인하기</a></p>
+            </div>
+
+        </div>
+
     </div>
 </div>
-
 </body>
+
 </html>

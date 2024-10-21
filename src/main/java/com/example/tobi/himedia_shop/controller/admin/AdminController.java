@@ -20,6 +20,6 @@ public class AdminController {
     public String admin(Model model) {
         List<Member> members = adminService.getMembers();
         model.addAttribute("members", members);
-        return "admin-page";
+        return "/admin/admin-page";
     }
 }

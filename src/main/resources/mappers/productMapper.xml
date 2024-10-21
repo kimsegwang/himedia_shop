@@ -17,7 +17,7 @@
         <result property="temperature"  column="temperature" />
         <result property="precipitation"  column="precipitation" />
     </resultMap>
-    <select id="getProductALL" parameterType="String" resultMap="productResultMap">
+    <select id="getProductALL"  resultMap="productResultMap">
         SELECT
             id, category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation
         FROM products
