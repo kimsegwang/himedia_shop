@@ -21,7 +21,6 @@ $(document).ready(() => {
     // province 리스트 드롭다운으로 렌더링
     function renderProvinceList() {
         const provinceSelectElement = $('#provinceSelect');
-        console.log(provinces);
         provinceSelectElement.empty(); // 이전 내용을 지웁니다.
         provinceSelectElement.append('<option value="">지역을 선택하세요</option>'); // 기본 선택 옵션 추가
 
@@ -41,7 +40,6 @@ $(document).ready(() => {
             contentType: 'application/json',
             data: JSON.stringify({nx, ny}),
             success: (result) => {
-                console.log(result);
                 const weatherHtml = `
                     <p>온도: ${result.temperature}</p>
                     <p>강수 종류: ${result.precipitationType}</p>

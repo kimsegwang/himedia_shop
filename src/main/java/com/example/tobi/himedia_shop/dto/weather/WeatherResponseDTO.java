@@ -1,6 +1,6 @@
 package com.example.tobi.himedia_shop.dto.weather;
 
-import com.example.tobi.himedia_shop.dto.ProductListResponseDTO;
+import com.example.tobi.himedia_shop.dto.product.product.ProductListResponseDTO;
 import lombok.Builder;
 import lombok.Getter;
 
