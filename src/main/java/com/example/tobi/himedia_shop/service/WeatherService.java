@@ -43,7 +43,7 @@ public class WeatherService {
         String baseDate = getCurrentDateAsString();
         String baseTime  = getCurrentTimeAsString();
         int nx = Usernx;
-        int ny = Userny;;
+        int ny = Userny;
         try {
             String weatherData = weatherClient.getWeatherData(
                     serviceKey,
@@ -67,7 +67,6 @@ public class WeatherService {
             var ptyValue = ptyItem.getObsrValue();
             int tem = TemperatureDivide(Float.valueOf(t1hItem.getObsrValue()));
             int rain = Integer.parseInt(ptyValue)==0?0:1;
-
 
             return WeatherResponseDTO.builder()
                     .temperature(t1hItem.getObsrValue() + "℃")

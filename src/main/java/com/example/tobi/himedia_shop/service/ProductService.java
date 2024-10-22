@@ -7,6 +7,9 @@ import com.example.tobi.himedia_shop.model.Products;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -25,4 +28,20 @@ public class ProductService {
                 .stock(productById.getStock())
                 .build();
     }
+    public List<ProductListResponseDTO> getAllProducts() {
+        List<Products> productALL = productMapper.getProductALL();
+        return productALL.stream().map(products -> ProductListResponseDTO.builder()
+                        .id(products.getId())
+                        .category(products.getCategory())
+                        .title(products.getTitle())
+                        .content(products.getContent())
+                        .sellerId(products.getSellerId())
+                        .created(products.getCreated())
+                        .price(products.getPrice())
+                        .contentImg(products.getContentImg())
+                        .stock(products.getStock())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
 }
