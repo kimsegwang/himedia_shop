@@ -13,4 +13,5 @@ public interface ProductMapper {
     Products getProductById(String id);
     //List<Products> getProductALL();
     List<Products> getProductWeather(RainAndTemResponseDTO dto);
+    List<Products> getProductALL();
 }

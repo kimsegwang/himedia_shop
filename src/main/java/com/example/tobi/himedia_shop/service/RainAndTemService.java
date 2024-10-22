@@ -20,6 +20,7 @@ public class RainAndTemService {
     public List<ProductListResponseDTO> Divide(int tem, int rain) {
         RainAndTemResponseDTO build = RainAndTemResponseDTO.builder().temperature(tem).precipitation(rain).build();
         List<Products> productWeather = productMapper.getProductWeather(build);
+
         return productWeather.stream()
                         .map(products -> ProductListResponseDTO.builder()
                                 .title(products.getTitle())
