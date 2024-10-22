@@ -15,5 +15,3 @@ weather:
   api:
     url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"
     key: "/OpTr2jhf6H+Sm4QWw/dIuj/JqoytGvD4zqTJ0sqL5rtqnBFVdG55phsDeMqxaWHyVmetB8pr5FPhP17zQ7Y0Q=="
-
-

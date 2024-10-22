@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/index.js}"></script>
+    <script th:src="@{/js/weatherDivide.js}"></script>
     <title>Trend & Weather</title>
     <link rel="stylesheet" href="css/connectionpage.css"><!-- CSS 파일 연결 -->
 </head>
@@ -34,7 +35,6 @@
     <!-- 날씨 정보가 여기에 동적으로 추가됩니다. -->
 </div>
 
-
 <div id="main">
     <button id="menuBtn" class="openbtn" onclick="toggleNav()">&#9776;</button>
 
@@ -43,40 +43,20 @@
         <section id="recommended">
             <h2>BEST</h2>
             <div class="image-section">
-                <a href="추천템.html">
-                    <img src="이미지/감성바다.jfif" alt="추천 이미지1">
-                </a>
-                <a href="추천템.html">
-                    <img src="이미지/감성바다.jfif" alt="추천 이미지2">
-                </a>
-                <a href="추천템.html">
-                    <img src="이미지/감성바다.jfif" alt="추천 이미지3">
-                </a>
+                <!-- 랜덤 이미지를 표시할 영역 -->
+                <div th:each="product:${products}" id="product">
+                    <div>
+                        <img th:src="@{'/' + ${product.contentImg}}" id="randomProductImage1" alt="Random Product Image 1">
+                        <h3 th:text="${product.title}" id="randomProductTitle1"></h3>
+                        <p th:text="${product.price}" id="randomProductPrice1"></p>
+                    </div>
+
+                </div>
+
             </div>
         </section>
 
-        <section id="home">
-            <h2>NEW</h2>
-            <div class="image-section">
-                <img src="이미지/감성바다.jfif" alt="신상품 이미지">
-            </div>
-        </section>
 
-        <section id="about">
-            <h2>OUTER</h2>
-        </section>
-
-        <section id="contact">
-            <h2>TOP</h2>
-        </section>
-
-        <section id="new">
-            <h2>BOTTOM</h2>
-        </section>
-
-        <section id="ACC">
-            <h2>ACC</h2>
-        </section>
 
         <section id="link">
             <div class="image-insta">

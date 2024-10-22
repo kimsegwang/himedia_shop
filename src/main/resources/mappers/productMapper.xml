@@ -31,7 +31,7 @@
             id = #{id}
     </select>
     <select id="getProductWeather" parameterType="com.example.tobi.himedia_shop.dto.RainAndTemResponseDTO" resultMap="productResultMap">
-        SELECT * FROM products
+        SELECT id,category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation FROM products
         where
             temperature = #{temperature} and precipitation=#{precipitation}
     </select>

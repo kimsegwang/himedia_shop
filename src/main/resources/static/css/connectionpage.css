@@ -163,11 +163,15 @@ footer {
 }
 
 /* connectionpage.css */
-#provinceSelect, .weather-details {
+#provinceSelect{
     float: right;
     text-align: right;
     margin-right: 20px;
 }
+
+
+
+
 
 
 

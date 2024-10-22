@@ -68,7 +68,6 @@ public class WeatherService {
             int tem = TemperatureDivide(Float.valueOf(t1hItem.getObsrValue()));
             int rain = Integer.parseInt(ptyValue)==0?0:1;
 
-
             return WeatherResponseDTO.builder()
                     .temperature(t1hItem.getObsrValue() + "℃")
                     .PrecipitationType(getPrecipitationDescription(ptyValue))
