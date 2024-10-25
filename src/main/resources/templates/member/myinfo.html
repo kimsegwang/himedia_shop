@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Info</title>
+</head>
+<body>
+<h1>My Information</h1>
+
+<div>
+  <label for="userId">User ID:</label>
+  <span id="userId" th:text="${member.userId}"></span>
+</div>
+
+<div>
+  <label for="name">Name:</label>
+  <span id="name" th:text="${member.name}"></span>
+</div>
+
+<div>
+  <label for="phone">Phone:</label>
+  <span id="phone" th:text="${member.phone}"></span>
+</div>
+
+<div>
+  <label for="myLocation">Location:</label>
+  <span id="myLocation" th:text="${member.myLocation}"></span>
+</div>
+
+<div>
+  <label for="password">Password:</label>
+  <span id="password" th:text="${member.password}"></span>
+</div>
+
+<div>
+  <a th:href="@{/update}">Edit Information</a>
+</div>
+</body>
+</html>
