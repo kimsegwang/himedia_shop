@@ -23,7 +23,7 @@
         FROM products
 
     </select>
-    <select id="getProductById" parameterType="Integer" resultMap="productResultMap">
+    <select id="getProductById" parameterType="int" resultMap="productResultMap">
         SELECT
             id,category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation
         FROM products

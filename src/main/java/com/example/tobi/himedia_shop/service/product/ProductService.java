@@ -1,7 +1,8 @@
 package com.example.tobi.himedia_shop.service;
 
-import com.example.tobi.himedia_shop.dto.ProductDetailResponseDTO;
-import com.example.tobi.himedia_shop.dto.ProductListResponseDTO;
+import com.example.tobi.himedia_shop.dto.product.product.ProductListResponseDTO;
+import com.example.tobi.himedia_shop.dto.product.product.ProductRequestDTO;
+import com.example.tobi.himedia_shop.dto.product.product.ProductDetailResponseDTO;
 import com.example.tobi.himedia_shop.mapper.ProductMapper;
 import com.example.tobi.himedia_shop.model.Products;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductMapper productMapper;
-    public ProductDetailResponseDTO getProductById(String productId) {
+    public ProductDetailResponseDTO getProductById(int productId) {
         Products productById = productMapper.getProductById(productId);
         return  ProductDetailResponseDTO.builder()
                 .category(productById.getCategory())
