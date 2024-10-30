@@ -22,17 +22,26 @@ $(document).ready(() => {
     function renderProvinceList() {
         const provinceSelectElement = $('#provinceSelect');
         provinceSelectElement.empty(); // 이전 내용을 지웁니다.
-        provinceSelectElement.append('<option value="">지역을 선택하세요</option>'); // 기본 선택 옵션 추가
 
         provinces.forEach(item => {
             const option = $('<option></option>')
                 .val(`${item.nx},${item.ny}`) // nx, ny 값을 쉼표로 구분해 value에 저장
                 .text(item.province);
-            provinceSelectElement.append(option); // 드롭다운에 추가
+
+            if (item.province === '서울 특별시'){
+                option.prop('selected',true);
+            }
+
+            provinceSelectElement.append(option)
         });
+        const selectedValue = provinceSelectElement.val();
+        if (selectedValue) {
+            const [nx, ny] = selectedValue.split(',');
+            sendDataToServer(nx, ny); // 선택된 좌표를 서버로 전송
+        }
     }
 
-    // 선택한 province의 nx, ny 값을 Controller로 전송
+    // 선택한 province의 nx, ny 값을 Controller로 전송하고 db에서 맞는 온도랑 강수값으로 상품가져와야됨
     function sendDataToServer(nx, ny) {
         $.ajax({
             url: '/weather', // Controller URL
@@ -40,6 +49,9 @@ $(document).ready(() => {
             contentType: 'application/json',
             data: JSON.stringify({nx, ny}),
             success: (result) => {
+                console.log(result)
+                if (result.products != null) {
+
                 const weatherHtml = `
                     <p>온도: ${result.temperature}</p>
                     <p>강수 종류: ${result.precipitationType}</p>
@@ -84,7 +96,16 @@ $(document).ready(() => {
                 const temperature = parseFloat(result.temperature);
                 const thermometerHeight = (temperature + 40) * (200 / 80); // 예: -40도에서 +40도까지의 범위를 200px로 매핑
                 $('#thermometer-fill').css('height', `${thermometerHeight}px`);
-            },
+            }else{
+
+                    const weatherHtml = `
+                        <p>온도: 데이터가 없습니다.</p>
+                        <p>강수 종류: 데이터가 없습니다.</p>
+                    `;
+                    $('.weather-details').html(weatherHtml);
+                    $('.image-section').html('<p>해당 지역에 대한 추천상품이 없습니다.</p>');
+
+                }},
             error: function () {
                 console.error('Error sending data to server');
             }

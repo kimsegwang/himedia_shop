@@ -23,11 +23,11 @@ public class RainAndTemService {
         List<Products> productWeather = productMapper.getProductWeather(build);
 
         return productWeather.stream()
-                        .map(products -> ProductListResponseDTO.builder()
-                                .title(products.getTitle())
-                                .price(products.getPrice())
-                                .contentImg(products.getContentImg())
-                                .build())
+                .map(products -> ProductListResponseDTO.builder()
+                        .title(products.getTitle())
+                        .price(products.getPrice())
+                        .contentImg(products.getContentImg())
+                        .build())
                 .collect(Collectors.toList());
     }
 }
