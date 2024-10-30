@@ -1,12 +1,12 @@
-package com.example.tobi.himedia_shop.service;
+package com.example.tobi.himedia_shop.service.product;
 
-import com.example.tobi.himedia_shop.dto.product.product.ProductListResponseDTO;
-import com.example.tobi.himedia_shop.dto.product.product.ProductRequestDTO;
 import com.example.tobi.himedia_shop.dto.product.product.ProductDetailResponseDTO;
+import com.example.tobi.himedia_shop.dto.product.product.ProductListResponseDTO;
 import com.example.tobi.himedia_shop.mapper.ProductMapper;
 import com.example.tobi.himedia_shop.model.Products;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,9 +16,11 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductMapper productMapper;
+    @Transactional(readOnly = true)
     public ProductDetailResponseDTO getProductById(int productId) {
         Products productById = productMapper.getProductById(productId);
         return  ProductDetailResponseDTO.builder()
+                .id(productById.getId())
                 .category(productById.getCategory())
                 .title(productById.getTitle())
                 .content(productById.getContent())
@@ -29,20 +31,22 @@ public class ProductService {
                 .stock(productById.getStock())
                 .build();
     }
+    @Transactional(readOnly = true)
     public List<ProductListResponseDTO> getAllProducts() {
         List<Products> productALL = productMapper.getProductALL();
-        return productALL.stream().map(products -> ProductListResponseDTO.builder()
-                        .id(products.getId())
-                        .category(products.getCategory())
-                        .title(products.getTitle())
-                        .content(products.getContent())
-                        .sellerId(products.getSellerId())
-                        .created(products.getCreated())
-                        .price(products.getPrice())
-                        .contentImg(products.getContentImg())
-                        .stock(products.getStock())
-                        .build())
-                .collect(Collectors.toList());
+       return productALL.stream().map(products -> ProductListResponseDTO.builder()
+               .id(products.getId())
+               .category(products.getCategory())
+               .title(products.getTitle())
+               .content(products.getContent())
+               .sellerId(products.getSellerId())
+               .created(products.getCreated())
+               .price(products.getPrice())
+               .contentImg(products.getContentImg())
+               .stock(products.getStock())
+               .build())
+           .collect(Collectors.toList());
     }
+
 
 }
