@@ -21,20 +21,25 @@
         SELECT
             id, category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation
         FROM products
-
     </select>
-    <select id="getProductById" parameterType="Integer" resultMap="productResultMap">
+    <select id="getProductById" parameterType="int" resultMap="productResultMap">
         SELECT
             id,category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation
         FROM products
         where
             id = #{id}
     </select>
+
     <select id="getProductWeather" parameterType="com.example.tobi.himedia_shop.dto.RainAndTemResponseDTO" resultMap="productResultMap">
         SELECT * FROM products
         where
             temperature = #{temperature} and precipitation=#{precipitation}
     </select>
 
+    <update id="updateProduct" parameterType="com.example.tobi.himedia_shop.dto.product.buy.StockUpdateDTO">
+        update products
+        set stock=#{stock}
+        where id = #{productId}
+    </update>
 </mapper>
 

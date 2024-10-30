@@ -8,9 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 public class ReviewRequestDTO {
     private String review;
-    private String productId;
+    private int productId;
     private String userId;
     private String title;
     private float rating;
-    private MultipartFile reviewImage;
+    //private MultipartFile reviewImage;
+    private String reviewImage;
+
 }

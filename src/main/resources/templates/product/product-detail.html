@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <div class="left">
-        <img th:src="@{'/'+${productById.img}}" alt="물건 이미지" style="width: 100%;">
+        <img th:src="@{${productById.img}}" alt="물건 이미지" style="width: 100%;">
         <h3>추천 상품</h3>
         <ul style="display: flex" id="recommendations"></ul>
     </div>
@@ -30,15 +30,18 @@
             <h2>가격: <span id="price" th:text="${productById.price}"></span> 원</h2>
             <h2>재고: <span id="stock" th:text="${productById.stock}"></span> 원</h2>
         </div>
-
-        <label for="userBuy">개수:</label>
-        <input  id ="userBuy" type="number" value=1>
-        <button  onclick="buy()">구매</button>
-
+            <label for="userBuy">개수:</label>
+            <input  id ="userBuy" type="number" value=1>
+            <button  onclick="buy()">구매</button>
         <div class="reviews">
+            <div class="pagination">
+                <button id="prev-page">이전 페이지</button>
+                <button id="next-page">다음 페이지</button>
+            </div>
             <div id="reviewList">
                 <ul id="reviews"></ul>
             </div>
+
             <div th:if="${session.userId != null}">
                 <button onclick="openModal()">리뷰 작성</button>
             </div>
@@ -71,7 +74,7 @@
 
 
 
-            <div th:if="${session.userId == null}">
+            <div id="loginPrompt" style="display: none;">
                 <p>로그인 후 리뷰를 작성할 수 있습니다.</p>
                 <p><a href="/member/login">로그인하기</a></p>
             </div>

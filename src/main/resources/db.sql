@@ -71,3 +71,4 @@ INSERT INTO roles (name) VALUES ('ROLE_USER');
 INSERT INTO user_roles (user_id, role_id) VALUES (5,1);
 
 select * from member;
+CREATE USER 'slave_user'@'%' IDENTIFIED BY '1234';

@@ -2,6 +2,8 @@ package com.example.tobi.himedia_shop.controller.prduct;
 
  
 import com.example.tobi.himedia_shop.dto.ReviewMessageResponseDTO;
+import com.example.tobi.himedia_shop.dto.product.review.PageResponseDTO;
+import com.example.tobi.himedia_shop.dto.product.review.ReviewQueryDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewRequestDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewResponseDTO;
 import com.example.tobi.himedia_shop.service.product.ReviewService;
@@ -18,17 +20,19 @@ import java.util.List;
 public class ReviewApiController {
     private final ReviewService reviewService;
 
-    @PostMapping("/review")
-    public ResponseEntity<ReviewMessageResponseDTO> reviewInsert(@ModelAttribute ReviewRequestDTO requestReviewDTO) {
-        boolean success = reviewService.InsertReview(requestReviewDTO);
-        return ResponseEntity.ok(new ReviewMessageResponseDTO(success ? "리뷰 작성 완료" : "리뷰 작성 실패"));
-    }
+//    @PostMapping("/review")
+//    public ResponseEntity<ReviewMessageResponseDTO> reviewInsert(@ModelAttribute ReviewRequestDTO requestReviewDTO) {
+//        boolean success = reviewService.insertReview(requestReviewDTO);
+//        return ResponseEntity.ok(new ReviewMessageResponseDTO(success ? "리뷰 작성 완료" : "리뷰 작성 실패"));
+//    }
+//
 
+    @GetMapping("/reviews")
+    public PageResponseDTO reviewList(@RequestParam int productId,
+                                      @RequestParam int page,
+                                      @RequestParam int size) {
 
-    @GetMapping("/review")
-    public List<ReviewResponseDTO> reviewList(@RequestParam int productId) {
-        List<ReviewResponseDTO> review= reviewService.GetAllReviews(productId);
-        return review;
+        return reviewService.getReviewsForProduct(productId, page, size);
     }
 
     @DeleteMapping("/review/{reviewId}")

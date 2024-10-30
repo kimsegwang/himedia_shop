@@ -70,7 +70,7 @@ button:hover {
     position: relative; /* 포지셔닝을 위한 설정 */
 }
 #date {
-    position: absolute; /* 절대 위치 설정 */
+
     top: 16px; /* 위쪽 여백 */
     right: 16px; /* 오른쪽 여백 */
     font-size: 0.9em; /* 글꼴 크기 조정 */

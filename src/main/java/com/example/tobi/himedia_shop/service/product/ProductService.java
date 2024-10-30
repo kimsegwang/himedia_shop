@@ -1,12 +1,12 @@
 package com.example.tobi.himedia_shop.service.product;
 
-import com.example.tobi.himedia_shop.dto.product.buy.BuyProductRequestDTO;
 import com.example.tobi.himedia_shop.dto.product.product.ProductDetailResponseDTO;
 import com.example.tobi.himedia_shop.dto.product.product.ProductListResponseDTO;
 import com.example.tobi.himedia_shop.mapper.ProductMapper;
 import com.example.tobi.himedia_shop.model.Products;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductMapper productMapper;
+    @Transactional(readOnly = true)
     public ProductDetailResponseDTO getProductById(int productId) {
         Products productById = productMapper.getProductById(productId);
         return  ProductDetailResponseDTO.builder()
@@ -30,6 +31,7 @@ public class ProductService {
                 .stock(productById.getStock())
                 .build();
     }
+    @Transactional(readOnly = true)
     public List<ProductListResponseDTO> getAllProducts() {
         List<Products> productALL = productMapper.getProductALL();
        return productALL.stream().map(products -> ProductListResponseDTO.builder()
@@ -46,19 +48,5 @@ public class ProductService {
            .collect(Collectors.toList());
     }
 
-    public void buyProduct(BuyProductRequestDTO buyProductRequestDTO) {
-        int i = productMapper.buyProduct(
-                Products.builder()
-                        .id(buyProductRequestDTO.getProductId())
-                        .price(buyProductRequestDTO.getPrice())
-                        .stock(buyProductRequestDTO.getStock())
-                        .sellerId(buyProductRequestDTO.getUserId())
-                        .build()
-        );
-        if(i>0){
-            //int i1 = productMapper.getProductById(buyProductRequestDTO.getProductId()) - buyProductRequestDTO.getStock();
-           // productMapper.updateProduct(i1);
-        }
 
-    }
 }
