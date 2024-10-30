@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -18,7 +19,7 @@ public class WebSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers(
-                        "/static/**", "/css/**", "/js/**"
+                        "/static/**", "/css/**", "/js/**", "/img/**"
                 );
     }
 
@@ -28,16 +29,20 @@ public class WebSecurityConfig {
             CustomAuthenticationSuccessHandler successHandler,
             CustomAuthenticationFailureHandler failureHandler
 
-    )throws Exception {
+    ) throws Exception {
         http
+
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
-                                        new AntPathRequestMatcher("/member/login"),
-                                        new AntPathRequestMatcher("/member/join"),
-                                        new AntPathRequestMatcher("/join")
-                                ).permitAll()
-                                .anyRequest().authenticated()
+                                        "/admin/**"
+                                ).authenticated()  // 이 페이지들은 로그인이 필요
+                                .requestMatchers("/admin/**").hasRole("ADMIN")  // ADMIN 페이지는 ADMIN 역할이 필요
+                                .anyRequest().permitAll()  // 나머지 요청은 로그인 없이 접근 가능
+//                                .requestMatchers("/member/login").permitAll() // 로그인 페이지 허용
+//                                .requestMatchers("/admin/**").authenticated() // 관리자 페이지는 로그인 필요
+//                                .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자 역할 필요
+//                                .anyRequest().permitAll()
                 )
                 .formLogin(
                         form -> form
@@ -61,4 +66,6 @@ public class WebSecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }

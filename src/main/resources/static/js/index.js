@@ -21,7 +21,6 @@ $(document).ready(() => {
     // province 리스트 드롭다운으로 렌더링
     function renderProvinceList() {
         const provinceSelectElement = $('#provinceSelect');
-        console.log(provinces);
         provinceSelectElement.empty(); // 이전 내용을 지웁니다.
         provinceSelectElement.append('<option value="">지역을 선택하세요</option>'); // 기본 선택 옵션 추가
 
@@ -41,11 +40,43 @@ $(document).ready(() => {
             contentType: 'application/json',
             data: JSON.stringify({nx, ny}),
             success: (result) => {
-                console.log(result);
                 const weatherHtml = `
                     <p>온도: ${result.temperature}</p>
                     <p>강수 종류: ${result.precipitationType}</p>
                 `;
+                const products = result.products; // response가 아닌 result에서 products를 가져옵니다.
+
+                // 랜덤 인덱스를 생성하여 하나의 제품 선택
+                // 제품 정보를 3번 반복하여 랜덤으로 선택
+                const length = products.length <= 3 ? products.length : 3;
+                $('.image-section').empty();
+
+
+                for (let i = 1; i <= length; i++) {
+                    // 랜덤 인덱스를 생성하여 하나의 제품 선택
+                    const randomIndex = Math.floor(Math.random() * products.length);
+                    const randomProduct = products[randomIndex];
+
+                    // 랜덤으로 선택된 제품의 정보
+                    const title = randomProduct.title;
+                    const price = randomProduct.price;
+                    const contentImg = randomProduct.contentImg; // 이미지 경로 (DB에서 가져온 것)
+
+                    // HTML 요소 생성 후 삽입
+                    const productHTML = `
+        <div id="product${i}">
+            <div>
+                <img src="/${contentImg}" alt="Random Product Image ${i}">
+                <h3>${title}</h3>
+                <p>${price}원</p>
+            </div>
+        </div>
+    `;
+
+
+                    $('.image-section').append(productHTML);
+                }
+
 
                 // #weather-info 요소에 날씨 정보 삽입
                 $('.weather-details').html(weatherHtml);

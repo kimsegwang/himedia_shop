@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tobi.himedia_shop.mapper.AdminMapper">
+    <resultMap id="memberResultMap" type="com.example.tobi.himedia_shop.model.Member">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id" />
+        <result property="password" column="password" />
+        <result property="my_location" column="my_location" />
+        <result property="phone" column="phone" />
+        <result property="name" column="name" />
+    </resultMap>
+
+    <insert id="saveProduct" parameterType="com.example.tobi.himedia_shop.model.Products">
+        INSERT INTO products (seller_id, category, title, content, content_img, stock, price,temperature,precipitation)
+        VALUES (#{sellerId}, #{category}, #{title}, #{content}, #{contentImg}, #{stock}, #{price}, #{temperature}, #{precipitation})
+    </insert>
+    <select id="getMember" resultType="com.example.tobi.himedia_shop.model.Member">
+        select id,user_id,password,my_location,phone,name from member
+    </select>
+</mapper>
