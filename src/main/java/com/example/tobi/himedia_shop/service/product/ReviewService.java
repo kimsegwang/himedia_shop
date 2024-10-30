@@ -28,45 +28,35 @@ public class ReviewService {
             .maximumSize(10_000) // 최대 캐시 크기
             .expireAfterAccess(10, TimeUnit.MINUTES) // 접근 후 만료 시간
             .build();
-    @Transactional
-    public boolean insertReviewsBulk(List<ReviewRequestDTO> reviewRequestDTOs) {
-        try {
-            List<Review> reviews = reviewRequestDTOs.stream()
-                    .map(dto -> Review.builder()
-                            .userId(dto.getUserId())
-                            .title(dto.getTitle())
-                            .review(dto.getReview())
-                            .productId(dto.getProductId())
-                            .score(dto.getRating())
-                            .reviewImg(dto.getReviewImage())
-                            .build())
-                    .collect(Collectors.toList());
-            reviewMapper.reviewInserta(reviews); // 벌크 삽입
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+
     public List<Review> getAllReviews() {
         return reviewMapper.getAllReviewsa(); // 모든 리뷰 조회
     }
-//    @Transactional
-//    public boolean insertReview(ReviewRequestDTO requestDTO) {
-//        String path = null;
-//        if (requestDTO.getReviewImage() != null && !requestDTO.getReviewImage().isEmpty()) {
-//            path = fileService.fileUpload(requestDTO.getReviewImage(), "/reviews/");
-//        }
-//        Review review = Review.builder()
-//                .userId(requestDTO.getUserId())
-//                .title(requestDTO.getTitle())
-//                .review(requestDTO.getReview())
-//                .productId(requestDTO.getProductId())
-//                .score(requestDTO.getRating())
-//                .reviewImg(path)
-//                .build();
-//        return reviewMapper.reviewInsert(review) > 0;
-//    }
+    @Transactional
+    public boolean insertReview(ReviewRequestDTO requestDTO) {
+        String path = null;
+        if (requestDTO.getReviewImage() != null && !requestDTO.getReviewImage().isEmpty()) {
+            path = fileService.fileUpload(requestDTO.getReviewImage(), "/reviews/");
+        }
+        Review review = Review.builder()
+                .userId(requestDTO.getUserId())
+                .title(requestDTO.getTitle())
+                .review(requestDTO.getReview())
+                .productId(requestDTO.getProductId())
+                .score(requestDTO.getRating())
+                .reviewImg(path)
+                .build();
+        boolean success = reviewMapper.reviewInsert(review) > 0;
+        if (success) {
+            // 캐시 무효화
+            int totalReviews = reviewMapper.countReviews(requestDTO.getProductId());
+            int totalPages = (int) Math.ceil((double) totalReviews / 5);
+            for (int i = 0; i < totalPages; i++) {
+                reviewCache.invalidate("product_" + requestDTO.getProductId() + "_page_" + i);
+            }
+        }
+        return success;
+    }
 
     @Transactional(readOnly = true)
     public PageResponseDTO getReviewsForProduct(int productId, int page, int size) {

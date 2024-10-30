@@ -11,8 +11,8 @@ function getRecommendProduct() {
                 $('#recommendations').append(
                     `<li id="recommend-product">
                    
-                    <img style="width: 150px; height: 150px;" src="${product.contentImg}" alt="Product Image" />
-                    <br>
+                  <img style="width: 150px; height: 150px;" src="${product.contentImg.startsWith('/') ? product.contentImg : '/' + product.contentImg}" alt="Product Image" />
+  <br>
                     <strong>제목:</strong> ${product.title} <br>
                     <strong>내용:</strong> ${product.content} <br>
                     <strong>가격:</strong> ${product.price} <br>

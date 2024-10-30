@@ -5,11 +5,13 @@ import com.example.tobi.himedia_shop.model.Review;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 public class ReviewServiceTest {
@@ -32,7 +34,27 @@ public class ReviewServiceTest {
         long startInsertTimeMaster = System.currentTimeMillis();
         boolean masterInsertResult = false;
         try {
-            masterInsertResult = reviewService.insertReviewsBulk(masterRequestDTOs);
+          //  masterInsertResult = reviewService.insertReviewsBulk(masterRequestDTOs);
+//            @Transactional
+//            public boolean insertReviewsBulk(List<ReviewRequestDTO> reviewRequestDTOs) {
+//                try {
+//                    List<Review> reviews = reviewRequestDTOs.stream()
+//                            .map(dto -> Review.builder()
+//                                    .userId(dto.getUserId())
+//                                    .title(dto.getTitle())
+//                                    .review(dto.getReview())
+//                                    .productId(dto.getProductId())
+//                                    .score(dto.getRating())
+//                                    .reviewImg(dto.getReviewImage())
+//                                    .build())
+//                            .collect(Collectors.toList());
+//                    reviewMapper.reviewInserta(reviews); // 벌크 삽입
+//                    return true;
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    return false;
+//                }
+//            }
         } catch (Exception e) {
             System.err.println("Error during bulk insert: " + e.getMessage());
         }
@@ -84,7 +106,7 @@ public class ReviewServiceTest {
             dto.setReview("This is a review content for review " + i);
             dto.setProductId(5); // productId
             dto.setRating(5); // rating
-            dto.setReviewImage("/img/reviews/t_shart.jpg"); // reviewImage
+           // dto.setReviewImage("/img/reviews/t_shart.jpg"); // reviewImage
             requestDTOs.add(dto);
         }
         return requestDTOs;

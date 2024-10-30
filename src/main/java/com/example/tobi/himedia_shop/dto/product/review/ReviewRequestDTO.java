@@ -12,7 +12,6 @@ public class ReviewRequestDTO {
     private String userId;
     private String title;
     private float rating;
-    //private MultipartFile reviewImage;
-    private String reviewImage;
+    private MultipartFile reviewImage;
 
 }

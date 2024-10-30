@@ -56,7 +56,7 @@ public class WeatherService {
                     ny
             );
             WeatherResponse weatherResponse = objectMapper.readValue(weatherData, WeatherResponse.class);
-            System.out.println(weatherResponse);
+
             if(weatherResponse.getResponse().getBody()==null){
                 return WeatherResponseDTO.builder().build();
             }
@@ -67,8 +67,6 @@ public class WeatherService {
             var ptyValue = ptyItem.getObsrValue();
             int tem = TemperatureDivide(Float.valueOf(t1hItem.getObsrValue()));
             int rain = Integer.parseInt(ptyValue)==0?0:1;
-
-
 
             return WeatherResponseDTO.builder()
                     .temperature(t1hItem.getObsrValue() + "℃")

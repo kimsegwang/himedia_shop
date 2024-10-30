@@ -26,7 +26,7 @@ function getReviews(page = currentPage) {
                     ? `<button class="delete-button" data-review-id="${review.id}">삭제</button>`
                     : '';
                 const reviewImg = review.reviewImg
-                    ? `<strong><img style="width: 150px;height: 150px" src="${review.reviewImg}" alt="Review Image" /></strong>`
+                    ? `<strong><img style="width: 150px; height: 150px;" src="${review.reviewImg.startsWith('/') ? review.reviewImg : '/' + review.reviewImg}" alt="Review Image" /></strong>`
                     : '';
 
                 $('#reviews').append(
@@ -93,7 +93,7 @@ window.onclick = function(event) {
 // 리뷰 전송
 window.submitReview = function() {
     const reviewText = document.getElementById("review").value.trim();
-    const rating = $('.star input').val().trim() / 2;
+    const rating = $('.star input').val(); // 0에서 10 사이의 값을 0.5 단위로
     const productId = document.getElementById("productId").value.trim();
     const userId = document.getElementById("userId").value.trim();
     const title = document.getElementById("title").value.trim();
@@ -114,6 +114,7 @@ window.submitReview = function() {
     formData.append("productId", productId);
     formData.append("userId", userId);
     formData.append("title", title);
+    formData.append("score", rating); // 별점 추가
     if (reviewImage) {
         formData.append("reviewImage", reviewImage);
     }
@@ -124,10 +125,11 @@ window.submitReview = function() {
     })
         .then(response => response.json())
         .then(data => {
+
             alert(data.message);
             closeModal();
             clearReviewForm(); // 입력란 초기화
-            getReviews(currentPage); // 리뷰 목록 새로고침
+            getReviews(currentPage);
         })
         .catch((error) => {
             console.error('Error:', error);

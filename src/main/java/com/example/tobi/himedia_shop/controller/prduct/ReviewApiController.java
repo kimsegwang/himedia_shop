@@ -20,12 +20,12 @@ import java.util.List;
 public class ReviewApiController {
     private final ReviewService reviewService;
 
-//    @PostMapping("/review")
-//    public ResponseEntity<ReviewMessageResponseDTO> reviewInsert(@ModelAttribute ReviewRequestDTO requestReviewDTO) {
-//        boolean success = reviewService.insertReview(requestReviewDTO);
-//        return ResponseEntity.ok(new ReviewMessageResponseDTO(success ? "리뷰 작성 완료" : "리뷰 작성 실패"));
-//    }
-//
+    @PostMapping("/review")
+    public ResponseEntity<ReviewMessageResponseDTO> reviewInsert(@ModelAttribute ReviewRequestDTO requestReviewDTO) {
+        boolean success = reviewService.insertReview(requestReviewDTO);
+        return ResponseEntity.ok(new ReviewMessageResponseDTO(success ? "리뷰 작성 완료" : "리뷰 작성 실패"));
+    }
+
 
     @GetMapping("/reviews")
     public PageResponseDTO reviewList(@RequestParam int productId,

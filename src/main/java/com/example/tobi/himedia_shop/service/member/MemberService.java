@@ -22,4 +22,12 @@ public class MemberService {
         return true;
     }
 
+    public Member getUserById(String id) {
+        return memberMapper.getUserById(id);
+    }
+
+
+
+
+
 }

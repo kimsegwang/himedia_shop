@@ -37,5 +37,34 @@
     <select id="memberCheckId" parameterType="String" resultType="int">
         select count(user_id) from member where user_id = #{userId}
     </select>
+
+    <select id="getUserById" parameterType="String" resultMap="memberResultMap">
+        SELECT
+            id, user_id, password, my_location, phone, name
+        FROM member
+        WHERE user_id = #{userId}
+    </select>
+
+
+    <!-- 아이디 중복 체크 -->
+    <select id="memberCheckingId" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM member WHERE user_id = #{userId}
+    </select>
+
+    <!-- 회원정보 업데이트 -->
+    <update id="updateMember" parameterType="com.example.tobi.himedia_shop.model.Member">
+        UPDATE member
+        SET
+            user_id = #{userId},
+            password = #{password},
+            my_location = #{myLocation},
+            phone = #{phone},
+            name = #{name}
+        WHERE id = #{id}
+    </update>
 </mapper>
+
+
+
+
 

@@ -14,10 +14,9 @@ public class FileService {
     private final String UPLOADED_FOLDER = "src/main/resources/static/img/"; // 저장할 경로
 
     // 파일 저장 로직
-    public String fileUpload(MultipartFile file,String paths) {
+    public String fileUpload(MultipartFile file, String paths) {
         // 업로드 디렉토리 생성
-
-        File uploadDir = new File(UPLOADED_FOLDER+paths);
+        File uploadDir = new File(UPLOADED_FOLDER + paths);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs(); // 디렉토리 생성
         }
@@ -29,8 +28,7 @@ public class FileService {
         String safeFilename = originalFilename;
         int count = 1;
 
-        while (new File(UPLOADED_FOLDER+paths + safeFilename).exists()) {
-            assert originalFilename != null;
+        while (new File(UPLOADED_FOLDER + paths + safeFilename).exists()) {
             String fileNameWithoutExt = originalFilename.substring(0, originalFilename.lastIndexOf('.'));
             String fileExtension = originalFilename.substring(originalFilename.lastIndexOf('.'));
             safeFilename = fileNameWithoutExt + "_" + count++ + fileExtension; // 이름 변경
@@ -38,11 +36,12 @@ public class FileService {
 
         try {
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER+paths + safeFilename);
+            Path path = Paths.get(UPLOADED_FOLDER + paths + safeFilename);
             Files.write(path, bytes);
-            return "img/"+paths + safeFilename; // 상대 경로로 반환
+            return "img/" + paths.replaceFirst("^/", "") + safeFilename; // 상대 경로로 반환
         } catch (IOException e) {
             throw new RuntimeException("파일 업로드에 실패했습니다: " + e.getMessage(), e);
         }
     }
+
 }
