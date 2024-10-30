@@ -65,6 +65,21 @@ CREATE TABLE user_roles (
                             FOREIGN KEY (user_id) REFERENCES member(id) ON DELETE CASCADE,
                             FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
+
+create table coordinate(
+    id  int auto_increment
+        primary key,
+    nx int not null,
+    ny int not null
+);
+
+create table wheatherAPI(
+    id int auto_increment
+        primary key,
+
+    Information varchar(255) not null
+);
+
 INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 INSERT INTO roles (name) VALUES ('ROLE_USER');
 
