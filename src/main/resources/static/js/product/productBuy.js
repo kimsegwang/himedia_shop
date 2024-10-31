@@ -1,14 +1,14 @@
 function checkLogin(callback) {
     $.get('/member/api/session', function(data) {
         if (data.userId) {
+
             callback(data.userId);
         } else {
-            document.getElementById("loginPrompt").style.display = "block";
             callback(null);
         }
     });
 }
-
+window.checkLogin = checkLogin;
 function buy() {
     checkLogin((userId) =>{
         if (!userId) {
@@ -48,12 +48,13 @@ function buy() {
         });
     });
 }
-
-// 페이지 로드 시 로그인 상태 체크
 $(document).ready(function() {
-    checkLogin((userId)=> {
+    checkLogin((userId) => {
         if (userId) {
+
             document.getElementById("loginPrompt").style.display = "none";
+        } else {
+            document.getElementById("loginPrompt").style.display = "block"; // 로그인 안 된 경우 보이기
         }
     });
 });

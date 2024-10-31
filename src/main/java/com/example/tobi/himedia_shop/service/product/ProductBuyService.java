@@ -34,13 +34,12 @@ public class ProductBuyService {
             }
 
             int updatedStock  = productById.getStock()-buyProductRequestDTO.getStock();
-            System.out.println(buyProductRequestDTO.getProductId()+"a"+updatedStock);
             if (updatedStock < 0) {
                 return false;
             }
             int purchaseResult  = productBuyMapper.buyProduct(
                     PurchaseHistory.builder()
-                            .id(buyProductRequestDTO.getProductId())
+                            .productId(buyProductRequestDTO.getProductId())
                             .price(buyProductRequestDTO.getPrice())
                             .purchaseVolume(buyProductRequestDTO.getStock())
                             .userId(userId)

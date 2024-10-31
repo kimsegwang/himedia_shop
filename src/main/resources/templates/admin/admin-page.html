@@ -27,11 +27,19 @@
     </header>
 
     <section id="product-registration">
+        <form action="/logout" method="post" style="display:inline;">
+            <button type="submit">Logout</button>
+        </form>
         <h2>제품 등록</h2>
         <form id = "writeForm" enctype="multipart/form-data" method="POST" >
             <label for="product-category">카테고리:</label>
-            <input type="number" id="product-category" name="productCategory" required>
-
+            <select id="product-category" name="productCategory" required>
+                <option value="">선택하세요</option>
+                <option value="상의">상의</option>
+                <option value="하의">하의</option>
+                <option value="아우터">아우터</option>
+                <option value="액세서리">액세서리</option>
+            </select>
             <label for="product-name">제품 이름:</label>
             <input type="text" id="product-name" name="productName" required>
             <label for="product-content">제품 정보:</label>
@@ -42,9 +50,9 @@
             <label for="product-userId">유저 id:</label>
             <input type="text" id="product-userId" name="productUserId" required>
             <label for="product-temperature">기온:</label>
-            <input type="number" id="product-temperature" name="productTemperature" required>
+            <input type="number" id="product-temperature" name="productTemperature" min="1" max="5" step="1" required>
             <label for="product-precipitation">강수:</label>
-            <input type="text" id="product-precipitation" name="productPrecipitation" required>
+            <input type="number" id="product-precipitation" name="productPrecipitation" min="0" max="1" step="1" required>
             <label for="product-stock">재고:</label>
             <input type="number" id="product-stock" name="productStock" required>
 
@@ -61,15 +69,6 @@
         <div class="graph-placeholder">그래프 영역</div>
     </section>
 
-    <section id="weather-update">
-        <h2>날씨 업데이트</h2>
-        <form>
-            <label for="weather-info">날씨 정보:</label>
-            <input type="text" id="weather-info" required>
-
-            <button type="submit">업데이트</button>
-        </form>
-    </section>
 
     <section id="review-management">
         <h2>리뷰 관리</h2>
@@ -83,15 +82,30 @@
     <section id="user-management">
         <h2>회원 관리</h2>
         <div class="user-list">
-            <tr th:each="member : ${members}">
-                id: <td th:text="${member.id}"></td>
-                name : <td th:text="${member.name}"></td>
-                userId : <td th:text="${member.userId}"></td>
-                password : <td th:text="${member.password}"></td>
-                myLocation : <td th:text="${member.myLocation}"></td>
-                phone : <td th:text="${member.phone}"></td>
-            </tr>
+            <table>
+                <thead>
+                <tr>
+                    <th>유저 ID</th>
+                    <th>이름</th>
+                    <th>ID</th>
+                    <th>PW</th>
+                    <th>지역</th>
+                    <th>번호</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="member : ${members}">
+                    <td th:text="${member.userId}"></td>
+                    <td th:text="${member.name}"></td>
+                    <td th:text="${member.id}"></td>
+                    <td th:text="${member.password}"></td>
+                    <td th:text="${member.myLocation}"></td>
+                    <td th:text="${member.phone}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+
     </section>
 
     <section id="revenue-stats">

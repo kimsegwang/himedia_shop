@@ -41,7 +41,7 @@ CREATE TABLE wishlist (
                           id INT AUTO_INCREMENT PRIMARY KEY,
                           product_id INT NOT NULL,
                           user_id VARCHAR(30) NOT NULL,
-                          sales_status TINYINT(1)
+
 
 );
 
@@ -71,4 +71,3 @@ INSERT INTO roles (name) VALUES ('ROLE_USER');
 INSERT INTO user_roles (user_id, role_id) VALUES (5,1);
 
 select * from member;
-CREATE USER 'slave_user'@'%' IDENTIFIED BY '1234';

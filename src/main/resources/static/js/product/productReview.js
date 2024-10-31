@@ -2,6 +2,7 @@ $(document).ready(() => {
     getReviews(); // 페이지 로드 시 리뷰 가져오기
     getRecommendProduct(); // 페이지 로드시 추천 제품 가져오기
     document.getElementById("review-image").addEventListener("change", previewImage);
+
 });
 
 // 리뷰 가져오기 함수
@@ -16,6 +17,9 @@ function getReviews(page = currentPage) {
         url: `/api/reviews?productId=${productId}&page=${page}&size=${size}`,
         method: 'GET',
         success: function(data) {
+            for(let i = 0; i < 100000; ++i) {
+
+            }
             const endTime = performance.now(); // 종료 시간 기록
             const duration = endTime - startTime; // 소요 시간 계산
             console.log(`요청 시간: ${duration}ms`);
@@ -26,7 +30,7 @@ function getReviews(page = currentPage) {
                     ? `<button class="delete-button" data-review-id="${review.id}">삭제</button>`
                     : '';
                 const reviewImg = review.reviewImg
-                    ? `<strong><img style="width: 150px; height: 150px;" src="${review.reviewImg.startsWith('/') ? review.reviewImg : '/' + review.reviewImg}" alt="Review Image" /></strong>`
+                    ? `<strong><img style="width: 150px; height: 150px;" src="${review.reviewImg}" alt="Review Image" /></strong>`
                     : '';
 
                 $('#reviews').append(
@@ -89,16 +93,30 @@ window.onclick = function(event) {
         closeModal();
     }
 };
+$(document).ready(() => {
+    const starRating = $('#star-rating');
+
+    function updateStars() {
+        const score = starRating.val();
+        const fullStars = Math.floor(score);
+        const halfStar = score % 1 ? '<i class="fa fa-star-half-o filled"></i>' : '';
+        const starsHtml = `${'<i class="fa fa-star filled"></i>'.repeat(fullStars)}${halfStar}${'<i class="fa fa-star"></i>'.repeat(5 - fullStars - (halfStar ? 1 : 0))}`;
+        $('.star-display').html(starsHtml);
+    }
+
+    starRating.on('input change', updateStars);
+    updateStars(); // 초기값 설정
+});
 
 // 리뷰 전송
 window.submitReview = function() {
     const reviewText = document.getElementById("review").value.trim();
-    const rating = $('.star input').val(); // 0에서 10 사이의 값을 0.5 단위로
+    const rating = $('#star-rating').val();// 0에서 10 사이의 값을 0.5 단위로
     const productId = document.getElementById("productId").value.trim();
     const userId = document.getElementById("userId").value.trim();
     const title = document.getElementById("title").value.trim();
     const reviewImage = document.getElementById("review-image").files[0];
-
+    console.log(rating);
     if (!reviewText) {
         alert("리뷰를 입력해주세요.");
         return;
@@ -114,7 +132,7 @@ window.submitReview = function() {
     formData.append("productId", productId);
     formData.append("userId", userId);
     formData.append("title", title);
-    formData.append("score", rating); // 별점 추가
+    formData.append("rating", rating); // 별점 추가
     if (reviewImage) {
         formData.append("reviewImage", reviewImage);
     }
