@@ -40,7 +40,7 @@ public class ProductBuyService {
             }
             int purchaseResult  = productBuyMapper.buyProduct(
                     PurchaseHistory.builder()
-                            .id(buyProductRequestDTO.getProductId())
+                            .productId(buyProductRequestDTO.getProductId())
                             .price(buyProductRequestDTO.getPrice())
                             .purchaseVolume(buyProductRequestDTO.getStock())
                             .userId(userId)
