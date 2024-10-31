@@ -41,13 +41,15 @@ public class ProductService {
         productALL.forEach(this::processImage);
         Collections.shuffle(productALL);
         return productALL.stream()
-                .limit(5)
+                .limit(3)
                 .map(this::buildProductListResponse)
                 .collect(Collectors.toList());
-    }@Transactional(readOnly = true)
+    }
+    @Transactional(readOnly = true)
     public List<ProductListResponseDTO> getProductRecommend(int productId) {
         List<Products> productALL = productMapper.getProductRecommend(productId);
         productALL.forEach(this::processImage);
+        //리스트 셔플
         Collections.shuffle(productALL);
         return productALL.stream()
                 .limit(5)

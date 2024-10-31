@@ -7,7 +7,6 @@
           href="https://fonts.googleapis.com/css?family=Tangerine">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/index.js}"></script>
-    <script th:src="@{/js/weatherDivide.js}"></script>
     <title>Trend & Weather</title>
     <link rel="stylesheet" href="css/connectionpage.css"><!-- CSS 파일 연결 -->
 </head>
@@ -48,7 +47,7 @@
                 <!-- 랜덤 이미지를 표시할 영역 -->
                 <div th:each="product:${products}" id="product">
                     <div>
-                        <img th:src="@{'/' + ${product.contentImg}}" id="randomProductImage1" alt="Random Product Image 1">
+                        <img th:src="@{${product.contentImg}}" id="randomProductImage1" alt="Random Product Image 1">
                         <h3 th:text="${product.title}" id="randomProductTitle1"></h3>
                         <p th:text="${product.price}" id="randomProductPrice1"></p>
                     </div>

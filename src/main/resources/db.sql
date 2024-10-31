@@ -40,8 +40,7 @@ CREATE TABLE review (
 CREATE TABLE wishlist (
                           id INT AUTO_INCREMENT PRIMARY KEY,
                           product_id INT NOT NULL,
-                          user_id VARCHAR(30) NOT NULL,
-
+                          user_id VARCHAR(30) NOT NULL
 
 );
 
@@ -65,9 +64,28 @@ CREATE TABLE user_roles (
                             FOREIGN KEY (user_id) REFERENCES member(id) ON DELETE CASCADE,
                             FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
+
+create table coordinate(
+    id  int auto_increment
+        primary key,
+    nx int not null,
+    ny int not null
+);
+
+create table wheatherAPI(
+    id int auto_increment
+        primary key,
+    Information text not null,
+    nx int,
+    ny int,
+    basedate int
+);
+drop table wheatherAPI;
 INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 INSERT INTO roles (name) VALUES ('ROLE_USER');
 
 INSERT INTO user_roles (user_id, role_id) VALUES (5,1);
 
 select * from member;
+use shoppingmall;
+
