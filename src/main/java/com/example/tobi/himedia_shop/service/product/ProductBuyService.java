@@ -34,7 +34,6 @@ public class ProductBuyService {
             }
 
             int updatedStock  = productById.getStock()-buyProductRequestDTO.getStock();
-            System.out.println(buyProductRequestDTO.getProductId()+"a"+updatedStock);
             if (updatedStock < 0) {
                 return false;
             }

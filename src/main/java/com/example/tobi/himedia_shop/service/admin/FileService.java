@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 @Service
 public class FileService {
-    private final String UPLOADED_FOLDER = "src/main/resources/static/img/"; // 저장할 경로
+    private final String UPLOADED_FOLDER = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "project" + File.separator + "upload" + File.separator + "img" + File.separator;
 
     // 파일 저장 로직
     public String fileUpload(MultipartFile file, String paths) {
@@ -38,7 +38,7 @@ public class FileService {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + paths + safeFilename);
             Files.write(path, bytes);
-            return "img/" + paths.replaceFirst("^/", "") + safeFilename; // 상대 경로로 반환
+            return UPLOADED_FOLDER+ paths.replaceFirst("^/", "") + safeFilename; // 상대 경로로 반환
         } catch (IOException e) {
             throw new RuntimeException("파일 업로드에 실패했습니다: " + e.getMessage(), e);
         }

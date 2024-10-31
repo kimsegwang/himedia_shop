@@ -26,16 +26,9 @@ public class CoordinateService {
             List<Integer> region = new ArrayList<>();
             Coordinate coordinate = coordinateMapper.findCoordinate(i);
             region.add(coordinate.getNx());
-            System.out.println("coordinate.getNx() : " + coordinate.getNx());
             region.add(coordinate.getNy());
-            System.out.println("coordinate.getNy() : " + coordinate.getNy());
-            System.out.println("Condonate for :: " + coordinate);
             coordinates.add(region);
-            System.out.println("region : " + region);
         }
-
-        System.out.println("Service region :: " + coordinates);
-
         return coordinates;
     }
 }

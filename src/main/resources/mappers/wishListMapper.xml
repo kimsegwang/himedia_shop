@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.tobi.himedia_shop.mapper.WishlistMapper">
+
+    <select id="getFavorites" resultType="int" parameterType="com.example.tobi.himedia_shop.model.Wishlist">
+        SELECT EXISTS (
+            SELECT 1 FROM wishlist
+            WHERE product_id = #{productId} AND user_id = #{userId}
+        )
+    </select>
+
+
+
+    <insert id="addFavorites"  parameterType="com.example.tobi.himedia_shop.dto.product.wishlist.WishlistRequestDTO">
+        INSERT INTO wishlist (product_id,user_id)
+        VALUES (#{productId},#{userId})
+    </insert>
+    <delete id="deleteFavorites" parameterType="com.example.tobi.himedia_shop.dto.product.wishlist.WishlistRequestDTO">
+        DELETE FROM wishlist
+        WHERE product_id = #{productId} AND user_id = #{userId}
+    </delete>
+
+
+
+
+
+</mapper>
+

@@ -2,9 +2,11 @@ package com.example.tobi.himedia_shop.dto.product.review;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Builder
 @Getter
+@Setter
 public class ReviewResponseDTO {
 
     private int id;
@@ -15,4 +17,6 @@ public class ReviewResponseDTO {
     private String reviewDate;
     private float score;
     private String reviewImg;
+
+
 }
