@@ -1,5 +1,4 @@
 $(document).ready(() => {
-
     let provinces = [];
     let chosenProducts = []; // 선택한 제품을 추적하는 배열
 
@@ -79,17 +78,33 @@ $(document).ready(() => {
 
                         // HTML 요소 생성 후 삽입
                         const productHTML = `
-                            <div id="product${i}">
+                            <div class="product-item">
                                 <div>
                                     <img src="/${contentImg}" alt="Random Product Image ${i}">
                                     <h3>${title}</h3>
                                     <p>${price}원</p>
-                                </div>
+                                </div> 
                             </div>
                         `;
 
                         $('.image-section').append(productHTML);
                     }
+
+                    // 상품 슬라이드 기능 구현
+                    const slideInterval = 3000; // 3초마다 슬라이드 전환
+                    let currentSlideIndex = 0;
+                    const slideWidth = $('.product-item').outerWidth(true); // 각 슬라이드의 너비 (간격 포함)
+                    const slideCount = $('.product-item').length;
+
+                    function showSlides() {
+                        currentSlideIndex++;
+                        if (currentSlideIndex >= slideCount) {
+                            currentSlideIndex = 0;
+                        }
+                        $('.product-slider').css('transform', `translateX(-${currentSlideIndex * slideWidth}px)`);
+                    }
+
+                    setInterval(showSlides, slideInterval);
 
                     // #weather-info 요소에 날씨 정보 삽입
                     $('.weather-details').html(weatherHtml);
@@ -122,4 +137,6 @@ $(document).ready(() => {
     });
 
     loadProvinces(); // 페이지 로드 시 JSON 파일 로드
+
+
 });
