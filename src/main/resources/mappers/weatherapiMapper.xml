@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tobi.himedia_shop.mapper.WeatherApiMapper">
+    <resultMap id="WeatherApi" type="com.example.tobi.himedia_shop.model.WeatherApi">
+        <result property="id" column="id" />
+        <result property="information"   column="information" />
+    </resultMap>
+
+    <insert id="transmissionApi" parameterType="com.example.tobi.himedia_shop.dto.weather.ApiResponseDTO">
+        INSERT INTO wheatherapi (information,nx,ny,basedate)
+        VALUES (#{information},#{nx}, #{ny}, #{basedate})
+    </insert>
+
+    <select id="getDataWeather" parameterType="com.example.tobi.himedia_shop.dto.weather.DataWeatherDTO" resultType="com.example.tobi.himedia_shop.dto.weather.DataWeatherResponseDTO">
+        SELECT information
+        from wheatherapi
+        WHERE nx=#{nx} and ny=#{ny} and basedate=#{basedate}
+    </select>
+</mapper>

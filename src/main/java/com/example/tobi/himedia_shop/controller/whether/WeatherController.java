@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/a")
+@RequestMapping("/")
 public class WeatherController {
     private final ProductService productService;
 

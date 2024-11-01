@@ -33,7 +33,7 @@ public class MemberApiController {
         }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     SignUpResponseDTO.builder()
-                    .url("member/join")
+                    .url("/member/join")
                     .message("아이디 중복")
                     .build());
     }
