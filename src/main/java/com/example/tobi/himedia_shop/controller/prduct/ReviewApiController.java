@@ -3,16 +3,12 @@ package com.example.tobi.himedia_shop.controller.prduct;
  
 import com.example.tobi.himedia_shop.dto.ReviewMessageResponseDTO;
 import com.example.tobi.himedia_shop.dto.product.review.PageResponseDTO;
-import com.example.tobi.himedia_shop.dto.product.review.ReviewQueryDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewRequestDTO;
-import com.example.tobi.himedia_shop.dto.product.review.ReviewResponseDTO;
 import com.example.tobi.himedia_shop.service.product.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
