@@ -30,8 +30,8 @@ public class WebSecurityConfig {
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/produc/detail/api/buy").hasRole("USER")
                                 .anyRequest().permitAll()
-
                 )
+
                 .formLogin(
                         form -> form
                                 .loginPage("/member/login")

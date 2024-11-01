@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구매 내역</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .table {
+            margin-top: 20px;
+        }
+        .img-thumbnail {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>구매 내역</h1>
+
+    <!-- 구매 내역 테이블 -->
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>제품 이미지</th>
+            <th>제품 제목</th>
+            <th>가격</th>
+            <th>구매 수량</th>
+            <th>총 가격</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${history}">
+            <td>
+                <img th:src="@{${item.img}}" alt="제품 이미지" class="img-thumbnail" />
+            </td>
+            <td th:text="${item.title}">제품 제목</td>
+            <td th:text="${item.price}">가격</td>
+            <td th:text="${item.purchaseVolume}">구매 수량</td>
+            <td th:text="${item.price * item.purchaseVolume}">총 가격</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

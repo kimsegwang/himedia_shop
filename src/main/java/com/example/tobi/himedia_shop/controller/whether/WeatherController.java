@@ -23,4 +23,5 @@ public class WeatherController {
         model.addAttribute("products", allProducts);
         return "connectionpage";
     }
+
 }

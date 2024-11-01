@@ -5,14 +5,26 @@ import com.example.tobi.himedia_shop.dto.product.review.ReviewQueryDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewRequestDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewResponseDTO;
 import com.example.tobi.himedia_shop.mapper.ReviewMapper;
+import com.example.tobi.himedia_shop.model.Products;
 import com.example.tobi.himedia_shop.model.Review;
 import com.example.tobi.himedia_shop.service.admin.FileService;
+
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -80,6 +92,8 @@ public class ReviewService {
 
         int totalReviews = reviewMapper.countReviews(productId);
         int totalPages = (int) Math.ceil((double) totalReviews / size);
+
+        reviews.forEach(this::processImage);
         PageResponseDTO response = PageResponseDTO.builder()
                 .reviews(reviews)
                 .totalReviews(totalReviews)
@@ -91,7 +105,39 @@ public class ReviewService {
 
         return response;
     }
+    private void processImage(ReviewResponseDTO review) {
+        String imagePath = review.getReviewImg();
+        if (imagePath != null && !imagePath.isEmpty()) {
+            try {
+                String dataUrl = convertImageToBase64(imagePath);
+                review.setReviewImg(dataUrl);
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading image file: " + imagePath, e);
+            }
+        }
+    }
 
+    private String convertImageToBase64(String imagePath) throws IOException {
+        String imageFormat = getImageFormat(imagePath);
+        Path path = Path.of(imagePath);
+        byte[] bytes = Files.readAllBytes(path);
+        String base64Image = Base64.getEncoder().encodeToString(bytes);
+        return "data:image/" + imageFormat + ";base64," + base64Image;
+    }
+    public static String getImageFormat(String imagePath) {
+        try {
+            File imageFile = new File(imagePath);
+            ImageInputStream iis = ImageIO.createImageInputStream(imageFile);
+            Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
+            if (readers.hasNext()) {
+                ImageReader reader = readers.next();
+                return reader.getFormatName().toLowerCase(); // 이미지 포맷 반환 (소문자로 변환)
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "png"; // 포맷을 확인할 수 없는 경우
+    }
     @Transactional
     public boolean deleteReview(int reviewId) {
         return reviewMapper.reviewDelete(reviewId) > 0;

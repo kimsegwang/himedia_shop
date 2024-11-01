@@ -14,4 +14,5 @@ public interface ProductMapper {
     List<Products> getProductWeather(RainAndTemResponseDTO dto);
 
 
+    List<Products> getProductRecommend(int productId);
 }
