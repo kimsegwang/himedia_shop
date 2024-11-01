@@ -1,7 +1,8 @@
 package com.example.tobi.himedia_shop.controller.whether;
 
 import com.example.tobi.himedia_shop.dto.product.product.ProductListResponseDTO;
-import com.example.tobi.himedia_shop.service.ProductService;
+
+import com.example.tobi.himedia_shop.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

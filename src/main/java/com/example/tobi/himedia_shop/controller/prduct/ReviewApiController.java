@@ -2,15 +2,13 @@ package com.example.tobi.himedia_shop.controller.prduct;
 
  
 import com.example.tobi.himedia_shop.dto.ReviewMessageResponseDTO;
-import com.example.tobi.himedia_shop.dto.product.review.RequestReviewDTO;
-import com.example.tobi.himedia_shop.dto.product.review.ReviewResponseDTO;
+import com.example.tobi.himedia_shop.dto.product.review.PageResponseDTO;
+import com.example.tobi.himedia_shop.dto.product.review.ReviewRequestDTO;
 import com.example.tobi.himedia_shop.service.product.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -19,16 +17,18 @@ public class ReviewApiController {
     private final ReviewService reviewService;
 
     @PostMapping("/review")
-    public ResponseEntity<ReviewMessageResponseDTO> reviewInsert(@RequestBody RequestReviewDTO requestReviewDTO) {
-        boolean success = reviewService.InsertReview(requestReviewDTO);
+    public ResponseEntity<ReviewMessageResponseDTO> reviewInsert(@ModelAttribute ReviewRequestDTO requestReviewDTO) {
+        boolean success = reviewService.insertReview(requestReviewDTO);
         return ResponseEntity.ok(new ReviewMessageResponseDTO(success ? "리뷰 작성 완료" : "리뷰 작성 실패"));
     }
 
 
-    @GetMapping("/review")
-    public List<ReviewResponseDTO> reviewList(@RequestParam int productId) {
-        List<ReviewResponseDTO> review= reviewService.GetAllReviews(productId);
-        return review;
+    @GetMapping("/reviews")
+    public PageResponseDTO reviewList(@RequestParam int productId,
+                                      @RequestParam int page,
+                                      @RequestParam int size) {
+
+        return reviewService.getReviewsForProduct(productId, page, size);
     }
 
     @DeleteMapping("/review/{reviewId}")
@@ -41,5 +41,7 @@ public class ReviewApiController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("리뷰 삭제에 실패했습니다.");
         }
     }
+
+
 
 }

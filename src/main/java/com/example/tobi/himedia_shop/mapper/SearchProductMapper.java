@@ -10,3 +10,4 @@ import java.util.List;
 public interface SearchProductMapper {
     List<SearchProduct> searchProducts(String keyword);
 }
+

@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>카테고리 페이지</title>
-  <link th:href="@{/css/category.css}" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 추가 -->
+  <link th:href="@{/css/category.css}" rel="stylesheet">
+
   <script th:src="@{/js/search.js}"></script>
   <script th:src="@{/js/category.js}"></script> <!-- JavaScript 파일 연결 -->
+  <title>카테고리 페이지</title>
 </head>
 <body>
 <div class="container">
@@ -20,8 +21,8 @@
       </h1> <!-- 쇼핑몰 로고 -->
     </div>
     <div class="login-actions">
-      <a href="#">로그인</a>
-      <a href="#">마이페이지</a>
+      <a th:href="@{/member/login}">로그인</a> <!-- 로그인 페이지로 연결 -->
+      <a th:href="@{/member/join}">회원가입</a> <!-- 회원가입 페이지로 연결 -->
     </div>
   </header>
 
@@ -44,8 +45,6 @@
   </section>
 
 
-
-
   <!-- Footer -->
   <footer>
     <p>tel : 010-xxxx-xxxx</p>
@@ -62,6 +61,8 @@
     <input type="text" placeholder="검색...">
     <button>검색</button>
   </div>
+
+
 
   <!-- TOP 카테고리 항목 -->
   <div class="dropdown">

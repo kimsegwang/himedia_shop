@@ -6,6 +6,7 @@ import com.example.tobi.himedia_shop.model.Member;
 import com.example.tobi.himedia_shop.model.Products;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,10 +16,11 @@ public class AdminService {
     private final FileService fileService;
     private final AdminMapper adminMapper;
 
+    @Transactional
     public void productRegistration(ProductRequestDTO prDTO) {
         String path = null;
         if(!prDTO.getProductImage().isEmpty()){
-            path=fileService.fileUpload(prDTO.getProductImage());
+            path=fileService.fileUpload(prDTO.getProductImage(),"/product/");
         }
 
         adminMapper.saveProduct(Products.builder()
@@ -34,7 +36,7 @@ public class AdminService {
                 .build()
         );
     }
-
+    @Transactional(readOnly = true)
     public List<Member> getMembers() {
         return adminMapper.getMember();
     }

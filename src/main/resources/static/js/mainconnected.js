@@ -133,4 +133,16 @@ $(document).ready(function() {
 
     // 일정 시간마다 슬라이드 전환
     setInterval(nextSlide, slideInterval);
+
+    $(document).ready(function() {
+        // 메인 페이지 또는 카테고리 페이지의 검색 버튼 클릭 이벤트
+        $('.search-container button').on('click', function() {
+            const keyword = $('.search-container input[type="text"]').val().trim();
+            if (keyword) {
+                // 검색 페이지로 이동하고 URL에 검색어 전달
+                window.location.href = `/search?keyword=${encodeURIComponent(keyword)}`;
+            }
+        });
+    });
+
 });

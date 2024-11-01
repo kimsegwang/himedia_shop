@@ -7,6 +7,7 @@ import com.example.tobi.himedia_shop.mapper.ProductMapper;
 import com.example.tobi.himedia_shop.model.Products;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 public class RainAndTemService {
     private final ProductMapper productMapper;
 
-
+    @Transactional(readOnly = true)
     public List<ProductListResponseDTO> Divide(int tem, int rain) {
         RainAndTemResponseDTO build = RainAndTemResponseDTO.builder().temperature(tem).precipitation(rain).build();
         List<Products> productWeather = productMapper.getProductWeather(build);

@@ -1,19 +1,28 @@
+
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/work1?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 1234
+    replication:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 1234
+      write:
+        name: write
+        url: jdbc:mysql://localhost:3306/shoppingmall?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8  # 마스터 DB URL
+      reads:
+        - name: read1
+          username: root
+          password: 1234
+          url: jdbc:mysql://localhost:3306/shoppingmall?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8  # 슬레이브 DB URL
+
+
 
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath:mappers/*.xml
 
 server:
-  port: 8089
+  port: 8086
 
 weather:
   api:
     url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"
     key: "/OpTr2jhf6H+Sm4QWw/dIuj/JqoytGvD4zqTJ0sqL5rtqnBFVdG55phsDeMqxaWHyVmetB8pr5FPhP17zQ7Y0Q=="
-
-

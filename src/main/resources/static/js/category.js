@@ -27,13 +27,7 @@ $(document).ready(function() {
         $('#menuBtn').css('visibility', 'visible'); // 삼선 메뉴 버튼 다시 보이기
     });
 
-    // 검색 버튼 클릭 시 카테고리 페이지로 이동
-    $('.sidenav button').on('click', function() {
-        const keyword = $('.sidenav input[type="text"]').val();
-        if (keyword) {
-            window.location.href = `/category/search?keyword=${encodeURIComponent(keyword)}`;
-        }
-    });
+
 
 
 
@@ -44,4 +38,18 @@ $(document).ready(function() {
         $('.dropdown-btn').removeClass('active'); // 'active' 클래스 제거
         $('#menuBtn').css('visibility', 'visible'); // 삼선 메뉴 버튼 다시 보이기
     }
+
+    $(document).ready(function() {
+        // 메인 페이지 또는 카테고리 페이지의 검색 버튼 클릭 이벤트
+        $('.search-container button').on('click', function() {
+            const keyword = $('.search-container input[type="text"]').val().trim();
+            if (keyword) {
+                // 검색 페이지로 이동하고 URL에 검색어 전달
+                window.location.href = `/search?keyword=${encodeURIComponent(keyword)}`;
+            }
+        });
+    });
+
+
+
 });

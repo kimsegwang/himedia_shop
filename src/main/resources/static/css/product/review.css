@@ -1,0 +1,211 @@
+/* 리뷰 섹션 스타일 */
+.reviews {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff; /* 흰색 배경 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+}
+
+/* 리뷰 목록 스타일 */
+#reviews {
+    list-style-type: none;
+    padding: 0;
+}
+
+#reviews li {
+    background-color: #f9f9f9; /* 리뷰 항목 배경색 */
+    border: 1px solid #ddd; /* 경계선 */
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 8px; /* 둥근 모서리 */
+    position: relative;
+    transition: transform 0.2s; /* 부드러운 효과 */
+}
+
+#reviews li:hover {
+    z-index: 1; /* 다른 요소보다 위로 표시 */
+    transform: scale(1.5);
+}
+
+/* 리뷰 제목 및 내용 스타일 */
+#reviews li strong {
+    color: #333; /* 제목 색상 */
+    font-size: 1.1em; /* 제목 크기 */
+}
+
+#reviews li p {
+    color: #555; /* 내용 색상 */
+}
+
+
+
+/* 삭제 버튼 스타일 */
+.delete-button {
+    background-color: #dc3545; /* 빨간색 */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* 호버 색상 */
+}
+
+/* 리뷰 작성 버튼 스타일 */
+button {
+    margin-top: 10px; /* 버튼 간격 */
+    width: 100%; /* 버튼 너비 100% */
+}
+
+/* 로그인 필요 메시지 스타일 */
+.reviews p {
+    color: #777; /* 연한 회색 */
+    text-align: center; /* 가운데 정렬 */
+    margin-top: 20px; /* 상단 여백 */
+}.modal {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.7);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     z-index: 1000;
+ }
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px; /* 모서리 둥글게 */
+    width: 400px; /* 원하는 너비 */
+    max-width: 90%; /* 최대 너비 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    margin-top: -250px; /* 위로 이동 */
+}
+
+.close {
+    font-size: 24px;
+    cursor: pointer;
+    color: #ff0000;
+    float: right;
+}
+
+h2 {
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+label {
+    margin-top: 10px;
+    display: block;
+    font-weight: bold;
+}
+
+.image-preview {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 10px auto;
+    display: block;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.submit-button,
+.cancel-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 48%;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.cancel-button {
+    background-color: #f44336;
+}
+
+.cancel-button:hover {
+    background-color: #d32f2f;
+}
+/* 포커스 시 스타일 */
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: #007bff; /* 포커스 시 테두리 색상 변경 */
+    outline: none; /* 기본 아웃라인 제거 */
+}
+
+/* 플레이스홀더 스타일 */
+input::placeholder {
+    color: #999; /* 플레이스홀더 색상 */
+    opacity: 1; /* 플레이스홀더 불투명도 조정 */
+}.star {
+     position: relative;
+     font-size: 2rem;
+     color: #ddd;
+ }
+
+.star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.star span {
+    width: 0;
+    position: absolute;
+    left: 0;
+    color: yellow;
+    overflow: hidden;
+    pointer-events: none;
+    transition: width 0.3s ease; /* 부드러운 애니메이션 추가 */
+}
+.get-star {
+    font-size: 30px; /* 별 크기 */
+    color: grey; /* 기본 색상 */
+}
+
+.filled {
+    color: gold; /* 채워진 별 색상 */
+}
+
+.star-container {
+    display: inline-block; /* 별을 가로로 정렬 */
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    #reviews li {
+        padding: 10px; /* 작은 화면에서 패딩 감소 */
+    }
+
+    .delete-button {
+        font-size: 0.9em; /* 버튼 크기 조정 */
+    }
+}

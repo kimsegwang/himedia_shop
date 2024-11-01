@@ -4,10 +4,11 @@ $(document).ready(() => {
 
         let userId = $('#user_id').val();
         let password = $('#password').val();
-
+        const referer = document.referrer;
         let formData = {
             username: userId,
-            password: password
+            password: password,
+            referer: referer
         };
 
         $.ajax({
