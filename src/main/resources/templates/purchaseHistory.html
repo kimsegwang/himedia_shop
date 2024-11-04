@@ -5,51 +5,270 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>구매 내역</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
+            background-color: #f8f9fa;
             padding: 20px;
+            height: 100vh;
+            color: #343a40;
         }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .table-container {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
         .table {
-            margin-top: 20px;
+            background-color: white;
+            margin-bottom: 0;
         }
+
+        .table thead th {
+            position: sticky;
+            top: 0;
+            background: #f8f9fa;
+            border-top: none;
+            border-bottom: 2px solid #dee2e6;
+            padding: 15px;
+            font-weight: 600;
+            color: #2c3e50;
+            white-space: nowrap;
+        }
+
+        .table tbody tr {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .table td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+
         .img-thumbnail {
-            max-width: 100px;
-            max-height: 100px;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .price-column {
+            font-weight: 500;
+            color: #2c3e50;
+            text-align: right;
+            width: 150px;
+        }
+
+        .volume-column {
+            text-align: center;
+            width: 100px;
+        }
+
+        .total-price {
+            color: #e74c3c;
+            font-weight: bold;
+            text-align: right;
+            width: 150px;
+        }
+
+
+        /* 페이지네이션 스타일 */
+        .pagination-container {
+            display: flex; /* 플렉스 박스를 사용하여 내부 요소를 정렬 */
+            justify-content: center; /* 중앙 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+            padding: 10px 0; /* 위아래 10px 패딩 추가 */
+            border-top: 1px solid #dee2e6; /* 상단에 연한 회색 경계선 추가 */
+        }
+
+        .pagination {
+            display: flex; /* 플렉스 박스를 사용하여 페이지네이션 버튼을 가로로 배치 */
+            margin: 0; /* 기본 마진을 제거하여 불필요한 여백 방지 */
+        }
+
+        .pagination li {
+            list-style-type: none; /* 기본 리스트 스타일 제거 */
+            margin: 0 5px; /* 버튼 사이의 여백 추가 */
+        }
+
+        .page-link {
+            color: #2c3e50;
+            border: 1px solid #dee2e6;
+            margin: 0 3px;
+        }
+
+        .page-item.active .page-link {
+            background-color: #3498db;
+            border-color: #3498db;
+        }
+
+        .page-item.disabled .page-link {
+            color: #6c757d;
+            background-color: #f8f9fa;
+        }
+
+        .items-per-page {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .items-per-page select {
+            padding: 5px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            background-color: white;
+        }
+
+        .page-info {
+            color: #6c757d;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>구매 내역</h1>
+    <h1><i class="fas fa-shopping-bag mr-2"></i>구매 내역</h1>
 
-    <!-- 구매 내역 테이블 -->
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>제품 이미지</th>
-            <th>제품 제목</th>
-            <th>가격</th>
-            <th>구매 수량</th>
-            <th>총 가격</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="item : ${history}">
-            <td>
-                <img th:src="@{${item.img}}" alt="제품 이미지" class="img-thumbnail" />
-            </td>
-            <td th:text="${item.title}">제품 제목</td>
-            <td th:text="${item.price}">가격</td>
-            <td th:text="${item.purchaseVolume}">구매 수량</td>
-            <td th:text="${item.price * item.purchaseVolume}">총 가격</td>
-        </tr>
-        </tbody>
-    </table>
+    <input type="hidden" id="totalPages" th:value="${totalPages}">
+    <input type="hidden" id="currentPage" th:value="${currentPage}">
+    <input type="hidden" id="history" th:value="${history}">
+    <input type="hidden" id="pageSize" th:value="${pageSize}">
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 100px">제품 이미지</th>
+                <th>제품 제목</th>
+                <th class="price-column">가격</th>
+                <th class="volume-column">구매 수량</th>
+                <th class="total-price">총 가격</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${history}">
+                <td>
+                    <img th:src="@{${item.img}}" alt="제품 이미지" class="img-thumbnail" />
+                </td>
+                <td th:text="${item.title}">제품 제목</td>
+                <td th:text="${item.price}">가격</td>
+                <td th:text="${item.purchaseVolume}">구매 수량</td>
+                <td th:text="${item.price * item.purchaseVolume}">총 가격</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination-container">
+        <ul class="pagination" id="pagination">
+            <script>
+                // 페이지네이션을 동적으로 생성하는 함수
+                function generatePagination(currentPage, totalPages, pageSize) {
+                    console.log(currentPage);
+                    console.log(totalPages)
+                    console.log(pageSize)
+                    const pagination = document.getElementById('pagination');
+                    pagination.innerHTML = '';  // 기존 버튼 초기화
+
+                    // 이전 버튼
+                    const prevItem = document.createElement('li');
+                    prevItem.className = `page-item${currentPage <= 1 ? ' disabled' : ''}`;
+                    prevItem.innerHTML = currentPage > 1
+                        ? `<a class="page-link" href="?page=${currentPage - 1}&pageSize=${pageSize}">&laquo;</a>`
+                        : `<span class="page-link">&laquo;</span>`;
+                    pagination.appendChild(prevItem);
+
+                    // 첫 페이지 버튼
+                    if (currentPage > 3) {
+                        const firstPageItem = document.createElement('li');
+                        firstPageItem.className = 'page-item';
+                        firstPageItem.innerHTML = `<a class="page-link" href="?page=1&pageSize=${pageSize}"> </a>`;
+                        pagination.appendChild(firstPageItem);
+
+                        const dots = document.createElement('li');
+                        dots.className = 'page-item disabled';
+                        dots.innerHTML = '<span class="page-link">...</span>';
+                        pagination.appendChild(dots);
+                    }
+
+                    // 현재 페이지 앞뒤로 2개씩 표시
+                    for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+                        const pageItem = document.createElement('li');
+                        pageItem.className = `page-item${i === currentPage ? ' active' : ''}`;
+                        pageItem.innerHTML = `<a class="page-link" href="?page=${i}&pageSize=${pageSize}">${i}</a>`;
+                        pagination.appendChild(pageItem);
+                    }
+
+
+                    // 마지막 페이지 버튼
+                    if (currentPage < totalPages - 2) {
+                        const dots = document.createElement('li');
+                        dots.className = 'page-item disabled';
+                        dots.innerHTML = '<span class="page-link">...</span>';
+                        pagination.appendChild(dots);
+
+                        const lastPageItem = document.createElement('li');
+                        lastPageItem.className = 'page-item';
+                        lastPageItem.innerHTML = `<a class="page-link" href="?page=${totalPages}&pageSize=${pageSize}">${totalPages}</a>`;
+                        pagination.appendChild(lastPageItem);
+                    }
+
+                    // 다음 버튼
+                    const nextItem = document.createElement('li');
+                    nextItem.className = `page-item${currentPage >= totalPages ? ' disabled' : ''}`;
+                    nextItem.innerHTML = currentPage >= totalPages
+                        ? `<a class="page-link" href="?page=${currentPage + 1}&pageSize=${pageSize}">&raquo;</a>`
+                        : `<span class="page-link">&raquo;</span>`;
+                    pagination.appendChild(nextItem);
+
+                }
+
+                // 페이지 초기 로드 시 기본값 설정 및 호출
+                const currentPage = parseInt(document.getElementById('currentPage').value, 10);
+                const totalPages = parseInt(document.getElementById('totalPages').value, 10);
+                const pageSize = parseInt(document.getElementById('pageSize').value, 10);
+
+                generatePagination(currentPage, totalPages, pageSize);
+            </script>
+
+        </ul>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function changePageSize(select) {
+        const pageSize = select.value;
+        window.location.href = `/purchase-history?page=1&pageSize=${pageSize}`;
+    }
+</script>
 </body>
 </html>

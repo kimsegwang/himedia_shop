@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tobi.himedia_shop.mapper.ShoppingCartMapper">
+
+    <resultMap id="shoppingCartResultMap" type="com.example.tobi.himedia_shop.dto.shoppingcart.ShoppingCartDTO">
+        <result property="img" column="img"/>
+        <result property="title" column="title"/>
+        <result property="price" column="price"/>
+        <result property="userId" column="user_id"/> <!-- userId를 추가 -->
+        <result property="productId" column="productId"/>
+    </resultMap>
+
+    <select id="findShoppingCartWithProductByUserId" resultMap="shoppingCartResultMap">
+        SELECT
+            p.content_img AS img,                 -- 제품 이미지
+            p.title AS title,                     -- 제품 제목
+            p.price AS price,                     -- 가격
+            p.id AS productId,
+            ws.product_id AS product_id,
+            ws.user_id AS user_id                 -- 사용자 ID 추가
+        FROM wishlist ws
+                 JOIN products p ON ws.product_id = p.id
+        WHERE ws.user_id = #{userId}
+            LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="findPurchaseLike" parameterType="String" resultType="int">
+        SELECT count(id)
+        FROM wishlist
+        WHERE user_id = #{userId}
+    </select>
+
+</mapper>

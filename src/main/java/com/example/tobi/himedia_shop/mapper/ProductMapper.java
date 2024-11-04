@@ -12,6 +12,7 @@ public interface ProductMapper {
     Products getProductById(int id);
     List<Products> getProductALL();
     List<Products> getProductWeather(RainAndTemResponseDTO dto);
+    List<Products> getProductPrecipitation(RainAndTemResponseDTO dto);
 
 
     List<Products> getProductRecommend(int productId);

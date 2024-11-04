@@ -73,20 +73,25 @@ $(document).ready(() => {
                         chosenProducts.push(randomIndex); // 선택된 인덱스를 추가
 
                         const randomProduct = products[randomIndex];
+                        console.log(randomProduct)
                         const title = randomProduct.title;
                         const price = randomProduct.price;
+                        const id = randomProduct.id;
+
                         const contentImg = randomProduct.contentImg; // 이미지 경로 (DB에서 가져온 것)
 
                         // HTML 요소 생성 후 삽입
                         const productHTML = `
-                            <div id="product${i}">
-                                <div>
-                                    <img src="/${contentImg}" alt="Random Product Image ${i}">
-                                    <h3>${title}</h3>
-                                    <p>${price}원</p>
-                                </div>
-                            </div>
-                        `;
+    <div id="product${i}">
+        <a href="/product/detail/${id}" class="btn btn-primary">
+            <div>
+                <img src="${contentImg}" alt="Random Product Image ${i}">
+                <h3>${title}</h3>
+                <p>${price}원</p>
+            </div>
+        </a>
+    </div>
+`;
 
                         $('.image-section').append(productHTML);
                     }

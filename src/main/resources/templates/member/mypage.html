@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 메뉴</title>
+    <link th:href="@{/css/member/mypage.css}" rel="stylesheet">
+</head>
+<body>
+<div class="menu-container">
+    <h1 class="menu-title">마이 페이지</h1>
+    <ul class="menu-list">
+        <li class="menu-item">
+            <a href="/member-info" class="menu-link member-info">회원정보 수정</a>
+        </li>
+        <li class="menu-item">
+            <a href="/purchase-history" class="menu-link purchase-history">구매내역</a>
+        </li>
+        <li class="menu-item">
+            <a href="/cart" class="menu-link cart">장바구니</a>
+        </li>
+        <li class="menu-item">
+            <a href="/charge" class="menu-link cart">요금충전</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

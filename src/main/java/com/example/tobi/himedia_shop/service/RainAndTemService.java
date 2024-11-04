@@ -9,6 +9,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Base64;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,12 +31,50 @@ public class RainAndTemService {
         RainAndTemResponseDTO build = RainAndTemResponseDTO.builder().temperature(tem).precipitation(rain).build();
         List<Products> productWeather = productMapper.getProductWeather(build);
 
+        if (rain == 1) {
+            List<Products> productPrecipitation = productMapper.getProductPrecipitation(build);
+            productWeather.addAll(productPrecipitation); // productPrecipitation의 모든 요소를 productWeather에 추가
+        }
+
         return productWeather.stream()
                 .map(products -> ProductListResponseDTO.builder()
+                        .id(products.getId())
                         .title(products.getTitle())
                         .price(products.getPrice())
-                        .contentImg(products.getContentImg())
+                        .contentImg(processImage(products.getContentImg()))
                         .build())
                 .collect(Collectors.toList());
+    }
+    private String processImage(String product) {
+        if (product != null && !product.isEmpty()) {
+            try {
+                return convertImageToBase64(product);
+
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading image file: " + product, e);
+            }
+        }return "";
+    }
+
+    private String convertImageToBase64(String imagePath) throws IOException {
+        String imageFormat = getImageFormat(imagePath);
+        Path path = Path.of(imagePath);
+        byte[] bytes = Files.readAllBytes(path);
+        String base64Image = Base64.getEncoder().encodeToString(bytes);
+        return "data:image/" + imageFormat + ";base64," + base64Image;
+    }
+    public static String getImageFormat(String imagePath) {
+        try {
+            File imageFile = new File(imagePath);
+            ImageInputStream iis = ImageIO.createImageInputStream(imageFile);
+            Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
+            if (readers.hasNext()) {
+                ImageReader reader = readers.next();
+                return reader.getFormatName().toLowerCase(); // 이미지 포맷 반환 (소문자로 변환)
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "png"; // 기본값 설정 (확인할 수 없는 경우)
     }
 }
