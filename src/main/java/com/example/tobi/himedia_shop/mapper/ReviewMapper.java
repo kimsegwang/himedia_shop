@@ -17,11 +17,13 @@ public interface ReviewMapper {
     int reviewDelete(int reviewId);
     int countReviews(int productId);
 
-    List<Review> getAllReviews(ReviewQueryDTO query);
+    List<Review> getPageReviews(ReviewQueryDTO query);
 
 
 
     void reviewInserta(List<Review> reviews); // 벌크 삽입
 
     List<Review> getAllReviewsa(); // 모든 리뷰 조회
+
+    int getProductIdFromReviewId(int reviewId);
 }

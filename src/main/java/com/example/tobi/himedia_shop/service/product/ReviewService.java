@@ -84,16 +84,20 @@ public class ReviewService {
         ReviewQueryDTO query = ReviewQueryDTO.builder()
                 .productId(productId)
                 .limit(size)
-                .offset(page * size)
+                .offset(page * size) // 페이지에 따라 offset 계산
                 .build();
 
-        List<Review> allReviews = reviewMapper.getAllReviews(query);
+        List<Review> allReviews = reviewMapper.getPageReviews(query);
         List<ReviewResponseDTO> reviews = convertToReviewResponseDTO(allReviews);
 
         int totalReviews = reviewMapper.countReviews(productId);
+
         int totalPages = (int) Math.ceil((double) totalReviews / size);
 
+        // 리뷰 이미지 처리
         reviews.forEach(this::processImage);
+
+        // 결과를 DTO로 변환
         PageResponseDTO response = PageResponseDTO.builder()
                 .reviews(reviews)
                 .totalReviews(totalReviews)
@@ -102,7 +106,7 @@ public class ReviewService {
 
         // 결과를 캐시에 저장
         reviewCache.put(cacheKey, response);
-
+        System.out.println("resoibse :"+response.getReviews());
         return response;
     }
     private void processImage(ReviewResponseDTO review) {
@@ -140,7 +144,18 @@ public class ReviewService {
     }
     @Transactional
     public boolean deleteReview(int reviewId) {
-        return reviewMapper.reviewDelete(reviewId) > 0;
+        int productId = reviewMapper.getProductIdFromReviewId(reviewId); // 리뷰 ID로 제품 ID 가져오기
+
+        boolean isDeleted = reviewMapper.reviewDelete(reviewId) > 0; // 리뷰 삭제 시도
+        if(isDeleted){
+            int totalReviews = reviewMapper.countReviews(productId); // 해당 제품의 총 리뷰 수
+
+            int totalPages = (int) Math.ceil((double) totalReviews / 5); // 총 페이지 수 계산
+            for (int i = 0; i < totalPages; i++) {
+                reviewCache.invalidate("product_" + productId + "_page_" + i); // 각 페이지 캐시 무효화
+            }
+        }
+        return isDeleted; // 삭제 성공 여부 반환
     }
 
     private List<ReviewResponseDTO> convertToReviewResponseDTO(List<Review> reviews) {

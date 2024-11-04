@@ -30,9 +30,9 @@ $(document).ready(() => {
                 },
                 error: function(error) {
                     // 실패 시 실행될 콜백 함수
-                    console.error('오류 발생:', error.responseJSON.message);
+
                     window.location.href =  error.responseJSON.url;
-                    alert('회원가입 중 오류가 발생했습니다.');
+                    alert(error.responseJSON.message);
                 }
             }
         )

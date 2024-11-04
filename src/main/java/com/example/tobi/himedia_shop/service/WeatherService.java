@@ -60,12 +60,12 @@ public class WeatherService {
 
     public WeatherResponseDTO getDataWeather(int nx, int ny) {
         DataWeatherDTO dataWeatherDTO = setEverything(nx, ny, getCurrentDateAsString());
-        DataWeatherResponseDTO a = weatherApiMapper.getDataWeather(dataWeatherDTO);
+        DataWeatherResponseDTO dataWeather = weatherApiMapper.getDataWeather(dataWeatherDTO);
 
         try {
 
-            WeatherResponse weatherResponse = objectMapper.readValue(a.getInformation(), WeatherResponse.class);
-            System.out.println(a.getInformation());
+            WeatherResponse weatherResponse = objectMapper.readValue(dataWeather.getInformation(), WeatherResponse.class);
+
             if (weatherResponse.getResponse().getBody() == null) {
                 return WeatherResponseDTO.builder().build();
             }

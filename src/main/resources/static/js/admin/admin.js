@@ -13,7 +13,7 @@ let saved = () => {
 
         $.ajax({
             type: 'POST',
-            url: '/admin/ProductRegistration', // 서버의 엔드포인트 URL
+            url: '/admin/product-registration', // 서버의 엔드포인트 URL
             data: formData,
             processData: false,
             contentType: false,
@@ -63,3 +63,61 @@ let updateFileList = () => {
         });
     }
 }
+
+
+$(document).ready(function() {
+    // 버튼 클릭 시 유저 잔액 가져오기
+    $('#fetch-balance').click(function() {
+        fetchUserBalances();
+    });
+
+    function fetchUserBalances() {
+        $.ajax({
+            url: '/admin/user-balance', // API 엔드포인트
+            method: 'GET',
+            success: function(data) {
+                displayUserBalances(data); // 데이터 표시 함수 호출
+            },
+            error: function(xhr, status, error) {
+                console.error("에러 발생:", error);
+                alert("유저 잔액을 가져오는 데 실패했습니다.");
+            }
+        });
+    }
+
+    function displayUserBalances(balances) {
+        const container = $('#user-balance-list');
+        container.empty(); // 기존 내용 초기화
+
+        if (balances.length === 0) {
+            container.append('<p>잔액 정보가 없습니다.</p>');
+            return;
+        }
+
+        balances.forEach(function(balance) {
+            const balanceItem = `<div>
+                <strong>유저 ID:</strong> ${balance.userId} <br>
+                <strong>잔액:</strong> ${balance.balance}
+            </div>`;
+            container.append(balanceItem); // 각 유저 잔액을 컨테이너에 추가
+        });
+    }
+});
+$(document).ready(function() {
+    $('#revenue-counts').on('click', function() {
+        $.ajax({
+            url: '/admin/revenue', // API 엔드포인트 (수익 정보를 가져오는 URL)
+            method: 'GET',
+            success: function(data) {
+                // BalanceSumResponseDTO 데이터 처리
+                $('#total-deposit').text(data.totalDeposit);
+                $('#total-withdrawal').text(data.totalWithdrawal);
+                $('#total-revenue').text(data.totalWithdrawalPurchased); // 총 수익에 해당하는 부분
+            },
+            error: function(xhr, status, error) {
+                console.error("에러 발생:", error);
+                alert("수익 수치를 가져오는 데 실패했습니다.");
+            }
+        });
+    });
+});

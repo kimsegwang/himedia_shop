@@ -51,7 +51,6 @@ $(document).ready(() => {
             contentType: 'application/json',
             data: JSON.stringify({ nx, ny }),
             success: (result) => {
-                console.log(result);
                 if (result.products != null) {
                     const weatherHtml = `
                         <p>온도: ${result.temperature}</p>
@@ -81,7 +80,7 @@ $(document).ready(() => {
                         const productHTML = `
                             <div id="product${i}">
                                 <div>
-                                    <img src="/${contentImg}" alt="Random Product Image ${i}">
+                                    <img src="${contentImg}" alt="Random Product Image ${i}">
                                     <h3>${title}</h3>
                                     <p>${price}원</p>
                                 </div>
