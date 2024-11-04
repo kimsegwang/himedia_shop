@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -23,6 +24,12 @@ public class MemberController {
     @GetMapping("/login")
     public String signIn() {
         return "member/sign-in";
+    }
+
+    @PostMapping("/logout")
+    public String logOut(HttpSession session) {
+        session.invalidate();
+        return "redirect:/main";
     }
 
 }
