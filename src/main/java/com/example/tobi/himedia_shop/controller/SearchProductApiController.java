@@ -1,5 +1,6 @@
 package com.example.tobi.himedia_shop.controller;
 
+import com.example.tobi.himedia_shop.model.Products;
 import com.example.tobi.himedia_shop.model.SearchProduct;
 import com.example.tobi.himedia_shop.service.SearchService;
 import lombok.RequiredArgsConstructor;

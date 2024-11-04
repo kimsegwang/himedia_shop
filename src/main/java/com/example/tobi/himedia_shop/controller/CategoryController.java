@@ -30,7 +30,7 @@ public class CategoryController {
         }
 
 
-        List<SearchProduct> products = searchService.searchProduct(null);
+        List<SearchProduct> products = searchService.categoryProduct(category,subCategory);
 
         // 하부 카테고리 이름 가져오기
         //모델에 하부 카테고리 이름 넣기

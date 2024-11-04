@@ -31,7 +31,7 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'com.github.ben-manes.caffeine:caffeine:3.0.5'
     implementation 'org.springframework.boot:spring-boot-devtools'
-
+    implementation 'com.twelvemonkeys.imageio:imageio-webp:0.3.1' // Check for the latest version
     implementation 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'

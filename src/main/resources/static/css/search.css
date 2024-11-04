@@ -81,45 +81,44 @@ header h1 {
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-
-/* 상품 그리드 */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr); /* 3개의 열로 구성 */
+    gap: 20px; /* 각 상품 사이의 간격 */
     padding: 20px;
-}
+    flex-grow: 1;
+    width: 70%; /* 너비 70%로 설정 */
+    margin: 0 auto; /* 수평 가운데 정렬 */
+}.product-item a {
+     text-decoration: none; /* 밑줄 제거 */
+     color: inherit; /* 기본 텍스트 색상 유지 (부모 요소 색상 상속) */
+ }
 
+.product-item a:hover {
+    color: #000; /* 마우스 오버 시 색상 변경 (선택적) */
+}
+/* 상품 아이템 스타일 */
 .product-item {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    text-align: center;
-    padding: 15px;
-    position: relative;
-    overflow: hidden;
-    transform: translateY(30px);
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9; /* 배경색 추가 */
+    border: 1px solid #ddd; /* 테두리 추가 */
+    border-radius: 5px; /* 둥근 모서리 추가 */
+    padding: 10px; /* 내부 여백 추가 */
+    text-align: center; /* 텍스트 중앙 정렬 */
 }
 
-.product-item.visible {
-    transform: translateY(0);
-    opacity: 1;
-}
 
-.product-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
+/* 상품 이미지 스타일 */
 .product-item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
-    transition: transform 0.3s ease;
+    width: 100%; /* 이미지 너비를 아이템의 전체 너비로 설정 */
+    height: auto; /* 비율 유지 */
+    border-radius: 5px; /* 둥근 모서리 추가 */
+}
+
+/* 가격 텍스트 스타일 */
+.product-item p {
+    font-size: 18px; /* 가격 글자 크기 조정 */
+    color: #333; /* 글자 색상 조정 */
+    margin: 10px 0 0; /* 마진 조정 */
 }
 
 .product-item:hover img {

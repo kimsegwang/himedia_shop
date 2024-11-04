@@ -1,16 +1,13 @@
 $(document).ready(function() {
     // 사이드바에서 검색 버튼 클릭 이벤트 처리
     $('.sidenav button').on('click', function() {
-        const keyword = $('.sidenav input[type="text"]').val();
+        const keyword = $('.sidenav input[type="text"]').val().trim(); // 공백 제거
         if (keyword) {
             searchProducts(keyword);
+        } else {
+            alert('검색어를 입력해 주세요.'); // 빈 검색어 처리
         }
     });
-    // 검색 요청을 카테고리 디테일 페이지로 리다이렉트하는 함수
-    function redirectToSearchPage(keyword) {
-        window.location.href = `/category/search?keyword=${encodeURIComponent(keyword)}`;
-    }
-
 
     // 검색 API 호출 함수
     function searchProducts(keyword) {
@@ -22,6 +19,7 @@ $(document).ready(function() {
                 renderSearchResults(response);
             },
             error: function() {
+                alert('검색 결과를 가져오는 데 오류가 발생했습니다.'); // 사용자 피드백
                 console.error('Error fetching search results');
             }
         });

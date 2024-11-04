@@ -22,7 +22,7 @@ public class SearchProduct {
     private LocalDateTime created;
     private LocalDateTime updated;
     private int salesStatus;
-    private int Stock;
+    private int stock;
     private int price;
     private int temperature;
     private int precipitation;
