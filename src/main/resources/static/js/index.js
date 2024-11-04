@@ -80,7 +80,7 @@ $(document).ready(() => {
                         const productHTML = `
                             <div class="product-item">
                                 <div>
-                                    <img src="/${contentImg}" alt="Random Product Image ${i}">
+                                    <img src="${contentImg}" alt="Random Product Image ${i}">
                                     <h3>${title}</h3>
                                     <p>${price}원</p>
                                 </div> 

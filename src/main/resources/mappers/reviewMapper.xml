@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.example.tobi.himedia_shop.mapper.ReviewMapper">
+<mapper namespace="com.example.tobi.himedia_shop.mapper.product.ReviewMapper">
     <resultMap id="reviewResultMap" type="com.example.tobi.himedia_shop.model.Review">
         <result property="id" column="id" />
         <result property="productId" column="product_id" />
@@ -25,20 +25,28 @@
         WHERE id = ${reviewId};
     </delete>
 
-    <select id="getAllReviews" parameterType="com.example.tobi.himedia_shop.dto.product.review.ReviewQueryDTO" resultMap="reviewResultMap">
-        SELECT
-            id, product_id, user_id, title, review, review_date, score, review_img
-        FROM review
-        WHERE product_id = #{productId} AND id > #{offset}
-        ORDER BY id
-            LIMIT #{limit}
-    </select>
 
+    <select id="getPageReviews" parameterType="com.example.tobi.himedia_shop.dto.product.review.ReviewQueryDTO" resultMap="reviewResultMap">
+        SELECT id, product_id, user_id, title, review, review_date, score, review_img
+        FROM (
+        SELECT
+        id, product_id, user_id, title, review, review_date, score, review_img,
+        ROW_NUMBER() OVER (ORDER BY id) AS rn
+        FROM review
+        WHERE product_id = #{productId}
+        ) AS sub
+        WHERE sub.rn > #{offset} AND  #{offset} + #{limit} >= sub.rn
+    </select>
 
     <select id="countReviews" resultType="int">
         SELECT COUNT(*) FROM review
         WHERE product_id = #{productId}
     </select>
+   <select id="getProductIdFromReviewId" parameterType="int" resultType="int">
+        SELECT product_id FROM review
+        WHERE id = #{reviewId}
+    </select>
+
 
 
 

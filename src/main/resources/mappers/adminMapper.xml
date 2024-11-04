@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.tobi.himedia_shop.mapper.AdminMapper">
+<mapper namespace="com.example.tobi.himedia_shop.mapper.admin.AdminMapper">
     <resultMap id="memberResultMap" type="com.example.tobi.himedia_shop.model.Member">
         <result property="id" column="id"/>
         <result property="userId" column="user_id" />
@@ -18,5 +18,17 @@
     </insert>
     <select id="getMember" resultType="com.example.tobi.himedia_shop.model.Member">
         select id,user_id,password,my_location,phone,name from member
+    </select>
+
+    <select id="listProductsAndReviews" resultType="com.example.tobi.himedia_shop.dto.admin.ReviewsCountResponseDTO">
+        SELECT pr.id,pr.title, COUNT(rv.id) AS reviewcount
+        FROM products AS pr
+                 INNER JOIN review AS rv ON pr.id = rv.product_id
+        GROUP BY pr.id;
+    </select>
+
+    <select id="getListUserId" resultType="com.example.tobi.himedia_shop.dto.admin.UserIdResponseDTO">
+        SELECT user_id as userId
+        FROM member
     </select>
 </mapper>

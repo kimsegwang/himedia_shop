@@ -1,7 +1,7 @@
 package com.example.tobi.himedia_shop.service.product;
 
 import com.example.tobi.himedia_shop.dto.product.wishlist.WishlistRequestDTO;
-import com.example.tobi.himedia_shop.mapper.WishlistMapper;
+import com.example.tobi.himedia_shop.mapper.product.WishlistMapper;
 import com.example.tobi.himedia_shop.model.Wishlist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

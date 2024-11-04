@@ -1,6 +1,6 @@
 package com.example.tobi.himedia_shop.service.member;
 
-import com.example.tobi.himedia_shop.mapper.MemberMapper;
+import com.example.tobi.himedia_shop.mapper.member.MemberMapper;
 import com.example.tobi.himedia_shop.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

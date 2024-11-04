@@ -4,7 +4,7 @@ package com.example.tobi.himedia_shop.service;
 import com.example.tobi.himedia_shop.client.WeatherClient;
 import com.example.tobi.himedia_shop.dto.weather.*;
 import com.example.tobi.himedia_shop.mapper.CoordinateMapper;
-import com.example.tobi.himedia_shop.mapper.ProductMapper;
+import com.example.tobi.himedia_shop.mapper.product.ProductMapper;
 import com.example.tobi.himedia_shop.mapper.WeatherApiMapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -60,16 +60,15 @@ public class WeatherService {
 
     public WeatherResponseDTO getDataWeather(int nx, int ny) {
         DataWeatherDTO dataWeatherDTO = setEverything(nx, ny, getCurrentDateAsString());
-        DataWeatherResponseDTO a = weatherApiMapper.getDataWeather(dataWeatherDTO);
+        DataWeatherResponseDTO dataWeather = weatherApiMapper.getDataWeather(dataWeatherDTO);
 
         try {
 
-            WeatherResponse weatherResponse = objectMapper.readValue(a.getInformation(), WeatherResponse.class);
-            System.out.println(a.getInformation());
+            WeatherResponse weatherResponse = objectMapper.readValue(dataWeather.getInformation(), WeatherResponse.class);
+
             if (weatherResponse.getResponse().getBody() == null) {
                 return WeatherResponseDTO.builder().build();
             }
-            System.out.println(weatherResponse.getResponse().getBody());
 
             List<Item> items = weatherResponse.getResponse().getBody().getItems().getItem();
             Item ptyItem = items.get(0);

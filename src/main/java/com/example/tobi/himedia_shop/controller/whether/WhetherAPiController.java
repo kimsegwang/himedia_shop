@@ -19,7 +19,7 @@ public class WhetherAPiController {
     public WeatherResponseDTO whetherAPi(@RequestBody WeatherRequestDTO request) {
 
 
-        WeatherResponseDTO weatherData = weatherService.getWeatherData(request.getNx(), request.getNy());
+        WeatherResponseDTO weatherData = weatherService.getDataWeather(request.getNx(), request.getNy());
         return weatherData;
     }
 

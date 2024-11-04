@@ -1,123 +1,117 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/index.js}"></script>
-    <script th:src="@{/js/weatherDivide.js}"></script>
+    <script th:src="@{/js/search.js}"></script>
     <title>Trend & Weather</title>
-    <link rel="stylesheet" href="css/connectionpage.css"><!-- CSS 파일 연결 -->
+    <link rel="stylesheet" href="css/connectionpage.css"> <!-- CSS 파일 연결 -->
 </head>
 <body>
 <div class="wrapper">
-<header>
-    <h1 style="font-family: 'Tangerine', serif;"><i>Trend & Weather</i></h1>
-    <div class="login-actions">
-        <a th:href="@{/member/login}">로그인</a> <!-- 로그인 페이지로 연결 -->
-        <a th:href="@{/member/join}">회원가입</a> <!-- 회원가입 페이지로 연결 -->
+    <header>
+        <h1 style="font-family: 'Tangerine', serif;"><i>Trend & Weather</i></h1>
+        <div class="login-actions">
+            <a th:href="@{/member/login}">로그인</a> <!-- 로그인 페이지로 연결 -->
+            <a th:href="@{/member/join}">회원가입</a> <!-- 회원가입 페이지로 연결 -->
+        </div>
+    </header>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        <!-- 검색 기능 추가 -->
+        <div class="search-container">
+            <input type="text" placeholder="검색...">
+            <button>검색</button>
+        </div>
+
+        <!-- 카테고리 항목 -->
+        <div class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-btn">TOP</a>
+            <ul class="dropdown-content">
+                <li><a th:href="@{/category/TOP/T-shirts}">T-Shirts</a></li>
+                <li><a th:href="@{/category/TOP/Shirts}">Shirts</a></li>
+                <li><a th:href="@{/category/TOP/Sweaters}">Sweaters</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-btn">OUTER</a>
+            <ul class="dropdown-content">
+                <li><a th:href="@{/category/OUTER/Coats}">Coats</a></li>
+                <li><a th:href="@{/category/OUTER/Jackets}">Jackets</a></li>
+                <li><a th:href="@{/category/OUTER/Hoodies}">Hoodies</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-btn">BOTTOM</a>
+            <ul class="dropdown-content">
+                <li><a th:href="@{/category/BOTTOM/Jeans}">Jeans</a></li>
+                <li><a th:href="@{/category/BOTTOM/Slacks}">Slacks</a></li>
+                <li><a th:href="@{/category/BOTTOM/Shorts}">Shorts</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-btn">ACC</a>
+            <ul class="dropdown-content">
+                <li><a th:href="@{/category/ACC/Bags}">Bags</a></li>
+                <li><a th:href="@{/category/ACC/Hats}">Hats</a></li>
+                <li><a th:href="@{/category/ACC/Scarves}">Scarves</a></li>
+            </ul>
+        </div>
     </div>
-</header>
 
-<div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <select id="provinceSelect">
+        <option value="">지역을 선택하세요</option>
+    </select>
 
-    <!-- 검색 기능 추가 -->
-    <div class="search-container">
-        <input type="text"  placeholder="검색...">
-        <button>검색</button>
+    <div class="weather-details">
+        <!-- 날씨 정보가 여기에 동적으로 추가됩니다. -->
     </div>
 
-    <!-- TOP 카테고리 항목 -->
-    <div class="dropdown">
-        <a href="javascript:void(0)" class="dropdown-btn">TOP</a>
-        <ul class="dropdown-content">
-            <li><a th:href="@{/category/TOP/T-shirts}">T-Shirts</a></li>
-            <li><a th:href="@{/category/TOP/Shirts}">Shirts</a></li>
-            <li><a th:href="@{/category/TOP/Sweaters}">Sweaters</a></li>
-        </ul>
-    </div>
+    <div id="main">
+        <button id="menuBtn" class="openbtn" onclick="toggleNav()">&#9776;</button>
 
-    <!-- OUTER 카테고리 항목 -->
-    <div class="dropdown">
-        <a href="javascript:void(0)" class="dropdown-btn">OUTER</a>
-        <ul class="dropdown-content">
-            <li><a th:href="@{/category/OUTER/Coats}">Coats</a></li>
-            <li><a th:href="@{/category/OUTER/Jackets}">Jackets</a></li>
-            <li><a th:href="@{/category/OUTER/Hoodies}">Hoodies</a></li>
-        </ul>
-    </div>
-
-    <!-- BOTTOM 카테고리 항목 -->
-    <div class="dropdown">
-        <a href="javascript:void(0)" class="dropdown-btn">BOTTOM</a>
-        <ul class="dropdown-content">
-            <li><a th:href="@{/category/BOTTOM/Jeans}">Jeans</a></li>
-            <li><a th:href="@{/category/BOTTOM/Slacks}">Slacks</a></li>
-            <li><a th:href="@{/category/BOTTOM/Shorts}">Shorts</a></li>
-        </ul>
-    </div>
-
-    <!-- ACC 카테고리 항목 -->
-    <div class="dropdown">
-        <a href="javascript:void(0)" class="dropdown-btn">ACC</a>
-        <ul class="dropdown-content">
-            <li><a th:href="@{/category/ACC/Bags}">Bags</a></li>
-            <li><a th:href="@{/category/ACC/Hats}">Hats</a></li>
-            <li><a th:href="@{/category/ACC/Scarves}">Scarves</a></li>
-        </ul>
-    </div>
-</div>
-
-<select id="provinceSelect">
-    <option value="">지역을 선택하세요</option>
-</select>
-<div class="weather-details">
-    <!-- 날씨 정보가 여기에 동적으로 추가됩니다. -->
-</div>
-
-<div id="main">
-    <button id="menuBtn" class="openbtn" onclick="toggleNav()">&#9776;</button>
-
-    <div class="container">
-
-        <section id="recommended">
-            <h2>BEST</h2>
-            <div class="product-slider-wrapper">
-                <div class="product-slider">
-                <!-- 랜덤 이미지를 표시할 영역 -->
-                    <div th:each="product:${products}" id="product-item">
-                        <div>
-                            <img th:src="@{${product.contentImg}}" id="randomProductImage1" alt="Random Product Image 1">
-                            <h3 th:text="${product.title}" id="randomProductTitle1"></h3>
-                            <p th:text="${product.price}" id="randomProductPrice1"></p>
+        <div class="container">
+            <section id="recommended">
+                <h2>BEST</h2>
+                <div class="product-slider-container">
+                    <div class="product-slider">
+                        <div class="image-section">
+                            <!-- 랜덤 상품 이미지를 삽입할 부분 -->
+                            <div th:each="product : ${products}">
+                                <div class="product-item">
+                                    <img th:src="@{${product.contentImg}}" alt="Product Image">
+                                    <h3 th:text="${product.title}"></h3>
+                                    <p th:text="${product.price} + '원'"></p>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-
-
-        <section id="link">
-            <div class="image-insta">
-                <a href="https://www.instagram.com/" target="_blank">
-                    <img src="이미지/인스타.jfif" alt="인스타 로고">
-                </a>
-            </div>
-        </section>
+            <section id="link">
+                <div class="image-insta">
+                    <a href="https://www.instagram.com/" target="_blank">
+                        <img style="width: 50px;" src="/img/instagram.jpg" alt="Description of image">
+                    </a>
+                </div>
+            </section>
+        </div>
     </div>
-</div>
 
-<footer>
-    <p>&copy; 2024 SEG. All rights reserved.</p>
-</footer>
+    <footer>
+        <p>&copy; 2024 SEG. All rights reserved.</p>
+    </footer>
 
-<script th:src="@{/js/connectionpage.js}"></script> <!-- JS 파일 연결 -->
-
+    <script th:src="@{/js/connectionpage.js}"></script> <!-- JS 파일 연결 -->
 </div>
 </body>
 </html>

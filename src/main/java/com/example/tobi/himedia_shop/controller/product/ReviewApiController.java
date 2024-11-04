@@ -1,4 +1,4 @@
-package com.example.tobi.himedia_shop.controller.prduct;
+package com.example.tobi.himedia_shop.controller.product;
 
  
 import com.example.tobi.himedia_shop.dto.ReviewMessageResponseDTO;

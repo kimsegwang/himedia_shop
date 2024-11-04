@@ -10,6 +10,7 @@ import lombok.Setter;
 public class ProductListResponseDTO {
     private int id;
     private String category;
+    private String subCategory;
     private String sellerId;
     private String title;
     private String content;

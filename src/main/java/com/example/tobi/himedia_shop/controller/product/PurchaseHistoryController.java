@@ -1,9 +1,7 @@
-package com.example.tobi.himedia_shop.controller.prduct;
+package com.example.tobi.himedia_shop.controller.product;
 
 
 import com.example.tobi.himedia_shop.dto.history.PurchaseHistoryWithProductDTO;
-import com.example.tobi.himedia_shop.model.Member;
-import com.example.tobi.himedia_shop.model.PurchaseHistory;
 import com.example.tobi.himedia_shop.service.product.PurchaseHistoryService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

@@ -13,7 +13,7 @@ spring:
         - name: read1
           username: replication_user
           password: 1234
-          url: jdbc:mysql://localhost:3306/shoppingmall?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8  # 슬레이브 DB URL
+          url: jdbc:mysql://localhost:3307/shoppingmall?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8  # 슬레이브 DB URL
 
 
 
@@ -21,7 +21,7 @@ mybatis:
   mapper-locations: classpath:mappers/*.xml
 
 server:
-  port: 8086
+  port: 8080
 
 weather:
   api:
