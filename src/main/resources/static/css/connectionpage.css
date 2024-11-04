@@ -1,9 +1,20 @@
-body {
+body, html {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    overflow-x: hidden; /* 사이드바 열릴 때 수평 스크롤 막기 */
+    overflow-x: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    flex: 1;
 }
 
 header {
@@ -13,6 +24,29 @@ header {
     text-align: center;
     font-size: 35px;
     position: relative;
+}
+
+.login-actions {
+    font-size: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    display: flex;
+    margin-left: 20px;
+}
+
+.login-actions a {
+    text-decoration: none;
+    color: #333;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.login-actions a:hover {
+    background-color: #333;
+    color: #fff;
 }
 
 nav {
@@ -75,7 +109,10 @@ footer {
     text-align: center;
     padding: 10px 0;
     width: 100%;
+    margin-top: auto;
+    position: relative;
     bottom: 0;
+    left: 0;
 }
 
 /* 사이드바 스타일 */
@@ -85,7 +122,7 @@ footer {
     position: fixed;
     z-index: 1001;
     top: 0;
-    left: 0; /* 왼쪽에 위치 */
+    left: 0;
     background-color: #111;
     overflow-x: hidden;
     padding-top: 60px;
@@ -113,36 +150,42 @@ footer {
     margin-left: 50px;
 }
 
+/* 메인 페이지 사이드바 검색창 및 버튼 스타일 */
 .sidenav .search-container {
-    padding: 10px 32px;
+    padding: 15px; /* 카테고리 페이지와 동일하게 */
+    display: flex;
+    flex-direction: column; /* 검색 칸과 버튼을 세로로 배치 */
 }
 
 .sidenav input[type="text"] {
-    width: 80%;
-    padding: 5px;
-    margin: 5px 0;
+    flex: 1;
+    padding: 10px; /* 카테고리 페이지와 동일한 패딩 */
     border: none;
-    background: #f1f1f1;
-    color: black;
+    border-radius: 4px;
+    margin-bottom: 10px; /* 검색 버튼과 검색칸 사이의 간격 */
+    width: 100%; /* 입력창 전체 너비로 설정 (카테고리 페이지와 동일) */
+    box-sizing: border-box; /* 패딩을 포함하여 너비 설정 */
 }
 
 .sidenav button {
-    width: 80%;
-    padding: 10px;
-    background-color: #444;
-    color: white;
+    padding: 10px; /* 카테고리 페이지와 동일한 패딩 */
+    background-color: #575757;
     border: none;
+    color: white;
     cursor: pointer;
-    text-align: center;
+    width: 100%; /* 버튼을 전체 너비로 설정 */
+    border-radius: 4px; /* 버튼 모양을 카테고리 페이지와 동일하게 */
 }
 
 .sidenav button:hover {
-    background-color: #555;
+    background-color: #444;
 }
 
 #main {
     transition: margin-left 0.5s;
     padding: 16px;
+    flex: 1;
+    margin-bottom: 0;
 }
 
 .openbtn {
@@ -154,7 +197,7 @@ footer {
     border: none;
     position: fixed;
     top: 20px;
-    left: 20px; /* 왼쪽에 위치 */
+    left: 20px;
     z-index: 1002;
 }
 
@@ -163,15 +206,24 @@ footer {
 }
 
 /* connectionpage.css */
-#provinceSelect{
-    float: right;
+#provinceSelect {
+    position: absolute;
+    right: 20px;
+    top: 40%;
+    transform: translateY(-50%);
+    width: auto;
+    max-width: 150px;
+    padding: 5px;
+    font-size: 14px;
     text-align: right;
+}
+
+.weather-details {
+    display: inline-block;
     margin-right: 20px;
 }
 
-
-
-
-
-
-
+.weather-details + #provinceSelect {
+    display: inline-block;
+    vertical-align: middle;
+}

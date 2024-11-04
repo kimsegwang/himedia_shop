@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.tobi.himedia_shop.mapper.ProductBuyMapper">
+<mapper namespace="com.example.tobi.himedia_shop.mapper.product.ProductBuyMapper">
 
 
     <insert id="buyProduct" parameterType="com.example.tobi.himedia_shop.model.PurchaseHistory">

@@ -4,6 +4,13 @@ body {
     margin: 0;
     padding: 0;
 }
+#sub-category-options {
+    margin-top: 10px;
+}
+
+.sub-category-item {
+    margin: 5px 0;
+}
 
 .container {
     max-width: 800px;

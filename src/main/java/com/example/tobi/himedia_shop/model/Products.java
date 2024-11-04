@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class Products {
     private int id;
+    private String subCategory;
     private String category;
     private String sellerId;
     private String title;

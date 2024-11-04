@@ -4,7 +4,7 @@ package com.example.tobi.himedia_shop.service;
 import com.example.tobi.himedia_shop.client.WeatherClient;
 import com.example.tobi.himedia_shop.dto.weather.*;
 import com.example.tobi.himedia_shop.mapper.CoordinateMapper;
-import com.example.tobi.himedia_shop.mapper.ProductMapper;
+import com.example.tobi.himedia_shop.mapper.product.ProductMapper;
 import com.example.tobi.himedia_shop.mapper.WeatherApiMapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -69,7 +69,6 @@ public class WeatherService {
             if (weatherResponse.getResponse().getBody() == null) {
                 return WeatherResponseDTO.builder().build();
             }
-            System.out.println(weatherResponse.getResponse().getBody());
 
             List<Item> items = weatherResponse.getResponse().getBody().getItems().getItem();
             Item ptyItem = items.get(0);

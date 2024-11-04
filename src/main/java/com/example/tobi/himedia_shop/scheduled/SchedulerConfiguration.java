@@ -21,7 +21,7 @@ public class SchedulerConfiguration {
     private final CoordinateService coordinateService;
     private final WeatherService weatherService;
 
-    @Scheduled(cron = "0 36 09 * * *")
+    @Scheduled(cron = "0 59 10 * * *")
     public void run() throws InterruptedException {
 
         List<List<Integer>> region = coordinateService.findCoordinate();

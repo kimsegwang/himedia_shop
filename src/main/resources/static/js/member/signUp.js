@@ -29,7 +29,6 @@ $(document).ready(() => {
                     window.location.href = response.url;
                 },
                 error: function(error) {
-                    // 실패 시 실행될 콜백 함수
 
                     window.location.href =  error.responseJSON.url;
                     alert(error.responseJSON.message);

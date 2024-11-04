@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script th:src="@{/js/search.js}"></script>
+  <link th:href="@{/css/category.css}" rel="stylesheet">
+  <title>Search Products</title>
+</head>
+<body>
+<div class="search-page-wrapper">
+  <header>
+    <h1><a href="/" style="text-decoration: none; color: inherit;">Trend & Weather</a></h1>
+    <div class="login-actions">
+      <a href="/member/login">로그인</a>
+      <a href="/member/join">회원가입</a>
+    </div>
+  </header>
+
+  <section class="search-section">
+    <input type="text" id="searchInput" placeholder="검색어를 입력하세요...">
+    <button id="searchBtn">검색</button>
+  </section>
+
+  <section class="filter-section">
+    <select id="sortSelect">
+      <option value="relevance">관련성</option>
+      <option value="priceLowHigh">가격 낮은순</option>
+      <option value="priceHighLow">가격 높은순</option>
+      <option value="newest">최신순</option>
+    </select>
+  </section>
+
+  <section id="searchResultContainer" class="product-grid">
+  </section>
+
+  <footer>
+    <p>tel: 010-xxxx-xxxx</p>
+    <p>location: xxxx-xxxx-xxxx</p>
+  </footer>
+</div>

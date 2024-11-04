@@ -1,4 +1,4 @@
-package com.example.tobi.himedia_shop.mapper;
+package com.example.tobi.himedia_shop.mapper.admin;
 
 import com.example.tobi.himedia_shop.dto.admin.ReviewsCountResponseDTO;
 import com.example.tobi.himedia_shop.dto.admin.UserIdResponseDTO;

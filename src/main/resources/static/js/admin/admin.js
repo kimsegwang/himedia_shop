@@ -3,36 +3,73 @@ let selectedFile = null; // 파일은 1개만 선택 가능
 $(document).ready(() => {
     saved();
     fileChaged();
-});
+    });
+    $(document).ready(() => {
+        const subCategories = {
+            '상의': ['T-Shirts', 'Shirts', 'Sweaters'],
+            '하의': ['Jeans', 'Slacks', 'Shorts'],
+            '아우터': ['Coats', 'Jackets', 'Hoodies'],
+            '액세서리': ['Bags', 'Hats', 'Scarves']
+        };
 
-let saved = () => {
-    $('#submitBtn').on('click', (event) => {
-        event.preventDefault();
+        $('#product-category').on('change', function () {
+            const selectedCategory = $(this).val();
+            const subCategoryContainer = $('#sub-category-container');
+            const subCategoryOptions = $('#sub-category-options');
 
-        let formData = new FormData($('#writeForm')[0]);
+            subCategoryOptions.empty(); // 이전 하위 항목 지우기
 
-        $.ajax({
-            type: 'POST',
-            url: '/admin/product-registration', // 서버의 엔드포인트 URL
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                // 성공 시 실행될 콜백 함수
-                alert('게시글이 성공적으로 등록되었습니다!')
-                // 성공 후 다른 페이지로 이동하거나 처리할 코드 작성 가능
-                window.location.href = '/admin';
-            },
-            error: function(error) {
-                // 실패 시 실행될 콜백 함수
-                console.error('오류 발생:', error);
-                alert('게시글 등록 중 오류가 발생하였습니다.');
-                window.location.href = '/admin';
+            if (subCategories[selectedCategory]) {
+                subCategoryContainer.show(); // 하위 항목 컨테이너 표시
+                subCategories[selectedCategory].forEach(item => {
+                    const optionHTML = `
+                        <div class="sub-category-item">
+                            <input type="checkbox" name="subCategory" value="${item}" id="${item}">
+                            <label for="${item}">${item}</label>
+                        </div>
+                    `;
+                    subCategoryOptions.append(optionHTML);
+                });
+            } else {
+                subCategoryContainer.hide(); // 하위 항목 컨테이너 숨기기
             }
         });
-
     });
-}
+
+    let saved = () => {
+        $('#submitBtn').on('click', (event) => {
+            event.preventDefault();
+
+            let formData = new FormData($('#writeForm')[0]);
+            const selectedSubCategories = [];
+
+            $('input[name="subCategory"]:checked').each(function () {
+                selectedSubCategories.push($(this).val());
+            });
+            formData.append('subCategories', JSON.stringify(selectedSubCategories));
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/product-registration', // 서버의 엔드포인트 URL
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // 성공 시 실행될 콜백 함수
+                    alert('게시글이 성공적으로 등록되었습니다!')
+                    // 성공 후 다른 페이지로 이동하거나 처리할 코드 작성 가능
+                    window.location.href = '/admin';
+                },
+                error: function(error) {
+                    // 실패 시 실행될 콜백 함수
+                    console.error('오류 발생:', error);
+                    alert('게시글 등록 중 오류가 발생하였습니다.');
+                    window.location.href = '/admin';
+                }
+            });
+
+        });
+    }
 
 let fileChaged = () => {
     // 파일 선택 시 이벤트

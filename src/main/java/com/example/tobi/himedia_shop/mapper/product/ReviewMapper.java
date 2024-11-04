@@ -1,14 +1,9 @@
-package com.example.tobi.himedia_shop.mapper;
+package com.example.tobi.himedia_shop.mapper.product;
 
 import com.example.tobi.himedia_shop.dto.product.review.ReviewQueryDTO;
-import com.example.tobi.himedia_shop.dto.product.review.ReviewResponseDTO;
 import com.example.tobi.himedia_shop.model.Review;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Mapper

@@ -4,8 +4,7 @@ import com.example.tobi.himedia_shop.dto.product.review.PageResponseDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewQueryDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewRequestDTO;
 import com.example.tobi.himedia_shop.dto.product.review.ReviewResponseDTO;
-import com.example.tobi.himedia_shop.mapper.ReviewMapper;
-import com.example.tobi.himedia_shop.model.Products;
+import com.example.tobi.himedia_shop.mapper.product.ReviewMapper;
 import com.example.tobi.himedia_shop.model.Review;
 import com.example.tobi.himedia_shop.service.admin.FileService;
 
@@ -22,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;

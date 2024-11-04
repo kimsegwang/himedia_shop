@@ -1,18 +1,4 @@
-#spring:
-#  datasource:
-#    replication:
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-#      username: root
-#      password: rheBl.m5-#wm
-#      write:
-#        name: write
-#        url: jdbc:mysql://3.34.99.115:3306/shoppingmall?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8  # 마스터 DB URL
-#      reads:
-#        - name: read1
-#          username: replica
-#          password: 1234
-#          url: jdbc:mysql://15.164.165.205:3307/shoppingmall?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8  # 슬레이브 DB URL
-#
+
 spring:
 
   datasource:

@@ -1,6 +1,5 @@
-package com.example.tobi.himedia_shop.mapper;
+package com.example.tobi.himedia_shop.mapper.member;
 
-import com.example.tobi.himedia_shop.dto.member.MemberUpdateRqDTO;
 import com.example.tobi.himedia_shop.dto.permission.Role;
 import com.example.tobi.himedia_shop.model.Member;
 import org.apache.ibatis.annotations.Mapper;
