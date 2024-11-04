@@ -12,6 +12,7 @@ public class ProductRequestDTO {
     private String productUserId;
     private String productName;
     private String productCategory;
+    private String productSubCategory;
     private String productContent;
     private MultipartFile productImage;
     private int productTemperature;

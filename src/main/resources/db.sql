@@ -47,8 +47,9 @@ CREATE TABLE wishlist (
 CREATE TABLE purchasehistory (
                                  id INT AUTO_INCREMENT PRIMARY KEY,
                                  product_id INT NOT NULL,
-                                 user_id VARCHAR(30) NOT NULL
-
+                                 user_id VARCHAR(30) NOT NULL,
+                                 price int not null ,
+                                 review_date DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -88,4 +89,25 @@ INSERT INTO user_roles (user_id, role_id) VALUES (5,1);
 
 select * from member;
 use shoppingmall;
+
+
+CREATE TABLE payment (
+                         id INT AUTO_INCREMENT PRIMARY KEY,
+                         user_id VARCHAR(20),
+                         amount INT,  -- 거래 금액 (입금: 양수, 출금: 음수)
+                         transaction_type BOOLEAN,  -- 0: 출금, 1: 입금
+                         balance INT,  -- 현재 잔액
+                         payment_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE payment (
+                         id INT AUTO_INCREMENT PRIMARY KEY,
+                         user_id VARCHAR(20),
+                         deposit INT DEFAULT 0,  -- 입금 금액
+                         withdrawal INT DEFAULT 0,  -- 출금 금액
+                         balance INT,  -- 현재 잔액
+                         is_purchased BOOLEAN DEFAULT false,
+                         payment_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
 

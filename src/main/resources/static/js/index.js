@@ -46,7 +46,7 @@ $(document).ready(() => {
     // 선택한 province의 nx, ny 값을 Controller로 전송하고 db에서 맞는 온도랑 강수값으로 상품가져와야됨
     function sendDataToServer(nx, ny) {
         $.ajax({
-            url: '/weather', // Controller URL
+            url: '/weather',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ nx, ny }),
@@ -59,72 +59,162 @@ $(document).ready(() => {
                     `;
                     const products = result.products;
 
-                    const length = products.length <= 3 ? products.length : 3;
                     $('.image-section').empty();
                     chosenProducts = []; // 이전 선택된 제품 초기화
 
-                    for (let i = 1; i <= length; i++) {
+                    // 랜덤하게 3개의 제품 선택
+                    const length = products.length <= 3 ? products.length : 3;
+                    const selectedProducts = [];
+
+                    for (let i = 0; i < length; i++) {
                         let randomIndex;
-                        // 중복되지 않는 랜덤 인덱스를 찾습니다.
                         do {
                             randomIndex = Math.floor(Math.random() * products.length);
-                        } while (chosenProducts.includes(randomIndex)); // 중복 검사
+                        } while (chosenProducts.includes(randomIndex));
 
-                        chosenProducts.push(randomIndex); // 선택된 인덱스를 추가
-
-                        const randomProduct = products[randomIndex];
-                        console.log(randomProduct)
-                        const title = randomProduct.title;
-                        const price = randomProduct.price;
-                        const id = randomProduct.id;
-
-                        const contentImg = randomProduct.contentImg; // 이미지 경로 (DB에서 가져온 것)
-
-                        // HTML 요소 생성 후 삽입
-                        const productHTML = `
-    <div id="product${i}">
-        <a href="/product/detail/${id}" class="btn btn-primary">
-            <div>
-                <img src="${contentImg}" alt="Random Product Image ${i}">
-                <h3>${title}</h3>
-                <p>${price}원</p>
-            </div>
-        </a>
-    </div>
-`;
-
-                        $('.image-section').append(productHTML);
+                        chosenProducts.push(randomIndex);
+                        selectedProducts.push(products[randomIndex]);
                     }
 
-                    // #weather-info 요소에 날씨 정보 삽입
-                    $('.weather-details').html(weatherHtml);
+                    // 슬라이더 컨테이너 생성
+                    const sliderContainer = $('<div class="slider-container"></div>');
+                    const productSlider = $('<div class="product-slider"></div>');
 
+                    // 네비게이션 버튼 추가
+                    const prevButton = $('<button class="slider-nav prev">&lt;</button>');
+                    const nextButton = $('<button class="slider-nav next">&gt;</button>');
+
+                    // 선택된 랜덤 제품들로 슬라이드 생성
+                    selectedProducts.forEach((product, index) => {
+                        const productHTML = `
+                            <div class="product-slide">
+                                <a href="/product/detail/${product.id}" class="btn btn-primary">
+                                    <div>
+                                        <img src="${product.contentImg}" alt="Product Image ${index + 1}">
+                                        <h3>${product.title}</h3>
+                                        <p>${product.price}원</p>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                        productSlider.append(productHTML);
+                    });
+
+                    // 무한 슬라이드를 위해 처음과 끝에 복제된 슬라이드 추가
+                    const firstSlideClone = productSlider.children().first().clone();
+                    const lastSlideClone = productSlider.children().last().clone();
+                    productSlider.append(firstSlideClone);
+                    productSlider.prepend(lastSlideClone);
+
+                    sliderContainer.append(prevButton);
+                    sliderContainer.append(productSlider);
+                    sliderContainer.append(nextButton);
+                    $('.image-section').append(sliderContainer);
+
+                    // 슬라이더 초기화
+                    let currentSlide = 1;
+                    const slideCount = productSlider.children().length;
+                    let sliding = false;
+
+                    function updateSlider() {
+                        const slideWidth = $('.product-slide').outerWidth(true);
+                        productSlider.css('transform', `translateX(-${currentSlide * slideWidth}px)`);
+                    }
+
+                    function slideNext() {
+                        if (sliding) return;
+                        sliding = true;
+                        currentSlide++;
+                        productSlider.css('transition', 'transform 0.5s ease-in-out');
+                        updateSlider();
+
+                        if (currentSlide === slideCount - 1) {
+                            setTimeout(() => {
+                                productSlider.css('transition', 'none');
+                                currentSlide = 1;
+                                updateSlider();
+                                sliding = false;
+                            }, 500);
+                        } else {
+                            setTimeout(() => {
+                                sliding = false;
+                            }, 500);
+                        }
+                    }
+
+                    function slidePrev() {
+                        if (sliding) return;
+                        sliding = true;
+                        currentSlide--;
+                        productSlider.css('transition', 'transform 0.5s ease-in-out');
+                        updateSlider();
+
+                        if (currentSlide === 0) {
+                            setTimeout(() => {
+                                productSlider.css('transition', 'none');
+                                currentSlide = slideCount - 2;
+                                updateSlider();
+                                sliding = false;
+                            }, 500);
+                        } else {
+                            setTimeout(() => {
+                                sliding = false;
+                            }, 500);
+                        }
+                    }
+
+                    // 이벤트 리스너 설정
+                    nextButton.on('click', slideNext);
+                    prevButton.on('click', slidePrev);
+
+                    // 자동 슬라이드 설정
+                    let autoSlideInterval = setInterval(slideNext, 3000);
+
+                    // 마우스가 슬라이더 위에 있을 때 자동 슬라이드 멈춤
+                    sliderContainer.on('mouseenter', () => {
+                        clearInterval(autoSlideInterval);
+                    });
+
+                    // 마우스가 슬라이더를 벗어날 때 자동 슬라이드 재시작
+                    sliderContainer.on('mouseleave', () => {
+                        autoSlideInterval = setInterval(slideNext, 3000);
+                    });
+
+                    // 초기 위치 설정
+                    function updateSlider() {
+                        const slideWidth = $('.product-slide').outerWidth(true);
+                        const offset = currentSlide * slideWidth;
+                        productSlider.css('transform', `translateX(${-offset}px)`);
+                    }
+
+// 슬라이더 초기화 시에 추가
+                    $(window).on('resize', function() {
+                        updateSlider();
+                    });
+
+                    // 날씨 정보 업데이트
+                    $('.weather-details').html(weatherHtml);
                     const temperature = parseFloat(result.temperature);
-                    const thermometerHeight = (temperature + 40) * (200 / 80); // 예: -40도에서 +40도까지의 범위를 200px로 매핑
+                    const thermometerHeight = (temperature + 40) * (200 / 80);
                     $('#thermometer-fill').css('height', `${thermometerHeight}px`);
                 } else {
-                    const weatherHtml = `
-                        <p>온도: 데이터가 없습니다.</p>
-                        <p>강수 종류: 데이터가 없습니다.</p>
-                    `;
-                    $('.weather-details').html(weatherHtml);
+                    $('.weather-details').html('<p>데이터가 없습니다.</p>');
                     $('.image-section').html('<p>해당 지역에 대한 추천상품이 없습니다.</p>');
                 }
             },
-            error: function () {
+            error: function() {
                 console.error('Error sending data to server');
             }
         });
     }
 
-    // 드롭다운에서 선택된 항목 처리
-    $('#provinceSelect').on('change', function () {
+    $('#provinceSelect').on('change', function() {
         const selectedValue = $(this).val();
         if (selectedValue) {
-            const [nx, ny] = selectedValue.split(','); // 쉼표로 구분된 nx, ny 값을 가져옴
-            sendDataToServer(nx, ny); // 선택된 좌표를 서버로 전송
+            const [nx, ny] = selectedValue.split(',');
+            sendDataToServer(nx, ny);
         }
     });
 
-    loadProvinces(); // 페이지 로드 시 JSON 파일 로드
+    loadProvinces();
 });

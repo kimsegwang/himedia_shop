@@ -1,0 +1,192 @@
+/* 공통 스타일 */
+body, html {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-size: 100% 100%;
+    color: black;
+    padding: 20px;
+    text-align: center;
+    font-size: 36px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.menu-logo-container {
+    display: flex;
+    align-items: center;
+}
+
+/* 삼선 버튼 스타일 */
+.menu-btn {
+    font-size: 20px; /* 메인 페이지와 동일한 글자 크기 */
+    cursor: pointer;
+    margin-right: 10px; /* 로고와의 간격 */
+    background-color: transparent; /* 배경을 투명하게 */
+    border: none; /* 테두리 없애기 */
+    color: #333; /* 글자 색상 설정 */
+    padding: 10px; /* 클릭 영역 설정 */
+    position: fixed; /* 위치를 고정 */
+    top: 20px; /* 상단에서 떨어진 거리 */
+    left: 20px; /* 왼쪽에서 떨어진 거리 */
+    z-index: 1002;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* 로그인과 마이페이지 스타일 */
+.login-actions {
+    font-size: 20px; /* 글자 크기 메인 페이지와 동일하게 설정 */
+    position: absolute; /* 절대 위치 지정 */
+    right: 20px; /* 오른쪽에서 떨어진 거리 */
+    top: 20px; /* 상단에서 떨어진 거리 */
+    display: flex;
+    margin-left: 20px;
+}
+
+.login-actions a {
+    text-decoration: none;
+    color: #333;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hover 스타일 */
+.login-actions a:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+/* 카테고리 섹션 */
+.category-section h2 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+/* 상품 그리드 */
+.product-grid {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.product-item img {
+    width: 200px;
+    height: auto;
+}
+
+/* 사이드바 스타일 */
+
+.sidenav {
+    height: 100%;
+    width: 0; /* 기본 상태에서 닫혀 있음 */
+    position: fixed;
+    z-index: 1001;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    /*transition: width 0.5s; !* 부드럽게 열리고 닫히도록 *!*/
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.sidenav .search-container {
+    padding: 15px;
+}
+
+.openbtn-hidden {
+    display: none;
+}
+
+/* 사이드바 검색창 및 버튼 스타일 */
+.sidenav .search-container {
+    padding: 15px; /* 메인 페이지와 동일하게 설정 */
+    display: flex;
+    flex-direction: column; /* 검색 칸과 버튼을 세로로 배치 */
+}
+
+.sidenav input[type="text"] {
+    flex: 1;
+    padding: 10px; /* 메인 페이지와 동일한 패딩 설정 */
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 10px; /* 검색 버튼과 검색칸 사이의 간격 */
+    width: 100%; /* 입력창 전체 너비로 설정 (메인 페이지와 동일하게 설정) */
+    box-sizing: border-box; /* 패딩을 포함하여 너비 설정 */
+}
+
+.sidenav button {
+    padding: 10px; /* 메인 페이지와 동일한 패딩 설정 */
+    background-color: #575757;
+    border: none;
+    color: white;
+    cursor: pointer;
+    width: 100%; /* 버튼을 전체 너비로 설정 */
+    border-radius: 4px; /* 버튼 모양을 메인 페이지와 동일하게 */
+}
+
+.sidenav button:hover {
+    background-color: #444;
+}
+
+
+
+/* Footer */
+footer {
+    background-color: #D9D9D9;
+    padding: 20px;
+    text-align: left; /* 텍스트를 왼쪽으로 정렬 */
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column; /* 텍스트를 위아래로 배치 */
+    align-items: flex-start; /* 왼쪽 정렬 유지 */
+}
+
+footer p {
+    margin: 5px 20px; /* 텍스트의 좌우 간격 */
+}

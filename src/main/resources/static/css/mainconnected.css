@@ -1,0 +1,313 @@
+/* 기본 스타일 */
+body, html {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 전체 레이아웃을 감싸는 wrapper */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 메인 컨텐츠가 남은 공간을 차지하도록 */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+
+/* 위치 선택 스타일 */
+.location-select {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+header {
+    background-size: 100% 100%;
+    color: black;
+    padding: 20px;
+    text-align: center;
+    font-size: 36px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-actions {
+    font-size: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    display: flex;
+    margin-left: 20px;
+}
+
+.login-actions a {
+    text-decoration: none;
+    color: #333;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.login-actions a:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #444;
+    position: fixed;
+    top: 0;
+    width: 80%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+nav a {
+    color: #fff;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+}
+
+nav a:hover {
+    background-color: #555;
+}
+
+section {
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+.image-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.image-section img {
+    max-width: 300px;
+    height: 400px;
+}
+
+/* Footer */
+footer {
+    background-color: #D9D9D9;
+    padding: 20px;
+    text-align: left; /* 텍스트를 왼쪽으로 정렬 */
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column; /* 텍스트를 위아래로 배치 */
+    align-items: flex-start; /* 왼쪽 정렬 유지 */
+}
+
+footer p {
+    margin: 5px 20px; /* 텍스트의 좌우 간격 */
+}
+
+
+
+/* 사이드바 스타일 */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1001;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* 메인 페이지 사이드바 검색창 및 버튼 스타일 */
+.sidenav .search-container {
+    padding: 15px; /* 카테고리 페이지와 동일하게 */
+    display: flex;
+    flex-direction: column; /* 검색 칸과 버튼을 세로로 배치 */
+}
+
+.sidenav input[type="text"] {
+    flex: 1;
+    padding: 10px; /* 카테고리 페이지와 동일한 패딩 */
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 10px; /* 검색 버튼과 검색칸 사이의 간격 */
+    width: 100%; /* 입력창 전체 너비로 설정 (카테고리 페이지와 동일) */
+    box-sizing: border-box; /* 패딩을 포함하여 너비 설정 */
+}
+
+.sidenav button {
+    padding: 10px; /* 카테고리 페이지와 동일한 패딩 */
+    background-color: #575757;
+    border: none;
+    color: white;
+    cursor: pointer;
+    width: 100%; /* 버튼을 전체 너비로 설정 */
+    border-radius: 4px; /* 버튼 모양을 카테고리 페이지와 동일하게 */
+}
+
+.sidenav button:hover {
+    background-color: #444;
+}
+
+
+#main {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+/* 오픈 버튼 스타일 */
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1002;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+/* 오픈 버튼 숨기기 */
+.openbtn-hidden {
+    display: none;
+}
+
+/* connectionpage.css */
+#provinceSelect, .weather-details {
+    float: right;
+    text-align: right;
+    margin-right: 20px;
+}
+
+/* 상품 이미지 스타일 추가 */
+.product-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.product {
+    text-align: center;
+    margin: 15px;
+}
+
+.product img {
+    width: 150px;
+    height: auto;
+}
+
+/* 상품 슬라이드 쇼 스타일 */
+.product-slider-container {
+    overflow: hidden;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.product-slider {
+    display: flex;
+    transition: transform 1s ease;
+    gap: 20px; /* 슬라이드 사이 간격 */
+}
+
+.slide {
+    flex: 0 0 calc((100% / 3) - 20px); /* 각 슬라이드 너비를 3등분하고 간격을 고려하여 설정 */
+    max-width: calc((100% / 3) - 20px);
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px;
+}
+
+.slide img {
+    width: 100%; /* 부모 컨테이너 너비에 맞춤 */
+    height: 200px; /* 모든 이미지의 높이를 동일하게 고정 */
+    object-fit: cover; /* 이미지 비율을 유지하면서 크기에 맞춰 자름 */
+    border-radius: 5px; /* 선택적으로 이미지에 둥근 모서리를 추가할 수 있음 */
+}
+
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .product-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product {
+        width: 80%;
+        max-width: 250px;
+        margin-bottom: 20px;
+    }
+
+    .slide {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

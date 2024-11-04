@@ -1,7 +1,6 @@
 package com.example.tobi.himedia_shop.service.member;
 
-import com.example.tobi.himedia_shop.dto.member.MemberUpdateRqDTO;
-import com.example.tobi.himedia_shop.mapper.MemberMapper;
+import com.example.tobi.himedia_shop.mapper.member.MemberMapper;
 import com.example.tobi.himedia_shop.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -18,7 +18,6 @@ $(document).ready(() => {
             contentType: 'application/x-www-form-urlencoded; charset=utf-8',
             dataType: 'json', // 서버에서 받을 데이터의 타입
             success: (response) => {
-                console.log('res :: ', response);
                 if (response.loggedIn) {
                     window.location.href = response.url; // 로그인 성공 시 URL 리다이렉트
                 }

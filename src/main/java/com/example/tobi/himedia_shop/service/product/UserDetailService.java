@@ -2,7 +2,7 @@ package com.example.tobi.himedia_shop.service.product;
 
 import com.example.tobi.himedia_shop.config.security.CustomUserDetails;
 import com.example.tobi.himedia_shop.dto.permission.Role;
-import com.example.tobi.himedia_shop.mapper.MemberMapper;
+import com.example.tobi.himedia_shop.mapper.member.MemberMapper;
 import com.example.tobi.himedia_shop.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

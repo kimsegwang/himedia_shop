@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tobi.himedia_shop.mapper.admin.PaymentMapper">
+
+    <select id="listUserBalance" resultType="com.example.tobi.himedia_shop.dto.payment.BalanceResponseDTO">
+        SELECT
+            p.user_id AS userId,
+            p.balance
+        FROM payment p
+                 JOIN (
+            SELECT user_id, MAX(payment_date) AS latest_date
+            FROM payment
+            GROUP BY user_id
+        ) AS latest_payments
+                      ON p.user_id = latest_payments.user_id AND p.payment_date = latest_payments.latest_date
+    </select>
+
+    <select id="financialSummary" resultType="com.example.tobi.himedia_shop.dto.payment.BalanceSumResponseDTO">
+        SELECT
+            SUM(deposit) AS totalDeposit,
+            SUM(withdrawal) AS totalWithdrawal,
+            SUM(CASE WHEN is_purchased = true THEN withdrawal ELSE 0 END) AS totalWithdrawalPurchased
+        FROM payment
+    </select>
+    <select id="findDailySalesData" resultType="com.example.tobi.himedia_shop.dto.payment.SalesDataDTO">
+        SELECT
+            DATE(payment_date) AS paymentDate,
+            SUM(deposit) AS totalDeposit,
+            SUM(CASE WHEN is_purchased = 1 THEN withdrawal ELSE 0 END) AS totalWithdrawal
+        FROM
+            payment
+        GROUP BY
+            DATE(payment_date)
+        ORDER BY
+            paymentDate;
+    </select>
+    <insert id="addPayment" parameterType="com.example.tobi.himedia_shop.dto.payment.PaymentBalanceRequestDTO">
+        INSERT INTO payment (user_id, deposit, withdrawal, balance, is_purchased)
+        VALUES (#{userId}, #{deposit}, #{withdrawal}, #{balance}, #{isPurchased})
+    </insert>
+
+    <select id="UserBalance" parameterType="String" resultType="com.example.tobi.himedia_shop.dto.payment.BalanceResponseDTO">
+        SELECT user_id AS userId, balance
+        FROM payment
+        WHERE user_id = #{userId}
+        ORDER BY payment_date DESC
+            LIMIT 1
+    </select>
+
+</mapper>
