@@ -1,5 +1,5 @@
 $(document).ready(() => {
-// 사이드바 관련 코드
+    // 사이드바 관련 코드
     function toggleNav() {
         var sidenav = document.getElementById("mySidenav");
         var menuBtn = document.getElementById("menuBtn");
@@ -71,11 +71,11 @@ $(document).ready(() => {
 
     // 검색 기능 구현
     $('.search-container button').on('click', function() {
-        const keyword = $('#searchInput').val().trim();
-        if (keyword) {
+        const keyword = $('#searchInput').val();
+        if (keyword && keyword.trim()) {
             window.location.href = `/search?keyword=${encodeURIComponent(keyword)}`;
+        } else {
+            alert("검색어를 입력하세요.");
         }
-
-
     });
 });

@@ -1,9 +1,11 @@
 package com.example.tobi.himedia_shop.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -19,10 +21,10 @@ public class SearchProduct {
     private String content;
     private String title;
     private String contentImg;
-    private LocalDateTime created;
-    private LocalDateTime updated;
+    private String created;
+    private String updated;
     private int salesStatus;
-    private int Stock;
+    private int stock;
     private int price;
     private int temperature;
     private int precipitation;

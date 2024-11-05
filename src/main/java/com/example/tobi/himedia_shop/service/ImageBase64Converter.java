@@ -18,21 +18,22 @@ public class ImageBase64Converter {
     public void processImage(Products product) {
         String imagePath = product.getContentImg();
         if (imagePath != null && !imagePath.isEmpty()) {
-            try {
-                String dataUrl = convertImageToBase64(imagePath);
-                product.setContentImg(dataUrl);
-            } catch (IOException e) {
-                throw new RuntimeException("Error reading image file: " + imagePath, e);
-            }
+            String dataUrl = convertImageToBase64(imagePath);
+            product.setContentImg(dataUrl);
         }
     }
 
-    public String convertImageToBase64(String imagePath) throws IOException {
+    public String convertImageToBase64(String imagePath)   {
         String imageFormat = getImageFormat(imagePath);
         Path path = Path.of(imagePath);
-        byte[] bytes = Files.readAllBytes(path);
-        String base64Image = Base64.getEncoder().encodeToString(bytes);
-        return "data:image/" + imageFormat + ";base64," + base64Image;
+        try {
+            byte[] bytes = Files.readAllBytes(path);
+            String base64Image = Base64.getEncoder().encodeToString(bytes);
+            return "data:image/" + imageFormat + ";base64," + base64Image;
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Error reading image file: " + imagePath, e);
+        }
     }
 
     public String getImageFormat(String imagePath) {
@@ -47,6 +48,6 @@ public class ImageBase64Converter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "png"; // 기본값 설정 (확인할 수 없는 경우)
+        return "webp"; // 기본값 설정 (확인할 수 없는 경우)
     }
 }

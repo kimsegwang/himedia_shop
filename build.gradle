@@ -15,8 +15,8 @@ java {
 
 repositories {
     mavenCentral()
-}
 
+}
 ext {
     set('springCloudVersion', "2023.0.3") // Spring Cloud 버전 설정
 }
@@ -31,7 +31,7 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'com.github.ben-manes.caffeine:caffeine:3.0.5'
     implementation 'org.springframework.boot:spring-boot-devtools'
-
+    implementation 'com.twelvemonkeys.imageio:imageio-webp:3.12.0' // 0.3.1 버전 사용
     implementation 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
