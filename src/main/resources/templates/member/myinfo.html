@@ -4,37 +4,114 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Info</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 500px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #4CAF50;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .info-item label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .info-item span {
+      color: #333;
+    }
+
+    .button-group {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .button {
+      padding: 10px 20px;
+      color: #fff;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+
+    .logout-button {
+      background-color: #f44336;
+    }
+
+    .logout-button:hover {
+      background-color: #e53935;
+    }
+  </style>
 </head>
 <body>
-<h1>My Information</h1>
+<div class="container">
+  <h1>내 정보</h1>
 
-<div>
-  <label for="userId">User ID:</label>
-  <span id="userId" th:text="${member.userId}"></span>
-</div>
+  <div class="info-item">
+    <label for="userId">User ID:</label>
+    <span id="userId" th:text="${member.userId}"></span>
+  </div>
 
-<div>
-  <label for="name">Name:</label>
-  <span id="name" th:text="${member.name}"></span>
-</div>
+  <div class="info-item">
+    <label for="name">Name:</label>
+    <span id="name" th:text="${member.name}"></span>
+  </div>
 
-<div>
-  <label for="phone">Phone:</label>
-  <span id="phone" th:text="${member.phone}"></span>
-</div>
+  <div class="info-item">
+    <label for="phone">Phone:</label>
+    <span id="phone" th:text="${member.phone}"></span>
+  </div>
 
-<div>
-  <label for="myLocation">Location:</label>
-  <span id="myLocation" th:text="${member.myLocation}"></span>
-</div>
+  <div class="info-item">
+    <label for="myLocation">Location:</label>
+    <span id="myLocation" th:text="${member.myLocation}"></span>
+  </div>
 
-<div>
-  <label for="password">Password:</label>
-  <span id="password" th:text="${member.password}"></span>
-</div>
-
-<div>
-  <a th:href="@{/update}">Edit Information</a>
+  <div class="button-group">
+    <a class="button" th:href="@{/update}">정보 수정</a>
+    <form action="/logout" method="post" style="display: inline;">
+      <button type="submit" class="button logout-button">로그아웃</button>
+    </form>
+  </div>
 </div>
 </body>
 </html>

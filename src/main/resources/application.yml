@@ -11,9 +11,9 @@ spring:
         url: jdbc:mysql://localhost:3306/shoppingmall?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8  # 마스터 DB URL
       reads:
         - name: read1
-          username: replication_user
+          username: root
           password: 1234
-          url: jdbc:mysql://localhost:3307/shoppingmall?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8  # 슬레이브 DB URL
+          url: jdbc:mysql://localhost:3306/shoppingmall?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8  # 슬레이브 DB URL
 
 
 mybatis:

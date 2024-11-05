@@ -1,6 +1,7 @@
 package com.example.tobi.himedia_shop.service;
 
 import com.example.tobi.himedia_shop.dto.product.product.ProductListResponseDTO;
+
 import com.example.tobi.himedia_shop.dto.RainAndTemResponseDTO;
 import com.example.tobi.himedia_shop.mapper.product.ProductMapper;
 import com.example.tobi.himedia_shop.model.Products;
@@ -30,24 +31,29 @@ public class RainAndTemService {
         RainAndTemResponseDTO build = RainAndTemResponseDTO.builder().temperature(tem).precipitation(rain).build();
         List<Products> productWeather = productMapper.getProductWeather(build);
 
+        if (rain == 1) {
+            List<Products> productPrecipitation = productMapper.getProductPrecipitation(build);
+            productWeather.addAll(productPrecipitation); // productPrecipitation의 모든 요소를 productWeather에 추가
+        }
+
         return productWeather.stream()
                 .map(products -> ProductListResponseDTO.builder()
+                        .id(products.getId())
                         .title(products.getTitle())
                         .price(products.getPrice())
                         .contentImg(processImage(products.getContentImg()))
                         .build())
                 .collect(Collectors.toList());
     }
-
-    private String processImage(String imagePath) {
-        if (imagePath != null && !imagePath.isEmpty()) {
+    private String processImage(String product) {
+        if (product != null && !product.isEmpty()) {
             try {
-                return convertImageToBase64(imagePath);
+                return convertImageToBase64(product);
+
             } catch (IOException e) {
-                throw new RuntimeException("Error reading image file: " + imagePath, e);
+                throw new RuntimeException("Error reading image file: " + product, e);
             }
-        }
-        return ""; // 빈 문자열 반환 또는 기본 이미지 URL 설정
+        }return "";
     }
 
     private String convertImageToBase64(String imagePath) throws IOException {
@@ -57,7 +63,6 @@ public class RainAndTemService {
         String base64Image = Base64.getEncoder().encodeToString(bytes);
         return "data:image/" + imageFormat + ";base64," + base64Image;
     }
-
     public static String getImageFormat(String imagePath) {
         try {
             File imageFile = new File(imagePath);

@@ -1,9 +1,10 @@
 package com.example.tobi.himedia_shop.service.product;
 
 import com.example.tobi.himedia_shop.dto.history.PurchaseHistoryWithProductDTO;
+import com.example.tobi.himedia_shop.dto.shoppingcart.ShoppingCartDTO;
 import com.example.tobi.himedia_shop.mapper.HistoryMapper;
+import com.example.tobi.himedia_shop.mapper.ShoppingCartMapper;
 import com.example.tobi.himedia_shop.model.Products;
-import com.example.tobi.himedia_shop.model.PurchaseHistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,29 +19,30 @@ import java.nio.file.Path;
 import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PurchaseHistoryService {
-    private final HistoryMapper historyMapper;
+public class ShoppingCartService {
 
+    @Autowired
+    private ShoppingCartMapper shoppingCartMapper;
 
-    // 사용자 ID를 매개변수로 받아 해당 사용자의 구매 내역을 반환
-    public List<PurchaseHistoryWithProductDTO> getPurchaseHistoryWithProduct(String userId,int page, int pageSize) {
+    public List<ShoppingCartDTO> getPurchaseHistoryWithProduct(String userId,int page, int pageSize) {
         int offset = Math.max(0, (page - 1) * pageSize);
-        List<PurchaseHistoryWithProductDTO> historyList = historyMapper.findPurchaseHistoryWithProductByUserId(userId, offset, pageSize);
-        historyList.forEach(this::processImage);
-
-        return historyList;
+        List<ShoppingCartDTO> shoppingCartWithProductByUserId = shoppingCartMapper.findShoppingCartWithProductByUserId(userId,offset,pageSize);
+        for(ShoppingCartDTO shoppingCartDTO : shoppingCartWithProductByUserId) {
+        }
+        shoppingCartWithProductByUserId.forEach(this::processImage);
+        return shoppingCartWithProductByUserId;
     }
 
-    public int getPurchaseHistory(String userId) {
-        int allpage = historyMapper.findPurchaseHistory(userId);
+    public int getPurchaseLike(String userId) {
+        int allpage = shoppingCartMapper.findPurchaseLike(userId);
         return allpage;
     }
 
-    private void processImage(PurchaseHistoryWithProductDTO product) {
+
+    private void processImage(ShoppingCartDTO product) {
         String imagePath = product.getImg();
         if (imagePath != null && !imagePath.isEmpty()) {
             try {
@@ -51,6 +53,7 @@ public class PurchaseHistoryService {
             }
         }
     }
+
     private String convertImageToBase64(String imagePath) throws IOException {
         String imageFormat = getImageFormat(imagePath);
         Path path = Path.of(imagePath);
@@ -72,4 +75,5 @@ public class PurchaseHistoryService {
         }
         return "png"; // 기본값 설정 (확인할 수 없는 경우)
     }
+
 }

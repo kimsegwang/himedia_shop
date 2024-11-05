@@ -9,19 +9,27 @@
         <result property="title" column="title"/>
         <result property="price" column="price"/>
         <result property="purchaseVolume" column="purchaseVolume"/>
-        <result property="userId" column="user_id"/> <!-- userId를 추가 -->
+        <result property="userId" column="user_id"/>
     </resultMap>
 
     <select id="findPurchaseHistoryWithProductByUserId" resultMap="historyResultMap">
         SELECT
-            p.content_img AS img,                 -- 제품 이미지
-            p.title AS title,                     -- 제품 제목
-            p.price AS price,                     -- 가격
-            ph.purchase_volume AS purchaseVolume, -- 구매 수량
-            ph.user_id AS user_id                 -- 사용자 ID 추가
+            p.content_img AS img,
+            p.title AS title,
+            p.price AS price,
+            ph.purchase_volume AS purchaseVolume,
+            ph.user_id AS user_id
         FROM purchasehistory ph
                  JOIN products p ON ph.product_id = p.id
         WHERE ph.user_id = #{userId}
+            LIMIT #{offset}, #{pageSize}
     </select>
+
+    <select id="findPurchaseHistory" parameterType="String" resultType="int">
+        SELECT count(id)
+        FROM purchasehistory
+        WHERE user_id = #{userId}
+    </select>
+
 
 </mapper>

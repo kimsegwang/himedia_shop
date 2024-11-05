@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // 정렬 선택 박스에서 값이 변경될 때마다 AJAX 요청 보내기
     $('#sortSelect').change(function() {
+
         var selectedOption = $(this).val(); // 선택된 정렬 옵션 값 가져오기
 
         // searchKeyword 값을 HTML에서 동적으로 가져오기
@@ -34,7 +35,6 @@ $(document).ready(function() {
 
         if (products && products.length > 0) {
             products.forEach(product => {
-                console.log(products);
                 const productHtml = `
                     <div class="product-item">
                         <a href="/product/detail/${product.id}" style="text-decoration: none; color: inherit;">
