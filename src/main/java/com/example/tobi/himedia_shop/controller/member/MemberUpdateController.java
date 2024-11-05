@@ -1,7 +1,9 @@
 package com.example.tobi.himedia_shop.controller.member;
 
 import com.example.tobi.himedia_shop.dto.member.MemberUpdateRqDTO;
+import com.example.tobi.himedia_shop.dto.payment.BalanceResponseDTO;
 import com.example.tobi.himedia_shop.model.Member;
+import com.example.tobi.himedia_shop.service.member.MemberChargeService;
 import com.example.tobi.himedia_shop.service.member.MemberService;
 import com.example.tobi.himedia_shop.service.member.MemberUpdateService;
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +21,19 @@ public class MemberUpdateController {
     private final MemberService memberService;
     private final MemberUpdateService memberUpdateService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final MemberChargeService memberChargeService;
+
+    @GetMapping("/charge")
+    public String charge(HttpSession session, Model model) {
+        String userId = (String) session.getAttribute("userId");
+        BalanceResponseDTO usercharge = memberChargeService.getUsercharge(userId);
+        model.addAttribute("charge", usercharge);
+        return "member/charge";
+    }
+
+
+
+
     @GetMapping("/myinfo")
     public String myInfo(HttpSession session, Model model) {
         String userId = (String) session.getAttribute("userId");

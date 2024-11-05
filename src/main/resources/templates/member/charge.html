@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>은행 거래 시스템</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .balance-title {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .balance-amount {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .deposit-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .withdraw-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .deposit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .withdraw-btn:hover {
+            background-color: #da190b;
+        }
+
+        .transaction-history {
+            max-height: 200px;
+            overflow-y: auto;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .transaction {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .deposit {
+            color: #4CAF50;
+        }
+
+        .withdraw {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>내 계좌</h1>
+    </div>
+
+    <div class="balance-card">
+        <div class="balance-title">현재 잔액</div>
+        <div class="balance-amount">₩<span id="balance" th:text="${charge.balance}">0</span></div>
+
+
+
+
+    </div>
+
+    <div class="input-group">
+        <input type="number" id="amount" placeholder="금액을 입력하세요" min="0">
+    </div>
+
+    <div class="buttons">
+        <button class="deposit-btn" onclick="deposit()">입금</button>
+        <button class="withdraw-btn" onclick="withdraw()">출금</button>
+    </div>
+
+    <div class="transaction-history" id="transactions"></div>
+</div>
+
+<script>
+    let balance = parseInt(document.getElementById('balance').textContent.replace(/,/g, '')); // 초기 잔액 설정
+
+    const transactions = [];
+
+    function updateBalance() {
+        document.getElementById('balance').textContent = balance.toLocaleString();
+    }
+
+    function updateTransactions() {
+        const transactionsDiv = document.getElementById('transactions');
+        transactionsDiv.innerHTML = '';
+
+        transactions.reverse().forEach(transaction => {
+            const div = document.createElement('div');
+            div.className = 'transaction';
+            const amountClass = transaction.type === '입금' ? 'deposit' : 'withdraw';
+            div.innerHTML = `
+                    <span>${transaction.date}</span>
+                    <span class="${amountClass}">${transaction.type}: ₩${transaction.amount.toLocaleString()}</span>
+                `;
+            transactionsDiv.appendChild(div);
+        });
+    }
+
+    function deposit() {
+        const amount = parseInt(document.getElementById('amount').value);
+        if (amount > 0) {
+            balance += amount;
+            transactions.push({
+                type: '입금',
+                amount: amount,
+                date: new Date().toLocaleString()
+            });
+            updateBalance();
+            updateTransactions();
+            document.getElementById('amount').value = '';
+
+            fetch('member/deposit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    balance: balance,
+                    amount: amount
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('입금 성공');
+                    } else {
+                        alert('입금 실패');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+
+    function withdraw() {
+        const amount = parseInt(document.getElementById('amount').value);
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            transactions.push({
+                type: '출금',
+                amount: amount,
+                date: new Date().toLocaleString()
+            });
+
+            updateBalance();
+            updateTransactions();
+            document.getElementById('amount').value = '';
+
+            fetch('member/Withdrawal', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    balance: balance,
+                    amount: amount
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('출금 성공');
+                    } else {
+                        alert('출금 실패');
+                    }
+                })
+
+
+
+        } else {
+            alert('잔액이 부족합니다');
+        }
+    }
+</script>
+</body>
+</html>

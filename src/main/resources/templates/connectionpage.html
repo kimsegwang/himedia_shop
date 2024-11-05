@@ -18,6 +18,7 @@
         <div class="login-actions">
             <!-- 로그인 상태 확인 (로그인 사용자일 때만 표시) -->
             <span th:if="${session.userId != null}">
+                <a th:href="@{/member/mypage}">마이페이지</a>
     <a th:href="@{/logout}">로그아웃</a>
 </span>
             <span th:if="${session.userId == null}">
