@@ -25,6 +25,10 @@ public class MemberController {
     public String signIn() {
         return "member/sign-in";
     }
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "member/mypage";
+    }
 
     @PostMapping("/logout")
     public String logOut(HttpSession session) {
