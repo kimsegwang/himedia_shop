@@ -14,7 +14,14 @@
 <body>
 <div class="wrapper">
     <header>
-        <h1 style="font-family: 'Tangerine', serif;"><i>Trend & Weather</i></h1>
+        <h1 class="header-title" style="font-family: 'Tangerine', serif; position: relative;">
+            <i>Trend & Weather</i>
+            <video autoplay muted loop playsinline class="background-video">
+                <source th:src="@{/img/weather/{weathering}(weathering=${weathering})}" type="video/mp4">
+            </video>
+        </h1>
+
+
         <div class="login-actions">
             <!-- 로그인 상태 확인 (로그인 사용자일 때만 표시) -->
             <span th:if="${session.userId != null}">
