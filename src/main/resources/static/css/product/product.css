@@ -87,6 +87,7 @@ button:hover {
 }
 
 .product-date {
+    width: 180px;
     font-size: 14px; /* 날짜 크기 */
     color: #888; /* 날짜 색상 */
     margin-bottom: 15px; /* 아래 여백 */

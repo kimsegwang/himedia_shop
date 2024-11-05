@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 추가 -->
   <link th:href="@{/css/category.css}" rel="stylesheet">
-
+  <script th:src="@{/js/connectionpage.js}"></script>
   <script th:src="@{/js/search.js}"></script>
-  <script th:src="@{/js/category.js}"></script> <!-- JavaScript 파일 연결 -->
+  <link rel="stylesheet" href="css/connectionpage.css"> <!-- CSS 파일 연결 -->
   <title>카테고리 페이지</title>
 </head>
 <body>
@@ -17,15 +19,65 @@
     <div class="menu-logo-container">
       <button class="menu-btn" id="menuBtn">☰</button> <!-- 삼선 버튼 -->
       <h1>
-        <a href="/" style="text-decoration: none; color: inherit;"><i>Trend & Weather</i></a>
+        <a href="/"style="font-family: 'Tangerine', serif;text-decoration-line : none;color: black;"><i>Trend & Weather</i></a>
       </h1> <!-- 쇼핑몰 로고 -->
     </div>
-    <div class="login-actions">
-      <a th:href="@{/member/login}">로그인</a> <!-- 로그인 페이지로 연결 -->
-      <a th:href="@{/member/join}">회원가입</a> <!-- 회원가입 페이지로 연결 -->
-    </div>
-  </header>
 
+      <div class="login-actions">
+        <a th:href="@{/member/login}">로그인</a> <!-- 로그인 페이지로 연결 -->
+        <a th:href="@{/member/join}">회원가입</a> <!-- 회원가입 페이지로 연결 -->
+      </div>
+    </header>
+
+    <div class="wrapper">
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+      <!-- 검색 기능 추가 -->
+      <div class="search-container">
+        <input id ="searchInput" type="text" placeholder="검색...">
+        <button>검색</button>
+      </div>
+
+      <!-- 카테고리 항목 -->
+      <div class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-btn">TOP</a>
+        <ul class="dropdown-content">
+          <li><a th:href="@{/category/TOP/T-shirts}">T-Shirts</a></li>
+          <li><a th:href="@{/category/TOP/Shirts}">Shirts</a></li>
+          <li><a th:href="@{/category/TOP/Sweaters}">Sweaters</a></li>
+        </ul>
+      </div>
+
+      <div class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-btn">OUTER</a>
+        <ul class="dropdown-content">
+          <li><a th:href="@{/category/OUTER/Coats}">Coats</a></li>
+          <li><a th:href="@{/category/OUTER/Jackets}">Jackets</a></li>
+          <li><a th:href="@{/category/OUTER/Hoodies}">Hoodies</a></li>
+        </ul>
+      </div>
+
+      <div class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-btn">BOTTOM</a>
+        <ul class="dropdown-content">
+          <li><a th:href="@{/category/BOTTOM/Jeans}">Jeans</a></li>
+          <li><a th:href="@{/category/BOTTOM/Slacks}">Slacks</a></li>
+          <li><a th:href="@{/category/BOTTOM/Shorts}">Shorts</a></li>
+        </ul>
+      </div>
+
+      <div class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-btn">ACC</a>
+        <ul class="dropdown-content">
+          <li><a th:href="@{/category/ACC/Bags}">Bags</a></li>
+          <li><a th:href="@{/category/ACC/Hats}">Hats</a></li>
+          <li><a th:href="@{/category/ACC/Scarves}">Scarves</a></li>
+        </ul>
+      </div>
+    </div>
+</div>
+</div>
   <!-- 카테고리 섹션 -->
   <section class="category-section">
     <h2 th:text="${subCategory}"></h2> <!-- 서브 카테고리 이름만 출력 -->
@@ -35,14 +87,13 @@
     <div th:each="product : ${products}" class="product-item">
       <a th:href="@{/product/detail/{productId}(productId=${product.id})}" style="text-decoration: none; color: inherit;">
 
-      <img th:src="@{${product.contentImg}}" alt="Product Image">
+        <img th:src="@{${product.contentImg}}" alt="Product Image">
         <h3 th:text="${product.title}"></h3>
+        <h4 th:text="${product.created}"></h4>
         <p th:text="${product.price} + '원'"></p>
       </a>
     </div>
   </section>
-
-
 
   <!-- Footer -->
   <footer>
@@ -52,59 +103,9 @@
     </div>
 
   </footer>
-</div>
-
-<!-- 사이드바 -->
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
-
-  <!-- 검색 기능 추가 -->
-  <div class="search-container">
-    <input type="text" placeholder="검색...">
-    <button>검색</button>
-  </div>
 
 
 
-  <!-- TOP 카테고리 항목 -->
-  <div class="dropdown">
-    <a href="javascript:void(0)" class="dropdown-btn">TOP</a>
-    <ul class="dropdown-content">
-      <li><a th:href="@{/category/TOP/T-shirts}">T-Shirts</a></li>
-      <li><a th:href="@{/category/TOP/Shirts}">Shirts</a></li>
-      <li><a th:href="@{/category/TOP/Sweaters}">Sweaters</a></li>
-    </ul>
-  </div>
 
-  <!-- OUTER 카테고리 항목 -->
-  <div class="dropdown">
-    <a href="javascript:void(0)" class="dropdown-btn">OUTER</a>
-    <ul class="dropdown-content">
-      <li><a th:href="@{/category/OUTER/Coats}">Coats</a></li>
-      <li><a th:href="@{/category/OUTER/Jackets}">Jackets</a></li>
-      <li><a th:href="@{/category/OUTER/Hoodies}">Hoodies</a></li>
-    </ul>
-  </div>
-
-  <!-- BOTTOM 카테고리 항목 -->
-  <div class="dropdown">
-    <a href="javascript:void(0)" class="dropdown-btn">BOTTOM</a>
-    <ul class="dropdown-content">
-      <li><a th:href="@{/category/BOTTOM/Jeans}">Jeans</a></li>
-      <li><a th:href="@{/category/BOTTOM/Slacks}">Slacks</a></li>
-      <li><a th:href="@{/category/BOTTOM/Shorts}">Shorts</a></li>
-    </ul>
-  </div>
-
-  <!-- ACC 카테고리 항목 -->
-  <div class="dropdown">
-    <a href="javascript:void(0)" class="dropdown-btn">ACC</a>
-    <ul class="dropdown-content">
-      <li><a th:href="@{/category/ACC/Bags}">Bags</a></li>
-      <li><a th:href="@{/category/ACC/Hats}">Hats</a></li>
-      <li><a th:href="@{/category/ACC/Scarves}">Scarves</a></li>
-    </ul>
-  </div>
-</div>
 </body>
 </html>

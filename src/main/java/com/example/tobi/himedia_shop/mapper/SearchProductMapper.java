@@ -10,7 +10,6 @@ import java.util.List;
 public interface SearchProductMapper {
     List<Products> searchProducts(String keyword);
     List<Products> categoryProduct(@Param("category") String category, @Param("subCategory") String subCategory);
-
-
+    List<Products> searchProductsSortBy(@Param("searchKeyword")String searchKeyword,@Param("sortBy") String sortBy);
 }
 

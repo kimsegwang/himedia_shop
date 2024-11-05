@@ -6,9 +6,8 @@ import com.example.tobi.himedia_shop.model.SearchProduct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Base64;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,8 +47,8 @@ public class SearchService {
                 .title(product.getTitle())
                 .content(product.getContent())
                 .contentImg(imageBase64Converter.convertImageToBase64(product.getContentImg()))
-                .created(parseDateTime(product.getCreated()))
-                .updated(parseDateTime(product.getUpdated()))
+                .created(product.getCreated())
+                .updated(product.getUpdated())
                 .stock(product.getStock()) // 수정된 부분
                 .price(product.getPrice())
                 .temperature(product.getTemperature())
@@ -63,12 +62,11 @@ public class SearchService {
                 .collect(Collectors.toList());
     }
 
-    private LocalDateTime parseDateTime(String dateTimeStr) {
-        try {
-            return LocalDateTime.parse(dateTimeStr);
-        } catch (Exception e) {
-            // 예외 처리 로직 추가 (예: 로깅)
-            return null; // 또는 기본값 반환
-        }
+
+
+
+    public List<SearchProduct> searchProductSortBy(String searchKeyword, String sortBy) {
+        List<Products> products = searchProductMapper.searchProductsSortBy(searchKeyword,sortBy);
+        return convertToSearchProducts(products);
     }
 }
