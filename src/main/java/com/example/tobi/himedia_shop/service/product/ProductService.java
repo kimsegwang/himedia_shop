@@ -41,7 +41,12 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public List<ProductListResponseDTO> getProductRecommend(int productId) {
-        List<Products> productALL = productMapper.getProductRecommend(productId);
+        Products productById = productMapper.getProductById(productId);
+        String category = productById.getCategory();
+        List<Products> productALL = productMapper.getProductRecommend(productId,category);
+        if (productALL.isEmpty()) {
+             productALL = productMapper.getProductRecommend(productId,"");
+        }
         productALL.forEach(imageBase64Converter::processImage); // 수정된 호출 방식
         Collections.shuffle(productALL);
         return productALL.stream()

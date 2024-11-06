@@ -19,8 +19,11 @@ function buy() {
 
         const salesVolume = parseInt(document.getElementById("userBuy").value.trim(), 10); // 정수로 변환
         const productId = parseInt(document.getElementById("productId").value.trim(), 10); // 정수로 변환
-        const price = parseInt(document.getElementById("price").textContent.trim(), 10); // 정수로 변환
+        // 가격 텍스트 추출 후 숫자만 남기고, 그 값을 정수로 변환
+        const priceText = document.getElementById("price").textContent.trim();
+        const price = parseInt(priceText.replace(/[^0-9]/g, ''), 10); // 숫자만 추출하여 정수로 변환
 
+        console.log(price);
         if (!salesVolume || salesVolume < 1) {
             alert("구매 수량을 입력해 주세요.");
             return;
@@ -40,6 +43,10 @@ function buy() {
             data: JSON.stringify(data),
             success: function(response) {
                 alert("구매 완료");
+                $.get(`/product/detail/api/stock/${productId}`, function(updatedStock) {
+                    // 서버에서 받아온 최신 재고 값으로 업데이트
+                    document.querySelector('.product-stock').textContent = `재고: ${updatedStock} 개`;
+                });
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);

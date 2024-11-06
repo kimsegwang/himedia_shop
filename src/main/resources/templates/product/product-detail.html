@@ -114,7 +114,7 @@
 
                 <!-- Product Price and Stock -->
                 <div class="product-details">
-                    <h2 class="product-price" id="price" th:text="'가격: ' + ${productById.price} + ' 원'"></h2>
+                    <h2 class="product-price" id="price"name="price" th:text="'가격: ' + ${productById.price} + ' 원'"></h2>
                     <h2 class="product-stock" th:text="'재고: ' + ${productById.stock} + ' 개'"></h2>
                 </div>
 

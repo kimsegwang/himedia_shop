@@ -3,6 +3,7 @@ body, html {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f4;
     height: 100%;
 }
 
@@ -75,12 +76,20 @@ header {
     color: #fff;
 }
 
-/* 카테고리 섹션 */
-.category-section h2 {
+/* 헤더 바로 아래에 표시되는 카테고리 섹션 */
+.category-section {
     text-align: center;
-    margin-top: 20px;
-    font-size: 30px;
+    margin: 0;
+    padding: 10px 0;       /* 상하 여백 추가 */
+    /*border-bottom: 1px solid #ddd; !* 하단에 구분선 추가 *!*/
 }
+
+.category-section h2 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;             /* 제목의 기본 마진 제거 */
+}
+
 
 /* 상품 그리드 */
 .product-grid {
@@ -106,7 +115,7 @@ header {
     left: 0;
     background-color: #111;
     overflow-x: hidden;
-    /*transition: width 0.5s; !* 부드럽게 열리고 닫히도록 *!*/
+    transition: width 0.5s; /* 부드럽게 열리고 닫히도록 */
     padding-top: 60px;
 }
 
@@ -202,11 +211,16 @@ footer p {
     color: inherit; /* 기본 텍스트 색상 유지 (부모 요소 색상 상속) */
 }
 
-.product-item a:hover {
-    color: #000; /* 마우스 오버 시 색상 변경 (선택적) */
+.product-item:hover {
+    transform: scale(1.1);
+    background-color: #1A2B4C; /* 딥 블루 */
+    color: #FFFFFF; /* 화이트 텍스트 */
+    border-color: #2C3E50;
+
 }
 /* 상품 아이템 스타일 */
 .product-item {
+    transition: transform 0.3s ease, color 0.3s ease; /* 부드러운 크기 변화 및 색상 변화 */
     background-color: #f9f9f9; /* 배경색 추가 */
     border: 1px solid #ddd; /* 테두리 추가 */
     border-radius: 5px; /* 둥근 모서리 추가 */

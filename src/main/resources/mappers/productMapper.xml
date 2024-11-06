@@ -25,13 +25,16 @@
             id, category,sub_category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation
         FROM products
     </select>
-    <select id="getProductRecommend" parameterType="int" resultMap="productResultMap">
+    <select id="getProductRecommend" parameterType="map" resultMap="productResultMap">
         SELECT
-            id, category,sub_category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation
-        FROM  products
-        WHERE id !=#{productId}
+        id, category, sub_category, seller_id, title, content, content_img, created, updated, stock, price, temperature, precipitation
+        FROM products
+        WHERE id != #{productId}
+        <if test="category != null and category != ''">
+            AND category = #{category}
+        </if>
         ORDER BY RAND()
-            LIMIT 5;
+        LIMIT 5;
     </select>
     <select id="getProductById" parameterType="int" resultMap="productResultMap">
         SELECT

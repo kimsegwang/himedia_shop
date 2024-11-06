@@ -6,12 +6,11 @@ $(document).ready(() => {
 
         if (sidenav.style.width === "250px") {
             sidenav.style.width = "0";
-            menuBtn.classList.remove("openbtn-hidden"); // 삼선 버튼 보이기
-            closeAllDropdowns();
+            menuBtn.style.visibility = "visible"; // 삼선 버튼 보이기
         } else {
             sidenav.style.width = "250px";
-            menuBtn.classList.add("openbtn-hidden"); // 삼선 버튼 숨기기
-            closeAllDropdowns();
+            menuBtn.style.visibility = "hidden"; // 삼선 버튼 숨기기
+            closeAllDropdownsInstant(); // 모든 드롭다운을 애니메이션 없이 닫기
         }
     }
 
@@ -19,8 +18,8 @@ $(document).ready(() => {
         var sidenav = document.getElementById("mySidenav");
         var menuBtn = document.getElementById("menuBtn");
         sidenav.style.width = "0";
-        menuBtn.classList.remove("openbtn-hidden"); // 삼선 버튼 보이기
-        closeAllDropdowns();
+        menuBtn.style.visibility = "visible"; // 삼선 버튼 보이기
+        closeAllDropdownsInstant(); // 애니메이션 없이 모든 드롭다운 닫기
     }
 
     function closeNavInstant() {
@@ -28,37 +27,40 @@ $(document).ready(() => {
         var menuBtn = document.getElementById("menuBtn");
         sidenav.style.transition = "none"; // 애니메이션 제거
         sidenav.style.width = "0";
-        menuBtn.classList.remove("openbtn-hidden");
-        closeAllDropdowns();
+        menuBtn.style.visibility = "visible"; // 삼선 버튼 보이기
+        closeAllDropdownsInstant(); // 모든 드롭다운 즉시 닫기
         setTimeout(function() {
             sidenav.style.transition = ""; // 애니메이션 복원
         }, 50);
     }
 
-    function closeAllDropdowns() {
-        $('.dropdown-content').slideUp();
+    // 모든 드롭다운을 애니메이션 없이 즉시 닫는 함수
+    function closeAllDropdownsInstant() {
+        $('.dropdown-content').css('display', 'none'); // 애니메이션 없이 닫기
         $('.dropdown-btn').removeClass('active');
     }
 
+    // 개별 드롭다운 열기/닫기 토글
     $('.dropdown-btn').on('click', function() {
         const targetId = $(this).data('target');
-        const $dropdownContent = $('#' + targetId);
         $('.dropdown-content').not($(this).next()).slideUp();
         $('.dropdown-btn').not(this).removeClass('active');
         $(this).next('.dropdown-content').slideToggle();
         $(this).toggleClass('active');
     });
 
+    // 페이지 로드시, 사이드바 닫기
     window.addEventListener('pageshow', function() {
         closeNavInstant();
     });
 
+    // 페이지를 떠날 때 모든 드롭다운 닫기
     window.addEventListener('beforeunload', function() {
-        closeAllDropdowns();
+        closeAllDropdownsInstant();
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-        closeAllDropdowns();
+        closeAllDropdownsInstant();
     });
 
     $('#menuBtn').on('click', function() {

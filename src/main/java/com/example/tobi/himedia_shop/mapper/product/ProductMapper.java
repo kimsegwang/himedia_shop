@@ -4,6 +4,7 @@ package com.example.tobi.himedia_shop.mapper.product;
 import com.example.tobi.himedia_shop.dto.RainAndTemResponseDTO;
 import com.example.tobi.himedia_shop.model.Products;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface ProductMapper {
     List<Products> getProductPrecipitation(RainAndTemResponseDTO dto);
 
 
-    List<Products> getProductRecommend(int productId);
+    List<Products> getProductRecommend(@Param("productId")int productId, @Param("category")String category);
 }

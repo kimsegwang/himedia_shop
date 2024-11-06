@@ -1,55 +1,37 @@
 $(document).ready(function() {
-    // 페이지 로드 시 사이드바와 하위 카테고리 초기화
-    closeSidebarAndDropdowns();
+    // 모든 하위 카테고리 초기화: 사이드바가 열릴 때 애니메이션 없이 닫힌 상태로 유지하기
+    function resetDropdowns() {
+        $('.dropdown-content').hide(); // 모든 드롭다운을 애니메이션 없이 닫기
+        $('.dropdown-btn').removeClass('active'); // 'active' 클래스 제거
+    }
 
-    // 뒤로 가기를 통한 페이지 로드시에도 초기화
-    window.addEventListener('pageshow', function(event) {
-        if (event.persisted || window.performance && window.performance.navigation.type === 2) {
-            closeSidebarAndDropdowns();
-        }
-    });
+    // 페이지 로드 시 드롭다운 초기화
+    resetDropdowns();
 
-    // 카테고리 버튼 클릭 시 하부 항목 토글
-    $('.dropdown-btn').on('click', function () {
-        $('.dropdown-content').not($(this).next()).slideUp();
-        $('.dropdown-btn').not(this).removeClass('active');
-        $(this).next('.dropdown-content').slideToggle();
-        $(this).toggleClass('active');
-    });
-
-    // 사이드바 열기/닫기
+    // 사이드바 열기
     $('#menuBtn').on('click', function () {
         $('#mySidenav').css({ 'width': '250px', 'transition': 'width 0.5s' });
-        $(this).css('visibility', 'hidden'); // 삼선 메뉴 버튼 숨기기 (visibility로)
+        $(this).css('visibility', 'hidden'); // 삼선 메뉴 버튼 숨기기
+        resetDropdowns(); // 사이드바가 열릴 때마다 모든 드롭다운을 애니메이션 없이 닫음
     });
-    $('#closeBtn').on('click', function () {
+
+    // 사이드바 닫기
+    $('.closebtn').on('click', function () {
         $('#mySidenav').css({ 'width': '0', 'transition': 'width 0.5s' });
         $('#menuBtn').css('visibility', 'visible'); // 삼선 메뉴 버튼 다시 보이기
     });
 
-
-
-
-
-    // 사이드바와 드롭다운을 즉시 닫는 함수
-    function closeSidebarAndDropdowns() {
-        $('#mySidenav').css({ 'width': '0', 'transition': 'none' }); // 애니메이션 없이 즉시 닫기
-        $('.dropdown-content').hide(); // 모든 드롭다운 닫기
-        $('.dropdown-btn').removeClass('active'); // 'active' 클래스 제거
-        $('#menuBtn').css('visibility', 'visible'); // 삼선 메뉴 버튼 다시 보이기
-    }
-
-    $(document).ready(function() {
-        // 메인 페이지 또는 카테고리 페이지의 검색 버튼 클릭 이벤트
-        $('.search-container button').on('click', function() {
-            const keyword = $('.search-container input[type="text"]').val().trim();
-            if (keyword) {
-                // 검색 페이지로 이동하고 URL에 검색어 전달
-                window.location.href = `/search?keyword=${encodeURIComponent(keyword)}`;
-            }
-        });
+    // 카테고리 버튼 클릭 시 하위 항목 열기/닫기 (개별 애니메이션 적용)
+    $('.dropdown-btn').on('click', function () {
+        $(this).next('.dropdown-content').slideToggle(); // 클릭된 항목만 토글
+        $(this).toggleClass('active');
     });
 
-
-
+    // 검색 기능
+    $('.search-container button').on('click', function() {
+        const keyword = $('#searchInput').val().trim();
+        if (keyword) {
+            window.location.href = `/search?keyword=${encodeURIComponent(keyword)}`;
+        }
+    });
 });
