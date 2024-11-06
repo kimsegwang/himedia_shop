@@ -13,8 +13,8 @@
     </resultMap>
 
     <insert id="saveProduct" parameterType="com.example.tobi.himedia_shop.model.Products">
-        INSERT INTO products (seller_id, category, title, content, content_img, stock, price,temperature,precipitation)
-        VALUES (#{sellerId}, #{category}, #{title}, #{content}, #{contentImg}, #{stock}, #{price}, #{temperature}, #{precipitation})
+        INSERT INTO products (seller_id, category,sub_category ,title, content, content_img, stock, price,temperature,precipitation)
+        VALUES (#{sellerId}, #{category},#{subCategory} ,#{title}, #{content}, #{contentImg}, #{stock}, #{price}, #{temperature}, #{precipitation})
     </insert>
     <select id="getMember" resultType="com.example.tobi.himedia_shop.model.Member">
         select id,user_id,password,my_location,phone,name from member

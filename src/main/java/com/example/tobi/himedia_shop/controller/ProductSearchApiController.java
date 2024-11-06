@@ -25,7 +25,8 @@ public class ProductSearchApiController {
     private final ObjectMapper objectMapper;
     @GetMapping("/order")
     public ResponseEntity<?> getSortedProducts(@RequestParam("searchKeyword") String searchKeyword,
-                                               @RequestParam("sortBy") String sortBy) throws JsonProcessingException {
+                                               @RequestParam("sortBy") String sortBy
+    ) throws JsonProcessingException {
         // 검색 키워드가 비어있는 경우 처리
         if (searchKeyword == null || searchKeyword.trim().isEmpty()) {
             return new ResponseEntity<>("검색어를 입력해주세요.", HttpStatus.BAD_REQUEST);

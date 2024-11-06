@@ -211,11 +211,15 @@ footer p {
     color: inherit; /* 기본 텍스트 색상 유지 (부모 요소 색상 상속) */
 }
 
-.product-item a:hover {
-    color: #000; /* 마우스 오버 시 색상 변경 (선택적) */
+.product-item:hover {
+    transform: scale(1.1);
+    background-color: #333333; /* 다크 그레이 */
+    color: #FFFFFF; /* 화이트 텍스트 */
+    border-color: #888888; /* 회색 테두리 */
 }
 /* 상품 아이템 스타일 */
 .product-item {
+    transition: transform 0.3s ease, color 0.3s ease; /* 부드러운 크기 변화 및 색상 변화 */
     background-color: #f9f9f9; /* 배경색 추가 */
     border: 1px solid #ddd; /* 테두리 추가 */
     border-radius: 5px; /* 둥근 모서리 추가 */
@@ -234,7 +238,7 @@ footer p {
 /* 가격 텍스트 스타일 */
 .product-item p {
     font-size: 18px; /* 가격 글자 크기 조정 */
-    color: #333; /* 글자 색상 조정 */
+
     margin: 10px 0 0; /* 마진 조정 */
 }/* 필터 섹션 */
 .filter-section {

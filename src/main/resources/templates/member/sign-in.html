@@ -7,11 +7,26 @@
     <script th:src="@{/js/member/signIn.js}"></script>
     <link th:href="@{/css/member/sign.css}" rel="stylesheet">
     <title>로그인</title>
+    <script th:src="@{/js/connectionpage.js}"></script>
+    <link th:href="@{/css/connectionpage.css}" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
 </head>
 <body>
-<div class="container">
+
+<button style="    width: 50px;" id="menuBtn" class="openbtn" onclick="toggleNav()">&#9776;</button>
+
+<!-- Site Header -->
+<a href="/" style="font-family: 'Tangerine', serif; text-decoration-line: none; color: black; margin-left: 80px; position: fixed;">
+    <h1><i>Trend & Weather</i></h1>
+</a>
+
+<div style="width: 600px;
+    height: 400px;" class="container">
     <h2>로그인</h2>
-    <div >
+    <div style="padding: 10px;
+    margin-bottom: 50px;">
         <label for="user_id">아이디:</label>
         <input type="text" id="user_id" name="user_id" required>
 
@@ -22,6 +37,54 @@
     </div>
     아직 회원이 아니신가요? <a th:href="@{/member/join}">회원가입</a>
 </div>
+
+    <!-- Side Navigation -->
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input id="searchInput" type="text" placeholder="검색...">
+            <button>검색</button>
+        </div>
+
+        <!-- Category Links -->
+        <div class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-btn">TOP</a>
+            <ul class="dropdown-content">
+                <li><a th:href="@{/category/TOP/T-shirts}">T-Shirts</a></li>
+                <li><a th:href="@{/category/TOP/Shirts}">Shirts</a></li>
+                <li><a th:href="@{/category/TOP/Sweaters}">Sweaters</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-btn">OUTER</a>
+            <ul class="dropdown-content">
+                <li><a th:href="@{/category/OUTER/Coats}">Coats</a></li>
+                <li><a th:href="@{/category/OUTER/Jackets}">Jackets</a></li>
+                <li><a th:href="@{/category/OUTER/Hoodies}">Hoodies</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-btn">BOTTOM</a>
+            <ul class="dropdown-content">
+                <li><a th:href="@{/category/BOTTOM/Jeans}">Jeans</a></li>
+                <li><a th:href="@{/category/BOTTOM/Slacks}">Slacks</a></li>
+                <li><a th:href="@{/category/BOTTOM/Shorts}">Shorts</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-btn">ACC</a>
+            <ul class="dropdown-content">
+                <li><a th:href="@{/category/ACC/Bags}">Bags</a></li>
+                <li><a th:href="@{/category/ACC/Hats}">Hats</a></li>
+                <li><a th:href="@{/category/ACC/Scarves}">Scarves</a></li>
+            </ul>
+        </div>
+    </div>
 </body>
 
 </html>

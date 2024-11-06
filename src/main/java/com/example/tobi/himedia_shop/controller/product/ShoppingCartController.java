@@ -29,11 +29,7 @@ public class ShoppingCartController {
         int totalRecords = allpage;
         int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
-        for (ShoppingCartDTO shoppingCartDTO : shoppingcart) {
-            System.out.println(shoppingCartDTO);
-            System.out.println(shoppingCartDTO.getProductId());
-            System.out.println(shoppingCartDTO.getPrice());
-        }
+
 
         // 조회된 구매 내역을 모델에 추가
         model.addAttribute("shoppingcart", shoppingcart);

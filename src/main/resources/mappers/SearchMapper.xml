@@ -19,11 +19,14 @@
         <result property="temperature" column="temperature" />
         <result property="precipitation" column="precipitation" />
     </resultMap>
-    <select id="searchProducts" parameterType="String" resultMap="productSearchResultMap">
-        SELECT id,category,sub_category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation FROM products
+
+    <select id="searchProducts" parameterType="map" resultMap="productSearchResultMap">
+        SELECT id, category, sub_category, seller_id, title, content, content_img, created, updated, stock, price, temperature, precipitation
+        FROM products
         WHERE (title LIKE CONCAT('%', #{keyword}, '%')
             OR content LIKE CONCAT('%', #{keyword}, '%'))
-        order by created desc
+        ORDER BY created DESC
+            LIMIT #{limit} OFFSET #{offset}
     </select>
     <select id="categoryProduct" parameterType="map" resultMap="productSearchResultMap">
         SELECT id,category,sub_category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation FROM products
@@ -39,5 +42,6 @@
             <when test="sortBy == 'newest'">ORDER BY created desc</when>
             <otherwise>ORDER BY id</otherwise>
         </choose>
+
     </select>
 </mapper>

@@ -33,6 +33,7 @@ public class AdminService {
                 .title(prDTO.getProductName())
                 .sellerId(prDTO.getProductUserId())
                 .category(prDTO.getProductCategory())
+                .subCategory(prDTO.getProductSubCategory())
                 .content(prDTO.getProductContent())
                 .contentImg(path)
                 .stock(prDTO.getProductStock())

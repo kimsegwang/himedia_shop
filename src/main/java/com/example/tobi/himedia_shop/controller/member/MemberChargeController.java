@@ -24,8 +24,6 @@ public class MemberChargeController {
         int amount = requestData.get("amount");
         int balance = requestData.get("balance");
 
-        System.out.println(balance);
-        System.out.println(amount);
 
         // 예시: 사용자 잔액 업데이트 처리
         boolean success = memberChargeService.updateUserBalance(session, amount, String.valueOf(balance));
@@ -41,8 +39,6 @@ public class MemberChargeController {
         int amount = requestData.get("amount");
         int balance = requestData.get("balance");
 
-        System.out.println(balance);
-        System.out.println(amount);
 
         // 예시: 사용자 잔액 업데이트 처리
         boolean success = memberChargeService.WithdrawalUserBalance(session, amount, String.valueOf(balance));

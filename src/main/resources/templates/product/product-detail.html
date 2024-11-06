@@ -3,110 +3,184 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물건 상세 페이지</title>
+
+    <!-- External CSS and JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
     <script th:src="@{/js/product/productReview.js}"></script>
     <script th:src="@{/js/product/productBuy.js}"></script>
     <script th:src="@{/js/product/recommendProduct.js}"></script>
     <script th:src="@{/js/product/productFavorite.js}"></script>
+    <script th:src="@{/js/connectionpage.js}"></script>
     <link th:href="@{/css/product/product.css}" rel="stylesheet">
+    <link th:href="@{/css/connectionpage.css}" rel="stylesheet">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>물건 상세 페이지</title>
+    <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/connectionpage.css"> <!-- CSS 파일 연결 -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
 </head>
 
 <body>
-<div class="container">
-    <div class="left">
-        <div class="img-div">
-            <img th:src="@{${productById.img}}" alt="물건 이미지" style="width: 100%;height: 100%">
+<div class="wrapper">
+    <!-- Menu Button -->
+    <button id="menuBtn" class="openbtn" onclick="toggleNav()">&#9776;</button>
+
+    <!-- Site Header -->
+    <a href="/" style="font-family: 'Tangerine', serif; text-decoration-line: none; color: black; margin-left: 80px; position: fixed;">
+        <h1><i>Trend & Weather</i></h1>
+    </a>
+
+    <div class="container" style="max-width: 1200px">
+        <!-- Login Actions -->
+        <div class="login-actions">
+                <span th:if="${session.userId != null}">
+                    <a th:href="@{/member/mypage}">마이페이지</a>
+                    <a th:href="@{/logout}">로그아웃</a>
+                </span>
+            <span th:if="${session.userId == null}">
+                    <a th:href="@{/member/login}">로그인</a>
+                    <a th:href="@{/member/join}">회원가입</a>
+                </span>
         </div>
 
-        <div class="reviews">
-            <div id="reviewList">
-                <ul id="reviews"></ul>
-            </div>
-            <div class="pagination">
-                <button id="prev-page">이전 페이지</button>
-                <button id="next-page">다음 페이지</button>
-            </div>
-            <div style=" display: flex;
-    justify-content: center;" th:if="${session.userId != null}">
-                <button style="background: grey;" onclick="openModal()">리뷰 작성</button>
+        <!-- Left Section (Product Image, Reviews, and Recommendations) -->
+        <div class="left">
+            <!-- Product Image -->
+            <div class="img-div">
+                <img th:src="@{${productById.img}}" alt="물건 이미지" style="width: 100%; height: 100%">
             </div>
 
-            <div id="reviewModal" class="modal" style="display:none;">
-                <div class="modal-content">
-                    <span class="close" onclick="closeModal()">&times;</span>
-                    <h2>리뷰 작성</h2>
-                    <input type="hidden" id="productId" th:value="${productById.id}"> <!-- 제품 ID -->
-                    <input type="hidden" id="userId" th:value="${session.userId}"> <!-- 사용자 ID -->
-                    <input type="text" id="title" placeholder="제목을 입력하세요">
-                    <input type="text" id="review" placeholder="리뷰를 입력하세요">
-                    <div class="star">
-                        <input type="range" id="star-rating" value="1" step="0.5" min="0.5" max="5">
-                        <div class="star-display"></div>
+            <!-- Product Reviews -->
+            <div class="reviews">
+                <div id="reviewList">
+                    <ul id="reviews"></ul>
+                </div>
+                <div class="pagination">
+                    <button id="prev-page">이전 페이지</button>
+                    <button id="next-page">다음 페이지</button>
+                </div>
+                <div style="display: flex; justify-content: center;" th:if="${session.userId != null}">
+                    <button style="background: grey;" onclick="openModal()">리뷰 작성</button>
+                </div>
+
+                <!-- Review Modal -->
+                <div id="reviewModal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <h2>리뷰 작성</h2>
+                        <input type="hidden" id="productId" th:value="${productById.id}">
+                        <input type="hidden" id="userId" th:value="${session.userId}">
+                        <input type="text" id="title" placeholder="제목을 입력하세요">
+                        <input type="text" id="review" placeholder="리뷰를 입력하세요">
+                        <div class="star">
+                            <input type="range" id="star-rating" value="1" step="0.5" min="0.5" max="5">
+                            <div class="star-display"></div>
+                        </div>
+                        <label for="review-image">리뷰이미지:</label>
+                        <input type="file" id="review-image" name="reviewImage" accept="image/*" required onchange="previewImage(event)">
+                        <button type="button" id="remove-image-button" style="display: none;" onclick="removeImage()">이미지 삭제</button>
+                        <div id="image-preview" style="display: none;">
+                            <img id="preview" src="" alt="Image Preview" style="max-width: 200px; max-height: 200px;">
+                        </div>
+                        <button onclick="submitReview()">제출</button>
+                        <button onclick="closeModal()">취소</button>
                     </div>
+                </div>
 
-                    <label for="review-image">리뷰이미지:</label>
-                    <input type="file" id="review-image" name="reviewImage" accept="image/*" required onchange="previewImage(event)">
-                    <button type="button" id="remove-image-button" style="display:none;" onclick="removeImage()">이미지 삭제</button>
-
-                    <div id="image-preview" style="display:none;">
-                        <img id="preview" src="" alt="Image Preview" style="max-width: 200px; max-height: 200px;">
-                    </div>
-                    <button onclick="submitReview()">제출</button>
-                    <button onclick="closeModal()">취소</button>
-
-
+                <!-- Login Prompt -->
+                <div id="loginPrompt" style="display: none;">
+                    <p>로그인 후 리뷰를 작성할 수 있습니다.</p>
+                    <p><a href="/member/login">로그인하기</a></p>
                 </div>
             </div>
 
-            <div id="loginPrompt" style="display: none;">
-                <p>로그인 후 리뷰를 작성할 수 있습니다.</p>
-                <p><a href="/member/login">로그인하기</a></p>
+            <!-- Recommended Products -->
+            <h1>추천 상품</h1>
+            <ul style="display: flex" id="recommendations"></ul>
+        </div>
+
+        <!-- Right Section (Product Details and Purchase Options) -->
+        <div class="right">
+            <div class="product-card">
+                <h1 class="product-title" th:text="${productById.title}"></h1>
+                <p class="product-date" th:text="'작성일: ' + ${productById.created}"></p>
+
+                <!-- Product Description -->
+                <div class="product-description">
+                    <h2 class="description-header">제품 설명</h2>
+                    <p th:text="${productById.content}"></p>
+                </div>
+
+                <!-- Product Price and Stock -->
+                <div class="product-details">
+                    <h2 class="product-price" id="price"name="price" th:text="'가격: ' + ${productById.price} + ' 원'"></h2>
+                    <h2 class="product-stock" th:text="'재고: ' + ${productById.stock} + ' 개'"></h2>
+                </div>
+
+                <!-- Favorite Button -->
+                <div class="button-container" th:if="${session.userId != null}">
+                    <button id="favoriteBtn" class="favorite-button not-favorited" onclick="toggleFavorite()">찜하기</button>
+                </div>
+
+                <!-- Purchase Section -->
+                <div class="purchase-section">
+                    <label for="userBuy">개수:</label>
+                    <input id="userBuy" type="number" value="1" min="1" class="quantity-input">
+                    <button class="action-button" onclick="buy()">구매</button>
+                </div>
             </div>
         </div>
-        <h1> 추천 상품 </h1>
-        <ul style="display: flex" id="recommendations"></ul>
+    </div>
+</div>
+
+<!-- Side Navigation -->
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input id="searchInput" type="text" placeholder="검색...">
+        <button>검색</button>
     </div>
 
-    <div class="right">
-        <div class="product-card">
-            <h1 class="product-title" th:text="${productById.title}"></h1>
-            <p class="product-date" th:text="'작성일: ' + ${productById.created}"></p>
+    <!-- Category Links -->
+    <div class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-btn">TOP</a>
+        <ul class="dropdown-content">
+            <li><a th:href="@{/category/TOP/T-shirts}">T-Shirts</a></li>
+            <li><a th:href="@{/category/TOP/Shirts}">Shirts</a></li>
+            <li><a th:href="@{/category/TOP/Sweaters}">Sweaters</a></li>
+        </ul>
+    </div>
 
-            <div class="product-description">
-                <h2 class="description-header">제품 설명</h2>
-                <p th:text="${productById.content}"></p>
-            </div>
+    <div class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-btn">OUTER</a>
+        <ul class="dropdown-content">
+            <li><a th:href="@{/category/OUTER/Coats}">Coats</a></li>
+            <li><a th:href="@{/category/OUTER/Jackets}">Jackets</a></li>
+            <li><a th:href="@{/category/OUTER/Hoodies}">Hoodies</a></li>
+        </ul>
+    </div>
 
-            <div class="product-details">
-                <h2 class="product-price" id="price" th:text="'가격: ' + ${productById.price} + ' 원'"></h2>
-                <h2 class="product-stock" th:text="'재고: ' + ${productById.stock} + ' 개'"></h2>
-            </div>
+    <div class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-btn">BOTTOM</a>
+        <ul class="dropdown-content">
+            <li><a th:href="@{/category/BOTTOM/Jeans}">Jeans</a></li>
+            <li><a th:href="@{/category/BOTTOM/Slacks}">Slacks</a></li>
+            <li><a th:href="@{/category/BOTTOM/Shorts}">Shorts</a></li>
+        </ul>
+    </div>
 
-            <div class="button-container" th:if="${session.userId != null}">
-                <button id="favoriteBtn" class="favorite-button not-favorited"  onclick="toggleFavorite()">찜하기</button>
-            </div>
-
-            <div class="purchase-section">
-                <label for="userBuy">개수:</label>
-                <input id="userBuy" type="number" value="1" min="1" class="quantity-input">
-                <button class="action-button" onclick="buy()">구매</button>
-            </div>
-        </div>
-
-
-
+    <div class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-btn">ACC</a>
+        <ul class="dropdown-content">
+            <li><a th:href="@{/category/ACC/Bags}">Bags</a></li>
+            <li><a th:href="@{/category/ACC/Hats}">Hats</a></li>
+            <li><a th:href="@{/category/ACC/Scarves}">Scarves</a></li>
+        </ul>
     </div>
 </div>
 </body>
 
 </html>
-
-
-
-

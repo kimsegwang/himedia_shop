@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,15 +28,37 @@ public class AdminApiController {
 
     @PostMapping("/product-registration")
     public ResponseEntity<ProductRegistrationDTO> registerProduct(
-            @ModelAttribute ProductRequestDTO requestDTO
+            @RequestParam String productUserId,
+            @RequestParam String productName,
+            @RequestParam String productCategory,
+            @RequestParam String subCategory, // 하나의 서브 카테고리 값 받기
+            @RequestParam String productContent,
+            @RequestParam MultipartFile productImage,
+            @RequestParam int productTemperature,
+            @RequestParam int productPrecipitation,
+            @RequestParam int productStock,
+            @RequestParam int productPrice
     ) {
-        adminService.productRegistration(requestDTO);
-        return ResponseEntity.ok(
-                ProductRegistrationDTO.builder()
-                        .url("/admin")
-                        .build()
-        );
+        ProductRequestDTO requestDTO = new ProductRequestDTO();
+        requestDTO.setProductUserId(productUserId);
+        requestDTO.setProductName(productName);
+        requestDTO.setProductCategory(productCategory);
+        requestDTO.setProductSubCategory(subCategory); // 서브 카테고리 값을 설정
+        requestDTO.setProductContent(productContent);
+        requestDTO.setProductImage(productImage);
+        requestDTO.setProductTemperature(productTemperature);
+        requestDTO.setProductPrecipitation(productPrecipitation);
+        requestDTO.setProductStock(productStock);
+        requestDTO.setProductPrice(productPrice);
+
+
+        adminService.productRegistration(requestDTO); // 서비스 호출
+
+        return ResponseEntity.ok(ProductRegistrationDTO.builder()
+                .url("/admin")
+                .build());
     }
+
     @GetMapping("/product-review-count-list")
     public List<ReviewsCountResponseDTO> ProductReviewCountList(){
         return adminService.listProductsAndReviews();

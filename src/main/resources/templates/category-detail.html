@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 추가 -->
+
   <link th:href="@{/css/category.css}" rel="stylesheet">
   <script th:src="@{/js/connectionpage.js}"></script>
   <script th:src="@{/js/search.js}"></script>
@@ -44,6 +44,18 @@
   <!-- 카테고리 섹션 -->
   <section class="category-section">
     <h2 th:text="${subCategory}"></h2> <!-- 서브 카테고리 이름만 출력 -->
+  </section>
+
+  <section class="product-grid" id="search-result-container">
+    <div th:each="product : ${products}" class="product-item">
+      <a th:href="@{/product/detail/{productId}(productId=${product.id})}" style="text-decoration: none; color: inherit;">
+
+        <img th:src="@{${product.contentImg}}" alt="Product Image">
+        <h3 th:text="${product.title}"></h3>
+        <h4 th:text="${product.created}"></h4>
+        <p th:text="${product.price} + '원'"></p>
+      </a>
+    </div>
   </section>
 
     <div class="wrapper">
@@ -96,18 +108,6 @@
 </div>
 </div>
 
-
-  <section class="product-grid" id="search-result-container">
-    <div th:each="product : ${products}" class="product-item">
-      <a th:href="@{/product/detail/{productId}(productId=${product.id})}" style="text-decoration: none; color: inherit;">
-
-        <img th:src="@{${product.contentImg}}" alt="Product Image">
-        <h3 th:text="${product.title}"></h3>
-        <h4 th:text="${product.created}"></h4>
-        <p th:text="${product.price} + '원'"></p>
-      </a>
-    </div>
-  </section>
 
   <!-- Footer -->
   <footer>
