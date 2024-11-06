@@ -1,113 +1,128 @@
-
-create database shoppingMall;
-use shoppingMall;
-CREATE TABLE member (
-                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                        password VARCHAR(255) NOT NULL,
-                        user_id VARCHAR(30) NOT NULL,
-                        my_location VARCHAR(30) NOT NULL,
-                        phone VARCHAR(30) NOT NULL,
-                        name VARCHAR(30) NOT NULL
-);
-CREATE TABLE products (
-                          id INT AUTO_INCREMENT PRIMARY KEY,
-                          category varchar(30) not null ,
-                          seller_id VARCHAR(50) NOT NULL,
-                          content VARCHAR(50),
-                          title VARCHAR(30),
-                          content_img VARCHAR(255) NOT NULL,
-                          created DATETIME DEFAULT CURRENT_TIMESTAMP,
-                          updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                          sales_status TINYINT(1),
-                          stock int(10),
-                          price INT NOT NULl,
-                          temperature int NOT NULl,
-                          precipitation varchar(50) NOT NULl
-
-);
-
-CREATE TABLE review (
-                        id INT AUTO_INCREMENT PRIMARY KEY,
-                        product_id INT NOT NULL,
-                        userId VARCHAR(30) not null ,
-                        title varchar(30) not null ,
-                        review VARCHAR(50) NULL,
-                        review_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-                        score INT NULL
-
-);
-
-CREATE TABLE wishlist (
-                          id INT AUTO_INCREMENT PRIMARY KEY,
-                          product_id INT NOT NULL,
-                          user_id VARCHAR(30) NOT NULL
-
-);
-
-CREATE TABLE purchasehistory (
-                                 id INT AUTO_INCREMENT PRIMARY KEY,
-                                 product_id INT NOT NULL,
-                                 user_id VARCHAR(30) NOT NULL,
-                                 price int not null ,
-                                 review_date DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
-
-CREATE TABLE roles (
-                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                       name VARCHAR(50) NOT NULL UNIQUE
-);
-
-CREATE TABLE user_roles (
-                            user_id BIGINT,
-                            role_id BIGINT,
-                            PRIMARY KEY (user_id, role_id),
-                            FOREIGN KEY (user_id) REFERENCES member(id) ON DELETE CASCADE,
-                            FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
-);
-
-create table coordinate(
-    id  int auto_increment
+create table coordinate
+(
+    id int auto_increment
         primary key,
     nx int not null,
     ny int not null
 );
 
-create table wheatherAPI(
-    id int auto_increment
+create table member
+(
+    id          bigint auto_increment
+        primary key,
+    password    varchar(255) not null,
+    user_id     varchar(30)  not null,
+    my_location varchar(30)  not null,
+    phone       varchar(30)  not null,
+    name        varchar(30)  not null
+);
+
+create table payment
+(
+    id           int auto_increment
+        primary key,
+    user_id      varchar(20)                          null,
+    deposit      int        default 0                 null,
+    withdrawal   int        default 0                 null,
+    balance      int                                  null,
+    payment_date datetime   default CURRENT_TIMESTAMP null,
+    is_purchased tinyint(1) default 0                 null
+);
+
+create table products
+(
+    id            int auto_increment
+        primary key,
+    category      varchar(30)                        not null,
+    sub_category  varchar(255)                       null,
+    seller_id     varchar(50)                        not null,
+    content       varchar(50)                        null,
+    title         varchar(30)                        null,
+    content_img   varchar(255)                       not null,
+    created       datetime default CURRENT_TIMESTAMP null,
+    updated       datetime default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP,
+    sales_status  tinyint(1)                         null,
+    stock         int                                null,
+    price         int                                not null,
+    temperature   int                                not null,
+    precipitation int                                not null
+);
+
+create table purchasehistory
+(
+    id              int auto_increment
+        primary key,
+    product_id      int                      not null,
+    user_id         varchar(30)              not null,
+    price           int                      null,
+    purchase_volume int                      null,
+    review_date     datetime default (now()) null
+);
+
+create table review
+(
+    id          int auto_increment
+        primary key,
+    product_id  int                                not null,
+    user_id     varchar(30)                        not null,
+    title       varchar(30)                        not null,
+    review      varchar(50)                        null,
+    review_date datetime default CURRENT_TIMESTAMP null,
+    score       float                              null,
+    review_img  varchar(255)                       null
+);
+
+create index idx_product_id_id
+    on review (product_id, id);
+
+create table roles
+(
+    id   bigint auto_increment
+        primary key,
+    name varchar(50) not null,
+    constraint name
+        unique (name)
+);
+
+create table user_roles
+(
+    user_id bigint not null,
+    role_id bigint not null,
+    primary key (user_id, role_id),
+    constraint user_roles_ibfk_1
+        foreign key (user_id) references member (id)
+            on delete cascade,
+    constraint user_roles_ibfk_2
+        foreign key (role_id) references roles (id)
+            on delete cascade
+);
+
+create index role_id
+    on user_roles (role_id);
+
+create table wheatherapi
+(
+    id          int auto_increment
         primary key,
     Information text not null,
-    nx int,
-    ny int,
-    basedate int
+    nx          int  null,
+    ny          int  null,
+    basedate    int  null
 );
-drop table wheatherAPI;
+
+create table wishlist
+(
+    id         int auto_increment
+        primary key,
+    product_id int         not null,
+    user_id    varchar(30) not null
+);
+
+ 
 INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 INSERT INTO roles (name) VALUES ('ROLE_USER');
 
 INSERT INTO user_roles (user_id, role_id) VALUES (5,1);
-
-select * from member;
-use shoppingmall;
-
-
-CREATE TABLE payment (
-                         id INT AUTO_INCREMENT PRIMARY KEY,
-                         user_id VARCHAR(20),
-                         amount INT,  -- 거래 금액 (입금: 양수, 출금: 음수)
-                         transaction_type BOOLEAN,  -- 0: 출금, 1: 입금
-                         balance INT,  -- 현재 잔액
-                         payment_date DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-CREATE TABLE payment (
-                         id INT AUTO_INCREMENT PRIMARY KEY,
-                         user_id VARCHAR(20),
-                         deposit INT DEFAULT 0,  -- 입금 금액
-                         withdrawal INT DEFAULT 0,  -- 출금 금액
-                         balance INT,  -- 현재 잔액
-                         is_purchased BOOLEAN DEFAULT false,
-                         payment_date DATETIME DEFAULT CURRENT_TIMESTAMP
-);
 
 
 

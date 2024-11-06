@@ -23,8 +23,15 @@
       </h1>
     </div>
     <div class="login-actions">
-      <a th:href="@{/member/login}">로그인</a> <!-- 로그인 페이지로 연결 -->
-      <a th:href="@{/member/join}">회원가입</a> <!-- 회원가입 페이지로 연결 -->
+      <!-- 로그인 상태 확인 (로그인 사용자일 때만 표시) -->
+      <span th:if="${session.userId != null}">
+                <a th:href="@{/member/mypage}">마이페이지</a>
+    <a th:href="@{/logout}">로그아웃</a>
+</span>
+      <span th:if="${session.userId == null}">
+    <a th:href="@{/member/login}">로그인</a>
+    <a th:href="@{/member/join}">회원가입</a>
+</span>
     </div>
   </header>
 
@@ -56,11 +63,11 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-      <p>&copy; 2024 SEG. All rights reserved.</p>
-  </footer>
-</div>
 
+</div>
+<footer>
+  <p>&copy; 2024 SEG. All rights reserved.</p>
+</footer>
 <!-- 사이드바 -->
 <div class="wrapper">
   <div id="mySidenav" class="sidenav">

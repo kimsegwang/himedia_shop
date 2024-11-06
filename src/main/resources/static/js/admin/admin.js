@@ -3,20 +3,19 @@ let selectedFile = null; // 파일은 1개만 선택 가능
 $(document).ready(() => {
 
     fileChaged();
-    });
-$(document).ready(() => {
+});$(document).ready(() => {
     const subCategories = {
-        '상의': ['T-Shirts', 'Shirts', 'Sweaters'],
-        '하의': ['Jeans', 'Slacks', 'Shorts'],
-        '아우터': ['Coats', 'Jackets', 'Hoodies'],
-        '액세서리': ['Bags', 'Hats', 'Scarves']
+        'TOP': ['T-Shirts', 'Shirts', 'Sweaters'],
+        'BOTTOM': ['Jeans', 'Slacks', 'Shorts'],
+        'OUTER': ['Coats', 'Jackets', 'Hoodies'],
+        'ACC': ['Bags', 'Hats', 'Scarves']
     };
 
     // 카테고리 선택 시 하위 카테고리 표시
     $('#product-category').on('change', function () {
         const selectedCategory = $(this).val();
-        const subCategoryContainer = $('#sub-category-container');
-        const subCategoryOptions = $('#sub-category-options');
+        const subCategoryContainer = $('#sub-category-container'); // 하위 카테고리 컨테이너
+        const subCategoryOptions = $('#sub-category-options'); // 하위 카테고리 옵션들
 
         subCategoryOptions.empty(); // 이전 하위 항목 지우기
 
@@ -47,8 +46,6 @@ $(document).ready(() => {
             formData.append('subCategory', selectedSubCategory); // 한 번만 추가하도록 수정
         }
 
-
-
         // Ajax 요청
         $.ajax({
             type: 'POST',
@@ -67,6 +64,7 @@ $(document).ready(() => {
         });
     });
 });
+
 
 let fileChaged = () => {
     // 파일 선택 시 이벤트

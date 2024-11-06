@@ -1,4 +1,4 @@
-package com.example.tobi.himedia_shop.controller.prduct;
+package com.example.tobi.himedia_shop.controller.product;
 
 
 import com.example.tobi.himedia_shop.dto.history.PurchaseHistoryWithProductDTO;
@@ -27,7 +27,7 @@ public class ShoppingCartController {
         List<ShoppingCartDTO> shoppingcart = shoppingCartService.getPurchaseHistoryWithProduct(userId, page, pageSize);
         int allpage = shoppingCartService.getPurchaseLike(userId);
         int totalRecords = allpage;
-        int totalPages = (int) Math.ceil( totalRecords / pageSize);
+        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
 
 

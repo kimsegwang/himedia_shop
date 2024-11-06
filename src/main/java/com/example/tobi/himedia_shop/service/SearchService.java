@@ -18,11 +18,13 @@ public class SearchService {
     private final SearchProductMapper searchProductMapper;
     private final ImageBase64Converter imageBase64Converter;
 
-    public List<SearchProduct> searchProduct(String keyword) {
+    public List<SearchProduct> searchProduct(String keyword,int page) {
         if (keyword == null || keyword.trim().isEmpty()) {
             return Collections.emptyList(); // 빈 리스트 반환
         }
-        List<Products> products = searchProductMapper.searchProducts(keyword);
+        int limit = 9;
+        int offset= page*limit;
+        List<Products> products = searchProductMapper.searchProducts(keyword,limit,offset);
         return convertToSearchProducts(products);
     }
 
@@ -69,4 +71,6 @@ public class SearchService {
         List<Products> products = searchProductMapper.searchProductsSortBy(searchKeyword,sortBy);
         return convertToSearchProducts(products);
     }
+
+
 }

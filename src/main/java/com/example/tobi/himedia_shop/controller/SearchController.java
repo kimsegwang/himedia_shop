@@ -25,7 +25,7 @@ public class SearchController {
         if (keyword == null || keyword.trim().isEmpty()) {
             model.addAttribute("products", List.of());
         } else {
-            List<SearchProduct> products = searchService.searchProduct(keyword);
+            List<SearchProduct> products = searchService.searchProduct(keyword,0);
             model.addAttribute("products", products);
         }
         model.addAttribute("searchKeyword", keyword);

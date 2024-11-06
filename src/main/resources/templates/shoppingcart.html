@@ -13,6 +13,26 @@
             color: #343a40;
         }
 
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            color: #2c3e50;
+            font-size: 24px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            padding: 10px 20px;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #3498db;
+            text-decoration: none;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -150,7 +170,9 @@
     </style>
 </head>
 <body>
-
+<div class="logo-container">
+    <a href="/" class="logo">Trend & Weather</a>
+</div>
 <div class="container">
     <h1>장바구니</h1>
 
@@ -205,7 +227,7 @@
                 if (currentPage > 3) {
                     const firstPageItem = document.createElement('li');
                     firstPageItem.className = 'page-item';
-                    firstPageItem.innerHTML = `<a class="page-link" href="?page=1&pageSize=${pageSize}"> </a>`;
+                    firstPageItem.innerHTML = `<a class="page-link" href="?page=1&pageSize=${pageSize}">1</a>`;
                     pagination.appendChild(firstPageItem);
 
                     const dots = document.createElement('li');
@@ -221,7 +243,6 @@
                     pageItem.innerHTML = `<a class="page-link" href="?page=${i}&pageSize=${pageSize}">${i}</a>`;
                     pagination.appendChild(pageItem);
                 }
-
 
                 // 마지막 페이지 버튼
                 if (currentPage < totalPages - 2) {
@@ -240,10 +261,9 @@
                 const nextItem = document.createElement('li');
                 nextItem.className = `page-item${currentPage >= totalPages ? ' disabled' : ''}`;
                 nextItem.innerHTML = currentPage >= totalPages
-                    ? `<a class="page-link" href="?page=${currentPage + 1}&pageSize=${pageSize}">&raquo;</a>`
-                    : `<span class="page-link">&raquo;</span>`;
+                    ? `<span class="page-link">&raquo;</span>`
+                    : `<a class="page-link" href="?page=${currentPage + 1}&pageSize=${pageSize}">&raquo;</a>`;
                 pagination.appendChild(nextItem);
-
             }
 
             // 페이지 초기 로드 시 기본값 설정 및 호출
