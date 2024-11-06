@@ -72,7 +72,7 @@ button:hover {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* 깊은 그림자 */
     transition: transform 0.2s; /* 애니메이션 효과 */
     position: sticky;
-    top: 20px;
+    top: 100px;
 }
 
 .product-card:hover {

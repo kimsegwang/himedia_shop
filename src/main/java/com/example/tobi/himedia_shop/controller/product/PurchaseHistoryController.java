@@ -30,7 +30,7 @@ public class PurchaseHistoryController {
         List<PurchaseHistoryWithProductDTO> history = purchaseHistoryService.getPurchaseHistoryWithProduct(userId, page, pageSize);
         int allpage = purchaseHistoryService.getPurchaseHistory(userId);
         int totalRecords = allpage;
-        System.out.println(totalRecords);
+
         int totalPages = (int) Math.ceil( totalRecords / pageSize);
         // 조회된 구매 내역을 모델에 추가
         model.addAttribute("history", history);
