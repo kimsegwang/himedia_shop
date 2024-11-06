@@ -254,9 +254,7 @@ footer {
 }
 .product-slide:hover{
     transform: scale(1.03);
-    background-color: #333333;
-    color: #FFFFFF;
-    border-color: #888888;
+
 }
 .product-slide {
     flex: 0 0 33.333%;

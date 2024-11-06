@@ -12,7 +12,7 @@ function getRecommendProduct() {
                         <img style="width: 150px; height: 150px;" src="${product.contentImg}" alt="Product Image" />
                         <br>
                         <strong>제목:</strong> ${product.title} <br>
-                        <strong>내용:</strong> ${product.content} <br>
+ 
                         <strong>가격:</strong> ${product.price} <br>
                     </li>`
                 );

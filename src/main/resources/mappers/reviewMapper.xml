@@ -35,7 +35,7 @@
         FROM review
         WHERE product_id = #{productId}
         ) AS sub
-        WHERE sub.rn > #{offset} AND  #{offset} + #{limit} >= sub.rn
+        WHERE sub.rn BETWEEN #{offset} AND #{offset} + #{limit} - 1
     </select>
 
     <select id="countReviews" resultType="int">

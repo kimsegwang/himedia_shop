@@ -126,3 +126,9 @@ INSERT INTO user_roles (user_id, role_id) VALUES (5,1);
 
 
 
+delete from products;
+delete from payment;
+delete from purchasehistory;
+delete from review;
+delete from wishlist;
+

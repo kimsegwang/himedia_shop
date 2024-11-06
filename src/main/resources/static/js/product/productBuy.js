@@ -48,9 +48,9 @@ function buy() {
                     document.querySelector('.product-stock').textContent = `재고: ${updatedStock} 개`;
                 });
             },
-            error: function(xhr, status, error) {
+            error: (error)=>{
                 console.error('Error:', error);
-                alert("구매 실패.");
+                alert(error.responseText);
             }
         });
     });
