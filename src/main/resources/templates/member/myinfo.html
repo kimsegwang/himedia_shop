@@ -11,10 +11,24 @@
       color: #333;
       margin: 0;
       padding: 0;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
+      padding-top: 2rem;
+    }
+
+    .logo {
+      margin-bottom: 2rem;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: #333;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .logo:hover {
+      color: #4CAF50;
     }
 
     .container {
@@ -25,6 +39,7 @@
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       text-align: center;
+      margin-bottom: 2rem;
     }
 
     h1 {
@@ -80,9 +95,11 @@
     .logout-button:hover {
       background-color: #e53935;
     }
+
   </style>
 </head>
 <body>
+<a href="/" class="logo">Trend & Weather</a>
 <div class="container">
   <h1>내 정보</h1>
 
