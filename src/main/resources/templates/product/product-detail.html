@@ -34,6 +34,7 @@
     <div class="container" style="max-width: 1200px">
         <!-- Login Actions -->
         <div class="login-actions">
+
                 <span th:if="${session.userId != null}">
                     <a th:href="@{/member/mypage}">마이페이지</a>
                     <a th:href="@{/logout}">로그아웃</a>

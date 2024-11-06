@@ -26,8 +26,8 @@ public class MemberChargeService {
         return 0< paymentMapper.addPayment(PaymentBalanceRequestDTO.builder()
                 .balance(Integer.parseInt(balance))
                 .isPurchased(0)
-                .withdrawal(amount)
-                .deposit(0)
+                .withdrawal(0)
+                .deposit(amount)
                 .userId(userid)
                 .build());
 
@@ -38,8 +38,8 @@ public class MemberChargeService {
         return 0< paymentMapper.addPayment(PaymentBalanceRequestDTO.builder()
                 .balance(Integer.parseInt(balance))
                 .isPurchased(0)
-                .withdrawal(0)
-                .deposit(amount)
+                .withdrawal(amount)
+                .deposit(0)
                 .userId(userid)
                 .build());
 

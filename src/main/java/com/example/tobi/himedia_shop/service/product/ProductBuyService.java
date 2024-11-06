@@ -48,7 +48,7 @@ public class ProductBuyService {
             int totalCost = requestDTO.getPrice() * requestDTO.getStock();
 
             paymentMapper.addPayment(PaymentBalanceRequestDTO.builder()
-                    .balance(balanceResponseDTO.getBalance())
+                    .balance(balanceResponseDTO.getBalance()-totalCost)
                     .isPurchased(1)
                     .withdrawal(totalCost)
                     .deposit(0)
