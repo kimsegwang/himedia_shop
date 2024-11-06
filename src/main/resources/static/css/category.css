@@ -3,6 +3,7 @@ body, html {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f4;
     height: 100%;
 }
 
@@ -75,12 +76,20 @@ header {
     color: #fff;
 }
 
-/* 카테고리 섹션 */
-.category-section h2 {
+/* 헤더 바로 아래에 표시되는 카테고리 섹션 */
+.category-section {
     text-align: center;
-    margin-top: 20px;
-    font-size: 30px;
+    margin: 0;
+    padding: 10px 0;       /* 상하 여백 추가 */
+    /*border-bottom: 1px solid #ddd; !* 하단에 구분선 추가 *!*/
 }
+
+.category-section h2 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;             /* 제목의 기본 마진 제거 */
+}
+
 
 /* 상품 그리드 */
 .product-grid {
@@ -106,7 +115,7 @@ header {
     left: 0;
     background-color: #111;
     overflow-x: hidden;
-    /*transition: width 0.5s; !* 부드럽게 열리고 닫히도록 *!*/
+    transition: width 0.5s; /* 부드럽게 열리고 닫히도록 */
     padding-top: 60px;
 }
 
