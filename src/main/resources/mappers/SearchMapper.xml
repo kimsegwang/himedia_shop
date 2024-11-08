@@ -31,6 +31,12 @@
     <select id="categoryProduct" parameterType="map" resultMap="productSearchResultMap">
         SELECT id,category,sub_category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation FROM products
         WHERE category = #{category} AND sub_category = #{subCategory}
+        <choose>
+            <when test="sortBy == 'priceLowHigh'">ORDER BY price </when>
+            <when test="sortBy == 'priceHighLow'">ORDER BY price desc</when>
+            <when test="sortBy == 'newest'">ORDER BY created desc</when>
+            <otherwise>ORDER BY id</otherwise>
+        </choose>
     </select>
     <select id="searchProductsSortBy" parameterType="map" resultMap="productSearchResultMap">
         SELECT id,category,sub_category,seller_id,title,content,content_img,created,updated,stock,price,temperature,precipitation FROM products

@@ -45,9 +45,13 @@ public class ReviewService {
     @Transactional
     public boolean insertReview(ReviewRequestDTO requestDTO) {
         String path = null;
+
+        // 이미지 업로드 처리
         if (requestDTO.getReviewImage() != null && !requestDTO.getReviewImage().isEmpty()) {
             path = fileService.fileUpload(requestDTO.getReviewImage(), "/reviews/");
         }
+
+        // 리뷰 객체 생성
         Review review = Review.builder()
                 .userId(requestDTO.getUserId())
                 .title(requestDTO.getTitle())
@@ -56,17 +60,37 @@ public class ReviewService {
                 .score(requestDTO.getRating())
                 .reviewImg(path)
                 .build();
+
+        // 리뷰 삽입 성공 여부 체크
         boolean success = reviewMapper.reviewInsert(review) > 0;
         if (success) {
-            // 캐시 무효화
-            int totalReviews = reviewMapper.countReviews(requestDTO.getProductId());
-            int totalPages = (int) Math.ceil((double) totalReviews / 5);
-            for (int i = 0; i < totalPages; i++) {
-                reviewCache.invalidate("product_" + requestDTO.getProductId() + "_page_" + i);
-            }
+            int productId = requestDTO.getProductId();
+
+            // 리뷰 추가 후 해당 제품의 캐시를 모두 삭제
+            invalidateProductCache(productId);
+
+            // 새로운 리뷰 수를 카운트
+            int totalReviews = reviewMapper.countReviews(productId);
+
+            // 페이지당 리뷰 수 (예: 3개씩 보여주기)
+            int pageSize = 3;
+
+            // 총 페이지 수 계산
+            int totalPages = (int) Math.ceil((double) totalReviews / pageSize);
+
+            // 새로 추가된 리뷰가 포함될 수 있는 마지막 페이지
+            String lastCacheKey = "product_" + productId + "_page_" + (totalPages - 1);
+
+            // 마지막 페이지의 캐시 갱신 (새로 추가된 리뷰가 포함된 페이지)
+            PageResponseDTO lastPageResponse = getReviewsForProduct(productId, totalPages - 1, pageSize);
+            reviewCache.put(lastCacheKey, lastPageResponse);
+
+            return true;
         }
-        return success;
+
+        return false;
     }
+
 
     @Transactional(readOnly = true)
     public PageResponseDTO getReviewsForProduct(int productId, int page, int size) {
@@ -104,7 +128,6 @@ public class ReviewService {
 
         // 결과를 캐시에 저장
         reviewCache.put(cacheKey, response);
-        System.out.println("resoibse :"+response.getReviews());
         return response;
     }
     private void processImage(ReviewResponseDTO review) {
@@ -142,20 +165,44 @@ public class ReviewService {
     }
     @Transactional
     public boolean deleteReview(int reviewId) {
-        int productId = reviewMapper.getProductIdFromReviewId(reviewId); // 리뷰 ID로 제품 ID 가져오기
+        // 리뷰 삭제 시 리뷰 ID로 해당 제품의 ID를 찾음
+        int productId = reviewMapper.getProductIdFromReviewId(reviewId);
 
-        boolean isDeleted = reviewMapper.reviewDelete(reviewId) > 0; // 리뷰 삭제 시도
-        if(isDeleted){
-            int totalReviews = reviewMapper.countReviews(productId); // 해당 제품의 총 리뷰 수
+        // 리뷰 삭제
+        boolean isDeleted = reviewMapper.reviewDelete(reviewId) > 0;
 
-            int totalPages = (int) Math.ceil((double) totalReviews / 5); // 총 페이지 수 계산
+        if (isDeleted) {
+            // 리뷰 삭제 후 해당 제품의 캐시를 모두 삭제
+            invalidateProductCache(productId);
+
+            // 삭제 후 리뷰 수와 페이지 수 다시 계산
+            int totalReviews = reviewMapper.countReviews(productId);
+            int pageSize = 3;  // 페이지당 3개씩 표시
+            int totalPages = (int) Math.ceil((double) totalReviews / pageSize);
+
+            // 리뷰 삭제 후 페이지가 비어 있는 경우를 방지하기 위한 처리
+            if (totalReviews == 0) {
+                // 삭제 후 남은 리뷰가 없다면 페이지를 없애거나 빈 페이지로 갱신
+                totalPages = 0;
+            }
+
+            // 해당 페이지들에 대한 캐시 갱신
             for (int i = 0; i < totalPages; i++) {
-                reviewCache.invalidate("product_" + productId + "_page_" + i); // 각 페이지 캐시 무효화
+                String cacheKey = "product_" + productId + "_page_" + i;
+                PageResponseDTO responseDTO = getReviewsForProduct(productId, i, pageSize);
+                reviewCache.put(cacheKey, responseDTO);
+            }
+
+            // 삭제된 후 페이지가 비지 않도록 마지막 페이지 처리
+            if (totalPages > 0) {
+                String lastCacheKey = "product_" + productId + "_page_" + (totalPages - 1);
+                PageResponseDTO lastPageResponse = getReviewsForProduct(productId, totalPages - 1, pageSize);
+                reviewCache.put(lastCacheKey, lastPageResponse);
             }
         }
-        return isDeleted; // 삭제 성공 여부 반환
-    }
 
+        return isDeleted;
+    }
     private List<ReviewResponseDTO> convertToReviewResponseDTO(List<Review> reviews) {
         return reviews.stream()
                 .map(review -> ReviewResponseDTO.builder()
@@ -171,7 +218,18 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
+    private void invalidateProductCache(int productId) {
+        // 해당 제품에 대한 모든 캐시를 삭제
+        int totalReviews = reviewMapper.countReviews(productId);
+        int pageSize = 3;  // 페이지당 3개씩 표시
+        int totalPages = (int) Math.ceil((double) totalReviews / pageSize);
 
+        // 제품에 관련된 모든 페이지 캐시 무효화
+        for (int i = 0; i < totalPages; i++) {
+            String cacheKey = "product_" + productId + "_page_" + i;
+            reviewCache.invalidate(cacheKey); // 특정 페이지 캐시 삭제
+        }
+    }
 
 
 }

@@ -15,6 +15,7 @@ public class PurchaseHistoryWithProductDTO {
     private int price;
     private int purchaseVolume;
     private String userId;
+    private String reviewDate;
 
 
 }

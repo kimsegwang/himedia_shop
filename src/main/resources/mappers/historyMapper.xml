@@ -18,7 +18,8 @@
             p.title AS title,
             p.price AS price,
             ph.purchase_volume AS purchaseVolume,
-            ph.user_id AS user_id
+            ph.user_id AS user_id,
+            ph.review_date AS reviewDate
         FROM purchasehistory ph
                  JOIN products p ON ph.product_id = p.id
         WHERE ph.user_id = #{userId}

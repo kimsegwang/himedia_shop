@@ -8,7 +8,7 @@
 
   <link th:href="@{/css/category.css}" rel="stylesheet">
   <script th:src="@{/js/connectionpage.js}"></script>
-  <script th:src="@{/js/search.js}"></script>
+  <script th:src="@{/js/carteryApi.js}"></script>
 
 
 
@@ -24,7 +24,7 @@
     <div class="menu-logo-container">
       <button class="menu-btn" id="menuBtn">☰</button> <!-- 삼선 버튼 -->
       <h1>
-        <a href="/"style="font-family: 'Tangerine', serif;text-decoration-line : none;color: black;"><i>Trend & Weather</i></a>
+        <a class="logos" href="/"><i>Trend & Weather</i></a>
       </h1> <!-- 쇼핑몰 로고 -->
     </div>
 
@@ -40,10 +40,19 @@
 </span>
     </div>
     </header>
-
+  <section class="filter-section">
+    <label for="sortSelect" class="filter-label">정렬 기준</label>
+    <select id="sortSelect" class="filter-select">
+      <option value="newest">최신순</option>
+      <option value="priceLowHigh">가격 낮은순</option>
+      <option value="priceHighLow">가격 높은순</option>
+    </select>
+  </section>
   <!-- 카테고리 섹션 -->
   <section class="category-section">
-    <h2 th:text="${subCategory}"></h2> <!-- 서브 카테고리 이름만 출력 -->
+    <h1 id="categoryName" th:text="${CategoryName}"></h1>  <!-- CategoryName을 표시하는 <h1> 태그 -->
+    <h2 id="subCategoryName" th:text="${subCategory}"></h2>  <!-- subCategory를 표시하는 <h2> 태그 -->
+
   </section>
 
   <section class="product-grid" id="search-result-container">

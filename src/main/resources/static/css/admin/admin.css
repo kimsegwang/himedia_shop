@@ -103,3 +103,15 @@ footer {
     margin-right: 20px; /* 간격 조정 */
     vertical-align: top; /* 수직 정렬 */
 }
+.logos {
+    font-family: 'Tangerine', serif;
+    text-decoration-line: none;
+    color: black;
+    margin-left: 80px;
+    position: fixed;
+    transition: color 0.3s ease;
+}
+.logos:hover {
+    color: #3498db;
+    text-decoration: none;
+}

@@ -63,7 +63,7 @@ $(document).ready(() => {
                     chosenProducts = []; // 이전 선택된 제품 초기화
 
                     // 랜덤하게 3개의 제품 선택
-                    const length = products.length <= 3 ? products.length : 3;
+                    const length = products.length <= 9 ? products.length : 9;
                     const selectedProducts = [];
 
                     for (let i = 0; i < length; i++) {

@@ -313,3 +313,11 @@ footer p {
     background-color: #007BFF;
     color: white;
 }
+.logos{
+ font-family: 'Tangerine', serif;text-decoration-line : none;color: black;
+    transition: color 0.3s ease;
+}
+.logos:hover {
+    color: #3498db;
+    text-decoration: none;
+}

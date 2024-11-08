@@ -126,9 +126,23 @@ INSERT INTO user_roles (user_id, role_id) VALUES (5,1);
 
 
 
-delete from products;
-delete from payment;
-delete from purchasehistory;
-delete from review;
-delete from wishlist;
+use shoppingmall;
+insert into coordinate(id, nx, ny) values (1, 63,126);
+insert into coordinate(id, nx, ny) values (2, 98,77);
+insert into coordinate(id, nx, ny) values (3, 89,90);
+insert into coordinate(id, nx, ny) values (4, 52,125);
+insert into coordinate(id, nx, ny) values (5, 60,74);
+insert into coordinate(id, nx, ny) values (6, 68,100);
+insert into coordinate(id, nx, ny) values (7, 104,83);
+insert into coordinate(id, nx, ny) values (8, 65,107);
+insert into coordinate(id, nx, ny) values (9, 63,124);
+insert into coordinate(id, nx, ny) values (10, 81,118);
+insert into coordinate(id, nx, ny) values (11, 61,104);
+insert into coordinate(id, nx, ny) values (12, 73,66);
+insert into coordinate(id, nx, ny) values (13, 94,106);
+insert into coordinate(id, nx, ny) values (14, 90,76);
+insert into coordinate(id, nx, ny) values (15, 53,38);
+insert into coordinate(id, nx, ny) values (16, 28,8);
+insert into coordinate(id, nx, ny) values (17, 77,122);
+insert into coordinate(id, nx, ny) values (18, 63,89);
 

@@ -28,11 +28,11 @@ public class SearchService {
         return convertToSearchProducts(products);
     }
 
-    public List<SearchProduct> categoryProduct(String category, String subCategory) {
+    public List<SearchProduct> categoryProduct(String category, String subCategory, String sortBy) {
         if (isNullOrEmpty(category) || isNullOrEmpty(subCategory)) {
             return Collections.emptyList(); // 빈 리스트 반환
         }
-        List<Products> products = searchProductMapper.categoryProduct(category, subCategory);
+        List<Products> products = searchProductMapper.categoryProduct(category, subCategory, sortBy);
         return convertToSearchProducts(products);
     }
 
