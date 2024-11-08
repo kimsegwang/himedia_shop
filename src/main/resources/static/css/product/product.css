@@ -358,10 +358,19 @@ ul {
  margin: 10px;
  }
 .recommend-product:hover{
-    transform: scale(1.05);
+    transform: scale(1.05);    color: #3498db;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .img-div{
     width: auto;
     height: 900px;
+}
+
+.logos{
+     font-family: 'Tangerine', serif; text-decoration-line: none; color: black; margin-left: 80px; position: fixed;
+    transition: color 0.3s ease;
+ }
+.logos:hover {
+    color: #3498db;
+    text-decoration: none;
 }

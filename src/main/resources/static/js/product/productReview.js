@@ -5,7 +5,7 @@ $(document).ready(() => {
 
 });
 let currentPage = 0; // 현재 페이지
-const size = 5; // 페이지당 리뷰 수
+const size = 3; // 페이지당 리뷰 수
 
 function getReviews(page = currentPage) {
     const productId = document.getElementById("productId").value;
@@ -21,6 +21,15 @@ function getReviews(page = currentPage) {
             console.log(`요청 시간: ${duration}ms`);
             console.log(`Fetching reviews for product ID: ${productId}, page: ${page}`);
             $('#reviews').empty(); // 기존 목록 비우기
+            // 리뷰가 없으면 버튼을 숨김
+            if (data.reviews.length === 0) {
+                $('#prev-page').hide();
+                $('#next-page').hide();
+            } else {
+                $('#prev-page').show();
+                $('#next-page').show();
+            }
+
             data.reviews.forEach(review => {
                 const deleteButton = (review.userId === userId)
                     ? `<button class="delete-button" data-review-id="${review.id}">삭제</button>`
@@ -68,8 +77,6 @@ $(document).ready(() => {
         getReviews(currentPage); // 현재 페이지를 전달
     });
 
-    // 초기 로드 시 리뷰 가져오기
-    getReviews();
 });
 
 function generateStars(score) {
@@ -145,7 +152,9 @@ window.submitReview = function() {
             alert(data.message);
             closeModal();
             clearReviewForm(); // 입력란 초기화
+
             getReviews(currentPage);
+
         })
         .catch((error) => {
             console.error('Error:', error);

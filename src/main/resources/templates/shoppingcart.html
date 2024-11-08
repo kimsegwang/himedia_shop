@@ -167,6 +167,24 @@
         .page-info {
             color: #6c757d;
         }
+        .btn {
+            float: right;
+            width: 100px;
+            left: 0px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* 호버 시 색상 변경 */
+        }
     </style>
 </head>
 <body>
@@ -174,7 +192,9 @@
     <a href="/" class="logo">Trend & Weather</a>
 </div>
 <div class="container">
-    <h1>장바구니</h1>
+    <h1>장바구니
+        <a th:href="@{/member/mypage}" class="btn">마이페이지</a>
+    </h1>
 
     <input type="hidden" id="totalPages" th:value="${totalPages}">
     <input type="hidden" id="currentPage" th:value="${currentPage}">

@@ -86,7 +86,7 @@ $(document).ready(function() {
 
     // 데이터 로드 함수
     function loadMoreData(page) {
-        console.log(searchKeyword,page)
+
         $.ajax({
             url: '/search-list', // 검색 URL (필요에 따라 수정)
             type: 'GET',

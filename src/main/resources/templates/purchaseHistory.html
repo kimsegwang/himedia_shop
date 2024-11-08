@@ -167,6 +167,24 @@
         .page-info {
             color: #6c757d;
         }
+        .btn {
+            float: right;
+            width: 100px;
+            left: 0px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* 호버 시 색상 변경 */
+        }
     </style>
 </head>
 <body>
@@ -174,8 +192,9 @@
     <a href="/" class="logo">Trend & Weather</a>
 </div>
 <div class="container">
-    <h1><i class="fas fa-shopping-bag mr-2"></i>구매 내역</h1>
-
+    <h1><i class="fas fa-shopping-bag mr-2"></i>구매 내역
+         <a th:href="@{/member/mypage}" class="btn">마이페이지</a>
+    </h1>
     <input type="hidden" id="totalPages" th:value="${totalPages}">
     <input type="hidden" id="currentPage" th:value="${currentPage}">
     <input type="hidden" id="history" th:value="${history}">
@@ -190,6 +209,7 @@
                 <th class="price-column">가격</th>
                 <th class="volume-column">구매 수량</th>
                 <th class="total-price">총 가격</th>
+                <th class="total-price">구매 날짜</th>
             </tr>
             </thead>
             <tbody>
@@ -201,6 +221,7 @@
                 <td th:text="${item.price}">가격</td>
                 <td th:text="${item.purchaseVolume}">구매 수량</td>
                 <td th:text="${item.price * item.purchaseVolume}">총 가격</td>
+                <td th:text="${item.reviewDate}">총 가격</td>
             </tr>
             </tbody>
         </table>

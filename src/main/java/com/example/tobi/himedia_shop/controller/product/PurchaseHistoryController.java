@@ -29,7 +29,6 @@ public class PurchaseHistoryController {
         // 사용자 ID를 사용하여 구매 내역 조회
         List<PurchaseHistoryWithProductDTO> history = purchaseHistoryService.getPurchaseHistoryWithProduct(userId, page, pageSize);
         int totalRecords = purchaseHistoryService.getPurchaseHistory(userId);
-        System.out.println(totalRecords);
 
         // 수정된 부분: double 캐스팅 추가
         int totalPages = (int) Math.ceil((double) totalRecords / pageSize);

@@ -43,4 +43,17 @@ public class ProductSearchApiController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+
+    @GetMapping("/order/cartagory")
+    public ResponseEntity<?> getSortedProducts(@RequestParam("subCategoryName") String subCategoryName,
+                                                   @RequestParam("categoryName") String categoryName,
+                                               @RequestParam("sortBy") String sortBy
+    ) throws JsonProcessingException {
+
+        List<SearchProduct> products = searchService.categoryProduct(categoryName,subCategoryName,sortBy);
+
+
+
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 }
